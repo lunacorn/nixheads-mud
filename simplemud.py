@@ -30,7 +30,7 @@ from mudserver import MudServer
 
 # import maps
 with open("map.json") as room:
-    rooms = json.loads(room)
+    rooms = json.load(room)
 
 # stores the players in the game
 players = {}
