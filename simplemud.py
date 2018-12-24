@@ -22,22 +22,15 @@ author: Mark Frimston - mfrimston@gmail.com
 """
 
 import time
+import json
 
 # import the MUD server class
 from mudserver import MudServer
 
 
-# structure defining the rooms in the game. Try adding more rooms to the game!
-rooms = {
-    "Tavern": {
-        "description": "You're in a cozy tavern warmed by an open fire.",
-        "exits": {"outside": "Outside"},
-    },
-    "Outside": {
-        "description": "You're standing outside a tavern. It's raining.",
-        "exits": {"inside": "Tavern"},
-    }
-}
+# import maps
+with open("map.json") as room:
+    rooms = json.loads(room)
 
 # stores the players in the game
 players = {}
@@ -103,7 +96,7 @@ while True:
         if players[id]["name"] is None:
 
             players[id]["name"] = command
-            players[id]["room"] = "Tavern"
+            players[id]["room"] = "Lounge"
 
             # go through all the players in the game
             for pid, pl in players.items():
