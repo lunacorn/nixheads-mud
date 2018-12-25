@@ -1,0 +1,32 @@
+{
+
+    "rooms": {
+
+        "Lounge": {
+
+            "description": "You find yourself in the new adventurers lounge.  Where are the new adventurers\n   come to find themeselves.  There seem to be some books on the shelf with\n knowledge of the realm.  There is a hallway leading [south] into a main\n hall and a chair where you can [sit] and read the books.  To read books\n [look] and [exam] one of your choice.  If you know all\n there is to know, feel free to head to down the hall.",
+
+            "exits": {
+
+                "south": "Hall"
+
+            }
+
+        },
+
+        "Hall": {
+
+            "description": "test",
+
+            "exits": {
+
+                "north": "Lounge"
+
+            }
+
+        }
+
+    }
+
+}
+
