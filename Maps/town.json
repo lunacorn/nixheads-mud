@@ -35,9 +35,34 @@
 
             "exits": {
 
-                "north": "###",
+                "north": "OnBridge",
                 "south": "TownCenter"
 
+            }
+
+        },
+
+        "OnBridge": {
+
+            "description": "test",
+
+            "exits": {
+
+                "north": "###",
+                "south": "TownCenter",
+                "jump": "River"
+
+            }
+
+        },
+
+        "River": {
+
+            "description": "you jumped off the bridge and landed into the river below\n The current is too strong and it carries you away",
+
+            "exits": {
+
+                "###": "###"
             }
 
         },
@@ -163,13 +188,13 @@
 
         },
 
-        "WeaponStorePath": {
+        "ArmorStorePath": {
 
             "description": "test",
 
             "exits": {
 
-                "open": "WeaponStore",
+                "open": "ArmorStore",
                 "west": "PotionStorePath"
 
             }
