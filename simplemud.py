@@ -45,18 +45,21 @@ import json
 from mudserver import MudServer
 
 # import rooms
-
 with open("Maps/starter.json") as room:
-
     map1 = json.load(room)
-
-with open("Maps/desert.json") as room:
-
+with open("Maps/dungeon.json") as room:
     map2 = json.load(room)
+with open("Maps/town.json") as room:
+    map3 = json.load(room)
+with open("Maps/townstores.json") as room:
+    map4 = json.load(room)
+with open("Maps/garden.json") as room:
+    map5 = json.load(room)
+
 
 # put all the map files together
 
-rooms = {**map1, **map2}
+rooms = {**map1, **map2, **map3, **map4, **map5}
 
 # import ascii file
 
@@ -160,7 +163,7 @@ while True:
 
             players[id]["name"] = command
 
-            players[id]["room"] = "Lounge"
+            players[id]["room"] = "Dungeon1"
 
             # go through all the players in the game
 
@@ -294,9 +297,7 @@ while True:
 
                     # sending the command
 
-                    if players[pid]["room"] == players[id]["room"] \
-
-                            and pid != id:
+                    if players[pid]["room"] == players[id]["room"] and pid != id:
 
                         # send them a message telling them that the player
 
@@ -320,9 +321,7 @@ while True:
 
                     # sending the command
 
-                    if players[pid]["room"] == players[id]["room"] \
-
-                            and pid != id:
+                    if players[pid]["room"] == players[id]["room"] and pid != id:
 
                         # send them a message telling them that the player
 
