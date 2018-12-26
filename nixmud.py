@@ -692,6 +692,10 @@ while True:
 
         elif command == "reset":
 
+            login[id] = {x: None for x in login[id]}
+            players[id] = {x: None for x in players[id]}
+            setups[id] = {x: None for x in setups[id]}
+
             mud.send_message(id, logascii.read())
             mud.send_message(id, "Are you a 'new' player or would you like to 'login'?")
 
