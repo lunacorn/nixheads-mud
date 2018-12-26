@@ -584,44 +584,31 @@ while True:
                     mud.send_message(id, rooms[players[id]["room"]]["description"])
 
 
-        # Dragonkeeper
-        # Please leave appropriate comments for this function
-        # so it is readable as time passes. Add spacing
-        # so it flows like rest of file.
-
-        # save command
+        # save command  ## used this method to allow password to be inputed as commaand on next loop
         elif players[id]["waitingsave"] is 1:
+          ###  this was to set the password to that command if a password didnt exist
+          ### prob not needed now since password is set on user creation 
             if players[id]["password"] is None:
                 players[id]["password"] = command
-
-            # Dragonkeeper
-            # I dont wanna write these comments since its your work
-
-            mud.send_message(id, "saving")
+            ## grabs a row from database that matches the player[id]
             userlist = database.get_name(userdata, players[id]["name"])
-            print(userlist)
+            print(userlist)  ##prints out the row to terminal for debug
 
             if not userlist:
-
-                # Dragonkeeper
-                # ...or this
+                ## if  userlist didnt return a row then a new save is needed
                 mud.send_message(id, "Creating new save")
                 database.save_name(userdata, players[id]["name"], players[id]["room"], players[id]["password"], players[id]["email"], players[id]["user"], players[id]["race"], players[id]["job"], players[id]["coin"])
 
-                # i think issue is here somehow
-
                 for user in database.get_name(userdata, players[id]["name"]):
-
-                    # Dragonkeeper
-                    # need to define user
-
+                  ## this then checks the new save was really added to database
                     if user[0] is players[id]["name"]:
                         mud.send_message(id, "New Save Created")
             else:
                 for user in userlist:
-                     if user[0] == players[id]["name"]:
+                 ### if user was found it means need update entry
+                     if user[0] == players[id]["name"]:  ##checks if 1st column is same as players name
                          mud.send_message(id, "found current user")
-                         if players[id]["password"] == user[2]:
+                         if players[id]["password"] == user[2]: #checks if 3rd column matchs password
                              mud.send_message(id, "password match")
                              database.update_name(userdata, players[id]["name"], players[id]["room"], players[id]["password"], players[id]["email"], players[id]["user"], players[id]["race"], players[id]["job"], players[id]["coin"])
                              for users in database.get_name(userdata, players[id]["name"]):
@@ -631,7 +618,7 @@ while True:
                                      mud.send_message(id, "Save Failed")
                          else:
                              mud.send_message(id, "Passwords do not match")
-            players[id]["waitingsave"] = 0
+            players[id]["waitingsave"] = 0  ##resets the value so this doesnt loop
 
         elif command == "save":
             if players[id]["name"] is not None:
