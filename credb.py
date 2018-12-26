@@ -12,7 +12,7 @@ import sqlite3
 
 # connect to the database
 def connect():
-    db = sqlite3.connect('credatabase')
+    db = sqlite3.connect('creaturedatabase')
     init_db(db)
     return db
 
@@ -23,38 +23,36 @@ def init_db(db):
     cursor = db.cursor()
     cursor.execute('CREATE TABLE IF NOT EXISTS creature(room, name, desc, clvl, cstr, cdmg, cdef, clfe, life, moves, drops, cspc, csnm, ctmr, corp)')
 
-# Execute 'save' command
 
-def cre_load():
+### load creatures 
+def cload(room, name, desc, clvl, cstr, cdmg, cdef, clfe, life, moves, drops, cspc, csnm, ctmr, corp):
     cursor = db.cursor()
     cursor.execute('INSERT INTO creature(room, name, desc, clvl, cstr, cdmg, cdef, clfe, life, moves, drops, cspc, csnm, ctmr, corp) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
             (room, name, desc, clvl, cstr, cdmg, cdef, clfe, life, moves, drops, cspc, csnm, ctmr, corp))
     db.commit()
     return
 
-# Not sure how to add the other features yet
 
-def cre_update(room, name, desc, clvl, cstr, cdmg, cdef, clfe, life, moves, drops, cspc, csnm, ctmr, corp):
+##this updates the creature in the database, the values you might not want to change them all, so we can remove the static ones from this command
+def cupdate(room, name, desc, clvl, cstr, cdmg, cdef, clfe, life, moves, drops, cspc, csnm, ctmr, corp):
     cursor = db.cursor()
-    cursor.execute("UPDATE creature SET room = ? name = ? desc = ? clvl = ? cstr = ? cdmg = ? cdef =? clfe = ? life = ? moves = ? drops = ? cspc = ? csnm = ? ctmr = ? corp =? WHERE name = ?",(room, name, desc, clvl, cstr, cdmg, cdef, clfe, life, moves, drops, cspc, csnm, ctmr, corp))
+    cursor.execute("UPDATE creature SET room = ?, name = ?, desc = ?, clvl = ?, cstr = ?, cdmg = ?, cdef = ?, clfe = ?, life = ?, moves = ?, drops = ?, cspc = ?, csnm = ?, ctmr = ?, corp =? WHERE name = ?",(room, name, desc, clvl, cstr, cdmg, cdef, clfe, life, moves, drops, cspc, csnm, ctmr, corp))
     db.commit()
     return
 
-# A way to delete players from database
+# A way to delete creatures from database
 
-def cre_corpse(db, name):
+def ccorpse(db, name):
     cursor = db.cursor()
-    cursor.execute('SET from creature WHERE corp = yes', (name,))
+    cursor.execute('DELETE from creature WHERE name = ?', (name,))
     db.commit()
     return
 
-#
-
-def spawn_name(db, name):
-    '''reloads creature onto map'''
+### this lets you pull a row of data that matches
+## i.e of you load creature[id]["name"]   , it will pull the results into a array for you to map to creature values when needed.
+def cspawn(db, name):
     cursor = db.cursor()
-    rows = cursor.execute('add load from file').fetchall()
+    rows = cursor.execute('SELECT room, name, desc, clvl, cstr, cdmg, cdef, clfe, life, moves, drops, cspc, csnm, ctmr, corp FROM creature').fetchall()
     player = [row for row in rows if name in row[0]]
-#    delete_player(db, name)
     return player
 

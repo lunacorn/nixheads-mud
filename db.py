@@ -54,3 +54,5 @@ def get_name(db, name):
     player = [row for row in rows if name in row[0]]
 #    delete_player(db, name)
     return player
+
+

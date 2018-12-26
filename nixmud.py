@@ -80,7 +80,7 @@ Team: Dragonkeeper, Lunacorn  Dec 25th-26th, 2018
 import time
 import db as database
 import json
-
+import credb as creaturedb
 # import the MUD server class
 
 from mudserver import MudServer
@@ -146,6 +146,7 @@ mud = MudServer()
 
 ##connect to db for player saves
 userdata = database.connect()
+creaturedata = creaturedb.connect()
 
 # main game loop. We loop forever (i.e. until the program is terminated)
 
@@ -783,7 +784,7 @@ while True:
 
                         playershere.append(players[pid]["name"])
 
-            # send player a message containing the list of players in the room
+            ### send player a message containing the list of players in the room
 
             mud.send_message(id, "Players here: {}".format(
 
@@ -795,7 +796,12 @@ while True:
             # check to see if any exist
             # Dragonkeeper:
             # not sure how to build a database.  help out.
-
+            ## so i added the new database in
+            ## creaturedb.command( )
+            ## creaturedb.cload
+            #           .cupdate
+            #           .ccorpse
+            #           .cspawn
             cr = rm["creaturecheck"]
 
             #for cd in creature.get_description(userdata, cr):
@@ -959,4 +965,5 @@ while True:
             # send back an 'unknown command' message
 
                 mud.send_message(id, "Unknown command '{}'".format(command))
+
 
