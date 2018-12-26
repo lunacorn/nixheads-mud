@@ -1,4 +1,41 @@
 # nixheads-mud
+
+=^..^=   =^..^=   =^..^=    =^..^=    =^..^=    =^..^=    =^..^=
+
+-----------------------------------------------------------
+
+Thank you for visiting https://nixheads.co.uk
+
+-----------------------------------------------------------
+
+This Mud runs the nixheads-mud codebase.  
+
+A heavily modified version of its former
+
+simplemud.  Written with python and json
+
+this overhauled codebase aims to be a api
+
+for a very open ended and customizable mud
+
+codebase.
+
+Brought to you by your friends at:
+
+-----------------------------------------------------------
+
+[]\  [] []====[] []  [] []  [] ______  =---=  [] \   //
+
+[] \ []    []      []   [][][] []__   []---[] []  |  \\
+
+[]  \[] []====[] []  [] []  [] []____ []   [] []__/  // 
+
+-----------------------------------------------------------
+
+=^..^=   =^..^=   =^..^=    =^..^=    =^..^=    =^..^=    =^.^=
+
+
+
 --------------------------------------------------------------------
 
 Nix-mud 0.1.0                           https://nixheads.co.uk
