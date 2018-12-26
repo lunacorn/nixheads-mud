@@ -1,0 +1,19 @@
+* make objects in room work
+-----------------------------
+
+--give creatures a database and adjust code in
+**map.json files
+**nixmud.py in look command and fight command
+
+--Ncurses Interface to:  for id, command, params in mud.get_commands():
+**Line 145 : simplemud.py
+
+--Write character sheet
+
+--Save players
+
+--add to newcharacter section
+
+--set up system messages
+
+upon update the system expects a room and a name for a character.  need to be able to always start wit those in hand.

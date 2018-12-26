@@ -1,0 +1,16 @@
+{
+
+        "main": {
+
+            "desc": "Main Help File\nsay <message>  -- This will say something outloud.\nlook           -- This will check general surrondings of an area.\ngo <exit>      -- This will move your character through the exit.\nexam <object>  -- This will examine an object more closely.\nfight <target> -- This will attack the designated target.\nchar           -- This will bring up your character sheet."
+
+
+        },
+
+        "race": {
+
+            "desc": "Race Help File\nHumani         -- The Humani are a humanoid race descended from\n                  Earth.  They cam to this land eons ago.  They have\n                  Well rounded starts.  Not overpowered in any attribute\n                  nor are they weak in any area in particular."
+        }
+
+}
+

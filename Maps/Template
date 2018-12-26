@@ -1,40 +1,8 @@
 {
 
-        "desert1": {
+        "GM": {
 
-            "description": "Desert",
-
-            "exits": {
-
-                "south": "desert2"
-
-            }
-
-        },
-
-        "desert2": {
-
-            "description": "This hall is dark with two doors on either side one labeled: The outside World to the east,\n the other labeled: Training Grounds which is to the west.  The hall is dimly lit\n by candles on hanging from the walls.\n",
-
-            "exits": {
-
-                "north": "Lounge",
-
-                "west": "Grounds"
-
-            }
-
-        },
-
-        "Grounds": {
-
-            "description": "Put monsters here",
-
-            "exits": {
-
-                "east": "Hall"
-
-            }
+            "description": "GM Lounge"
 
         }
 
