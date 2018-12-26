@@ -1,7 +1,7 @@
 * make objects in room work
 -----------------------------
 
---give creatures a database and adjust code in
+--give creatures a database and adjust code in [current project]
 **map.json files
 **nixmud.py in look command and fight command
 
@@ -10,10 +10,16 @@
 
 --Write character sheet
 
---Save players
+--Save players [done]
 
---add to newcharacter section
+--add to newcharacter section [current project]
 
---set up system messages
+--set up system messages [done]
+
+--update db.py with new player info when finished.
+
+--set up a way to become GM
+
+--set up a job change system
 
 upon update the system expects a room and a name for a character.  need to be able to always start wit those in hand.
