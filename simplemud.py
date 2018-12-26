@@ -37,9 +37,8 @@ author: Mark Frimston - mfrimston@gmail.com
 """
 
 import time
-
 import json
-
+import db as database
 # import the MUD server class
 
 from mudserver import MudServer
@@ -73,6 +72,8 @@ players = {}
 
 mud = MudServer()
 
+##connect to db for player saves
+userdata = database.connect()
 # main game loop. We loop forever (i.e. until the program is terminated)
 
 while True:
@@ -108,6 +109,11 @@ while True:
             "name": None,
 
             "room": None,
+
+            "password": None,
+
+            "waitingsave": None,
+
 
         }
 
@@ -164,6 +170,10 @@ while True:
             players[id]["name"] = command
 
             players[id]["room"] = "Dungeon1"
+
+            players[id]["password"] = None
+
+            players[id]["waitingsave"] = 0
 
             # go through all the players in the game
 
@@ -273,6 +283,48 @@ while True:
 
                                                     ", ".join(rm["exits"])))
 
+        # save command
+        elif players[id]["waitingsave"] is 1:
+            if players[id]["password"] is None:
+                players[id]["password"] = command
+
+            mud.send_message(id, "saving")
+            userlist = database.get_name(userdata, players[id]["name"])
+            print(userlist)
+
+            if not userlist:
+               ## create new save
+                mud.send_message(id, "Creating new save")
+                database.save_name(userdata, players[id]["name"], players[id]["room"], players[id]["password"])
+                for users in database.get_name(userdata, players[id]["name"]):
+                    if user[0] is players[id]["name"]:
+                        mud.send_message(id, "New Save Created")
+            else:
+                for user in userlist:
+                     if user[0] == players[id]["name"]:
+                         mud.send_message(id, "found current user")
+                         if players[id]["password"] == user[2]:
+                             mud.send_message(id, "password match")
+                             database.update_name(userdata, players[id]["name"], players[id]["room"], players[id]["password"])
+                             for users in database.get_name(userdata, players[id]["name"]): 
+                                 if user[1] is players[id]["room"]:
+                                     mud.send_message(id, "Save Completed")
+                                 else:
+                                     mud.send_message(id, "Save Failed")
+                         else:
+                             mud.send_message(id, "Passwords do not match")
+            players[id]["waitingsave"] = 0
+
+        elif command == "save":
+            if players[id]["name"] is not None:
+                players[id]["waitingsave"] = 1
+                if players[id]["password"] is None:
+                    mud.send_message(id, "Type a password for " + players[id]["name"])
+                else:
+                    mud.send_message(id, "ready to save")
+            else:
+                mud.send_message(id, "Your name is invalid. please set a username")
+
         # 'go' command
 
         elif command == "go":
@@ -354,4 +406,3 @@ while True:
             # send back an 'unknown command' message
 
             mud.send_message(id, "Unknown command '{}'".format(command))
-
