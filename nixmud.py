@@ -610,6 +610,28 @@ while True:
                     players[id]["room"] = "Dungeon1"
                     setups[id]["setup"] = None
 
+                    print("original player values")
+                    print(players[id])
+
+                    pr = players[id]["race"]
+                    pj = players[id]["job"]
+                    for stat in races[pr]:
+                        attribs = json.dumps(races[pr][stat])
+                        if stat != "description":
+                            for jobs in startjobs[pj]:
+                                if stat == jobs:
+                                    value = json.dumps(startjobs[pj][stat])
+                                    players[id][stat] = int(attribs) + int(value)
+                        
+                    print("new player ids")
+                    print(players[id])
+                    
+                        # if is player[id][items]:
+#                            player[id][items] = races
+
+                    # setup races stats
+                   # player[id]["hp"] = race[player[id]["race"]["hp"]]
+
                     mud.send_message(id, "Thank you. Creation successful.")
 
                     # Show the first look window
