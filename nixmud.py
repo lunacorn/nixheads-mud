@@ -699,8 +699,57 @@ while True:
 
         elif command == "sheet":
             # very basic character sheet
+            mud.send_message(id, "::Basic Stats::")
 
-            mud.send_message(id, "Name: ")
+            mud.send_message(id, "Name: {}".format(players[id]["name"]))
+
+            mud.send_message(id, "Race: {}".format(players[id]["race"]))
+
+            mud.send_message(id, "PvP Status: ")
+
+            mud.send_message(id, "Coin: {}".format(players[id]["coin"]))
+
+            mud.send_message(id, "Level:")
+
+            mud.send_message(id, "Exp/Next:")
+
+            mud.send_message(id, "HP/Max: ")
+
+            mud.send_message(id, "Mp/Max: ")
+
+            mud.send_message(id, "Tech Points: ")
+
+            mud.send_message(id, "::Character Stats::")
+
+            mud.send_message(id, "Strength: ")
+
+            mud.send_message(id, "Dexterity: ")
+
+            mud.send_message(id, "Vitality: ")
+
+            mud.send_message(id, "Intelligence: ")
+
+            mud.send_message(id, "Mind: ")
+
+            mud.send_message(id, "Charisma: ")
+
+            mud.send_message(id, "Crit. Modifer: ")
+
+            mud.send_message(id, "::Spells::")
+
+            mud.send_message(id, " ")
+
+            mud.send_message(id, "::Skills::")
+
+            mud.send_message(id, " ")
+
+            mud.send_message(id, "::User Rank:::::::::Current Job::")
+
+            mud.send_message(id, "               ::  {}".format(players[id]["job"]))
+
+            mud.send_message(id, "::Unlocked Jobs::")
+
+            mud.send_message(id, " ")
 
         # help file command
 
