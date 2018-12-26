@@ -199,15 +199,36 @@ while True:
             "name": None,
             "email": None,
             "password": None,
+            "level":None,
+            "exp": None,
+            "next": None,
+            "hp": None,
+            "maxhp": None,
+            "mp": None,
+            "maxmp": None,
+            "tp": None,
+            "str": None,
+            "dex": None,
+            "vit": None,
+            "int": None,
+            "mnd": None,
+            "cha": None,
+            "crit": None,
+            "spells": None,
+            "skills": None,
+            "corp": None,
+            "jskill": None,
+            "inv": None,
             "room": None,
             "user": None,
             "race": None,
             "job": None,
+            "ujob": None,
+            "pvp": None,
             "coin": 0,
             "waitingsave": None,
 
-
-        }
+}
 
 
         # send the new player a login screen
@@ -330,7 +351,6 @@ while True:
             if login[id]["password"] != None:
 
                 if login[id]["name"] != None:
-
                     # check the database
 
                     userlist = database.get_name(userdata, login[id]["name"])
@@ -586,10 +606,6 @@ while True:
 
         # save command  ## used this method to allow password to be inputed as commaand on next loop
         elif players[id]["waitingsave"] is 1:
-          ###  this was to set the password to that command if a password didnt exist
-          ### prob not needed now since password is set on user creation 
-            if players[id]["password"] is None:
-                players[id]["password"] = command
             ## grabs a row from database that matches the player[id]
             userlist = database.get_name(userdata, players[id]["name"])
             print(userlist)  ##prints out the row to terminal for debug
@@ -610,6 +626,7 @@ while True:
                          mud.send_message(id, "found current user")
                          if players[id]["password"] == user[2]: #checks if 3rd column matchs password
                              mud.send_message(id, "password match")
+                            # database.update_name(userdata, players[id]["name"], players[id]["room"], players[id]["user"], players[id]["race"], players[id]["job"], players[id]["coin"])
                              database.update_name(userdata, players[id]["name"], players[id]["room"], players[id]["password"], players[id]["email"], players[id]["user"], players[id]["race"], players[id]["job"], players[id]["coin"])
                              for users in database.get_name(userdata, players[id]["name"]):
                                  if user[1] is players[id]["room"]:
