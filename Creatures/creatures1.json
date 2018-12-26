@@ -8,9 +8,16 @@
         "cdmg": 5,
         "cdef": 6,
         "clfe": 15,
-        "cspc": {
-            "web" : "bound"
-        },
-        "ctmr": 5
+        "life": 15,
+        "moves": "no",
+        "drops": "venom sack",
+        "cspc": "bind",
+        "csnm": "web",
+        "ctmr": 5,
+        "corp": "no"
+    },
+
+    "test": {
+        "desc": "a test of creature files"
     }
 }

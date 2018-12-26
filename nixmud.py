@@ -203,10 +203,32 @@ while True:
             "name": None,
             "email": None,
             "password": None,
+            "level":None,
+            "exp": None,
+            "next": None,
+            "hp": None,
+            "maxhp": None,
+            "mp": None,
+            "maxmp": None,
+            "tp": None,
+            "str": None,
+            "dex": None,
+            "vit": None,
+            "int": None,
+            "mnd": None,
+            "cha": None,
+            "crit": None,
+            "spells": None,
+            "skills": None,
+            "corp": None,
+            "jskill": None,
+            "inv": None,
             "room": None,
             "user": None,
             "race": None,
             "job": None,
+            "ujob": None,
+            "pvp": None,
             "coin": 0,
             "waitingsave": None,
 
@@ -574,6 +596,7 @@ while True:
                     players[id]["user"] = "normal"
                     players[id]["room"] = "Dungeon1"
                     setups[id]["setup"] = None
+
                     mud.send_message(id, "Thank you. Creation successful.")
 
                     # Show the first look window
@@ -738,22 +761,19 @@ while True:
             # send player a message containing the list of creatures in the room
 
             # check to see if any exist
+            # Dragonkeeper:
+            # not sure how to build a database.  help out.
 
-            if rm["creaturecheck"] != None:
+            cr = rm["creaturecheck"]
 
-                for cr in rm:
-                    mud.send_message(id, "{}".format(
-                            ", ".join(credb[[rm["creaturecheck"]]["desc"]])))
+            #for cd in creature.get_description(userdata, cr):
+            # got it to pull out desc, need to create a db for all
+            # creatures so we can manipulate them individually
+            # as in above commented command
 
-                # fallbacks below
-
-                #mud.send_message(id, "{}".format(
-
-                 #                         "\n".join(rm["creaturedesc"])))
-
-                # mud.send_message(id, "Creatures here: {}".format(
-
-                #                                      ", ".join(rm["creatures"])))
+            for cd in cr:
+                cx = credb[cd]["desc"]
+                mud.send_message(id, "{}".format("".join(cx)))
 
             # send player a message containing the list of exits from this room
 
