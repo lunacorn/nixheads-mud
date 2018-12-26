@@ -1,0 +1,29 @@
+{
+
+        "GM": {
+
+            "description": "GM Lounge\nmake this show todo list under Art.\n Check todo list",
+            "exits": {
+                "newbie": "Lounge" 
+            }
+        },
+
+        "np": {
+            "description": "You remain here until you choose a race, and initial class.\nType 'help race' for information on races.\nType 'help class' for help picking a class.",
+            
+            "creaturecheck": {
+                "number": "none"
+            },
+            "creatures": {
+                "none": "none"
+            },
+
+            "objects": {
+
+            },
+            
+            "exits": {
+                "none": "np"
+            }
+        }
+}

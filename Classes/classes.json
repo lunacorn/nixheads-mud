@@ -1,0 +1,29 @@
+{
+
+        "warrior:": {
+
+            "desc": "warrior info here",
+            "hpmod": "10"
+        },
+
+        "blackmage": {
+
+            "desc": "blackmage info here",
+            "hpmod": "5"
+        },
+
+
+        "whitemage": {
+
+            "description": "whitemage info here",
+            "hpmod": "0"
+        },
+
+
+        "thief": {
+
+            "description": "thief info here",
+            "hpmod": "8"
+        }
+
+}

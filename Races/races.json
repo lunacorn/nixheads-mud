@@ -1,0 +1,29 @@
+{
+
+        "elvari": {
+
+            "desc": "elvari info here",
+            "hp": "17"
+        },
+
+        "humani": {
+
+            "desc": "humani info here",
+            "hp": "20"
+        },
+
+
+        "dragani": {
+
+            "description": "dragani info here",
+            "hp": "26"
+        },
+
+
+        "krei": {
+
+            "description": "krei info here",
+            "hp": "15"
+        }
+
+}
