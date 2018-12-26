@@ -34,10 +34,51 @@ Some ideas for things to try adding:
 
 author: Mark Frimston - mfrimston@gmail.com
 
-"""
+--------------------------------------------------------------------
+
+Nix-mud 0.1.0                           https://nixheads.co.uk
+
+--------------------------------------------------------------------
+
+This version implements the following features
+
+--------------------------------------------------------------------
+
+-- New player creation
+
+--------------------------------------------------------------------
+
+    New player creation with the ability to save and login via
+    character name and password.
+
+---------------------------------------------------------------------
+
+-- objects
+
+---------------------------------------------------------------------
+
+    Objects are allowed to be examined, or attacked.  This will go
+through heavy overhaul in the version to come as a combat system is
+implemnented.  For now they are very loose fitings.
+
+---------------------------------------------------------------------
+
+-- System Message
+
+---------------------------------------------------------------------
+
+    A command 'system' allows your to speak to whole of server as a
+channel.  Similar to say, though it works beyond a single room.
+
+---------------------------------------------------------------------
+
+Team: Dragonkeeper, Lunacorn  Dec 25th-26th, 2018
+
+"""""""""""
+
 
 import time
-
+import db as database
 import json
 
 # import the MUD server class
@@ -47,47 +88,64 @@ from mudserver import MudServer
 # import map files
 
 with open("Maps/starter.json") as room:
-
     map1 = json.load(room)
-
-with open("Maps/desert.json") as room:
-
+with open("Maps/dungeon.json") as room:
     map2 = json.load(room)
-
-with open("Maps/gm.json") as room:
-
+with open("Maps/town.json") as room:
     map3 = json.load(room)
+with open("Maps/townstores.json") as room:
+    map4 = json.load(room)
+with open("Maps/garden.json") as room:
+    map5 = json.load(room)
+with open("Maps/desert.json") as room:
+    map6 = json.load(room)
+with open("Maps/gm.json") as room:
+    map7 = json.load(room)
 
 # put all the map files together
 
-rooms = {**map1, **map2, **map3}
+rooms = {**map1, **map2, **map3, **map4, **map5, **map6, **map7}
+
+# import creature files
+
+with open("Creatures/creatures1.json") as cre:
+    credb = json.load(cre)
 
 # import ascii files
 
-motd = open("Art/MOTD")
-todo = open("Art/todo")
+motd       = open("Art/MOTD")
+logascii   = open("Art/login")
+todo       = open("Art/todo")
 
 # import help files
 with open("Help/help1.json") as helpfile:
 
     helpfiles = json.load(helpfile)
-
+# import race files
 with open("Races/races.json") as raceoptions:
 
     races = json.load(raceoptions)
 
+# import jobs (currently classes)
 with open("Classes/classes.json") as joboptions:
 
-    jobs = json.load(joboptions)
+    startjobs = json.load(joboptions)
 
 # stores the players in the game
+# setups is the newly created characters during generation process
+# players is the players found in game.  A player will not be seen
+# by anyone while in the setups group.
 
+login = {}
 setups = {}
 players = {}
 
 # start the server
 
 mud = MudServer()
+
+##connect to db for player saves
+userdata = database.connect()
 
 # main game loop. We loop forever (i.e. until the program is terminated)
 
@@ -109,15 +167,21 @@ while True:
 
     for id in mud.get_new_players():
 
-        # add the new player to the dictionary, noting that they've not been
+        # The attributes for login credentials
+        # just a character name and password
+        # and where it is in its process
 
-        # named yet.
+        login[id] = {
 
-        # The dictionary key is the player's id number. We set their room to
+                "process": None,
+                "name": None,
+                "password": None
 
-        # None initially until they have entered a name
+                }
 
-        # Try adding more player stats - level, gold, inventory, etc
+        # The attributes of setups and players.  Notice the differences
+        # between them.  See 'new' command for better understanding of
+        # setups.
 
         setups[id] = {
 
@@ -127,7 +191,7 @@ while True:
                 "name": None,
                 "pickrace" : None,
                 "race": None,
-                "class": None,
+                "job": None,
                 "pickclass": None,
                 "user" : None,
                 "email": None,
@@ -137,27 +201,23 @@ while True:
         players[id] = {
 
             "name": None,
-
             "email": None,
-
             "password": None,
-
             "room": None,
-
             "user": None,
-
             "race": None,
-
-            "class": None,
-
+            "job": None,
             "coin": 0,
+            "waitingsave": None,
 
 
         }
 
 
-        # send the new player a prompt for their name
+        # send the new player a login screen
 
+        mud.send_message(id, "Hey there...")
+        mud.send_message(id, logascii.read())
         mud.send_message(id, "Are you a 'new' player or would you like to 'login'? ")
 
 
@@ -199,6 +259,23 @@ while True:
 
         # move on to the next one
 
+        # move the above comments down
+
+
+        # Check the login process
+        if login[id]["process"] != None:
+
+            if login[id]["process"] == "name":
+                login[id]["name"] = command
+                command = "login"
+            if login[id]["process"] == "password":
+                login[id]["password"] = command
+                command = "login"
+            if login[id]["process"] == "done":
+                login[id]["process"] = None
+
+        # Check the process of setting up new character
+
         if setups[id]["setup"] != None:
             if setups[id]["setup"] == "name":
                 setups[id]["name"] = command
@@ -208,11 +285,9 @@ while True:
                 setups[id]["password"] = command
             if setups[id]["setup"] == "confirm":
                 setups[id]["confirm"] = command
-            if setups[id]["setup"] == "race":
-                setups[id]["race"] = command
             if setups[id]["setup"] == "pickrace":
                 setups[id]["pickrace"]  = command
-            if setups[id]["setup"] == "class":
+            if setups[id]["setup"] == "pickclass":
                 setups[id]["pickclass"] = command
             if setups[id]["setup"] == "merge":
                 mud.send_message(id, "success")
@@ -235,38 +310,126 @@ while True:
                                                         players[id]["name"]))
 
 
-        # each of the possible commands is handled below. Try adding new
-
-        # commands to the game!
-
-        # 'help' command
+        # Here we have a place to add commands for the user.
+        # Later :: check commands against players[id]["user"]
+        # to see if they have GM priveleges and thus new
+        # commands other users do not have.
 
         elif command == "login":
-            mud.send_message(id, "Pending...")
+
+            if login[id]["name"] is None:
+
+                mud.send_message(id, "Please enter your character name:")
+
+                login[id]["process"] = "name"
+
+            if login[id]["password"] is None:
+
+                if login[id]["name"] != None:
+
+                    mud.send_message(id, "Please enter your password:")
+
+                    login[id]["process"] = "password"
+
+            if login[id]["password"] != None:
+
+                if login[id]["name"] != None:
+
+                    # check the database
+
+                    userlist = database.get_name(userdata, login[id]["name"])
+                    print(userlist)
+
+                    # Dragonkeepr:
+                    # I need to check against all names in userlist
+
+                    for check in userlist:
+                        if check[0] == login[id]["name"]:
+
+                            if check[2] == login[id]["password"]:
+
+                                players[id]["name"]        = check[0]
+                                players[id]["room"]        = check[1]
+                                players[id]["password"]    = check[2]
+                                players[id]["email"]       = check[3]
+                                players[id]["user"]        = check[4]
+                                players[id]["race"]        = check[5]
+                                players[id]["job"]         = check[6]
+                                players[id]["coin"]        = check[7]
+                                players[id]["waitingsave"] = 0
+
+                                mud.send_message(id, "Successfully loaded: {}.\n".format(
+                                                                                    players[id]["name"]))
+                                #login[id]["process"] is None
+
+                                mud.send_message(id, motd.read())
+                                mud.send_message(id, "You are being pulled through a dimensional gateway.")
+                                mud.send_message(id, "Welcome back to NixMud, {}.".format(
+                                                                                    players[id]["name"]))
+                                mud.send_message(id, "Type 'look' to get your bearings.  It's always")
+                                mud.send_message(id, "and adjustment to warp dimesnions")
+
+
+                                login[id]["process"] = "done"
+
+                        if check[0] != login[id]["name"]:
+
+                            mud.send_message(id, "Failed to find that character name.")
+
+                            login[id]["name"] = None
+                            login[id]["password"] = None
+                            login[id]["process"] = None
+
+                        if check[2] != login[id]["password"]:
+
+                            mud.send_message(id, "Bad password.")
+                            mud.send_message(id, "Enter a new command: ('login' or 'new')")
+
+                            login[id]["name"] = None
+                            login[id]["password"] = None
+                            login[id]["process"] = None
+
 
         elif command == "new":
 
-            # Setup a setups[id] section with info and pipe it into players
+            #   The 'new' command gets input for a new player from the user
+            # without getting all lost n broken amidst updates of server.
+            # After it has collected all the data, it stores the setup[id]
+            # as a new player in players[id].
 
             if setups[id]["name"] is None:
+
+                # Prompt for a Name and set the new player task
 
                 mud.send_message(id, "Enter a Name:")
 
                 setups[id]["setup"] = "name"
 
+            # Check to see if we set up an email yet
+
             if setups[id]["email"] is None:
 
+                # Oh look we got a name from the user
+
                 if setups[id]["name"] != None:
+
+                    # Make sure that silly player learns their name
 
                     mud.send_message(id, "Your Name is: {}".format(
 
                                                           setups[id]["name"]))
 
+                    # Ask for an email and set the new player task
+
                     mud.send_message(id, "Enter an Email Address:")
 
                     setups[id]["setup"] = "email"
 
+            # Check to see if we have set a password
+
             if setups[id]["password"] is None:
+
+                # We have input for an email.
 
                 if setups[id]["email"] != None:
 
@@ -274,11 +437,28 @@ while True:
 
                                                           setups[id]["email"]))
 
+                    # Warn player
+
+                    mud.send_message(id, "WARNING!")
+
+                    mud.send_message(id, "If this email is not valid, you will not")
+
+                    mud.send_message(id, "recieve a new password should you lose")
+
+                    mud.send_message(id, "yours.")
+
+                    # Ask for a password
+
                     mud.send_message(id, "Enter a password:")
 
                     setups[id]["setup"] = "password"
 
+            # Check if we have input for password confirmation
+
             if setups[id]["confirm"] is None:
+
+                # We have input of password.  Store it and move on
+                # To confirm it.
 
                 if setups[id]["password"] != None:
 
@@ -286,12 +466,13 @@ while True:
 
                     setups[id]["setup"] = "confirm"
 
+            # We have input for a confirmation of password
+
             if setups[id]["confirm"] != None:
 
+                # Our paswords match so move on to race
 
                 if setups[id]["password"] == setups[id]["confirm"]:
-
-                   # setups[id]["confirm"] = None
 
                     setups[id]["match"] = "yes"
 
@@ -299,7 +480,10 @@ while True:
 
                 else:
 
+                    # Prompt for a new password and wait for input
+
                     mud.send_message(id, "Passwords do not match.")
+
                     mud.send_message(id, "Please enter a password:")
 
                     setups[id]["password"] = None
@@ -307,6 +491,8 @@ while True:
                     setups[id]["confirm"] = None
 
                     setups[id]["setup"] = "password"
+
+            # If there is no choice for class prompt for one
 
             if setups[id]["pickrace"] is None:
 
@@ -316,12 +502,15 @@ while True:
 
                     mud.send_message(id, "of Neff.  They are ferocious and agile.")
 
-
                 if setups[id]["setup"] == "pickrace":
 
                     mud.send_message(id, "Pick a race:")
 
+            # Now we have input for our choice of race
+
             if setups[id]["pickrace"] != None:
+
+                # Check if input for race is valid
 
                 if setups[id]["pickrace"] not in races:
 
@@ -331,17 +520,31 @@ while True:
 
                 else:
 
-                    if setups[id]["race"] is None:
+                        # Insert race in setups[id]
 
                         setups[id]["race"] = setups[id]["pickrace"]
 
-                        setups[id]["setup"] = "class"
+                        setups[id]["setup"] = "pickclass"
 
-                        mud.send_message(id, "warrior, blackmage, whitemage, thief.\n#write up descriptions.\nFor now pick one:")
+
+            # If there is no choice for class prompt for one
+
+            if setups[id]["pickclass"] is None:
+
+                if setups[id]["setup"] == "pickclass":
+
+                    mud.send_message(id, "Put class info here")
+
+            if setups[id]["setup"] == "pickclass":
+
+               mud.send_message(id, "warrior, blackmage, whitemage, thief.\n#write up descriptions.\nFor now pick one:")
+            # Now we have input for our choice of class
 
             if setups[id]["pickclass"] != None:
 
-                if setups[id]["pickclass"] not in jobs:
+                # check if input for class is valid
+
+                if setups[id]["pickclass"] not in startjobs:
 
                     mud.send_message(id, "Not a valid class.\nPick a class:")
 
@@ -349,30 +552,106 @@ while True:
 
                 else:
 
-                    setups[id]["class"] = setups[id]["pickclass"]
-                    setups[id]["setup"] = "merge"
+                        # Insert class in setups[id]
 
-            if setups[id]["setup"] == "merge":
+                        setups[id]["job"] = setups[id]["pickclass"]
 
-                players[id]["name"] = setups[id]["name"]
-                players[id]["email"] = setups[id]["email"]
-                players[id]["password"] = setups[id]["password"]
-                players[id]["race"] = setups[id]["race"]
-                players[id]["class"] = setups[id]["class"]
-                players[id]["user"] = "normal"
-                players[id]["room"] = "Lounge"
-                setups[id]["setup"] = None
-                mud.send_message(id, "Thank you. Creation successful.")
-                mud.send_message(id, motd.read())
-                mud.send_message(id, "Welcome to the Nixheads-Mud, {}.\n".format(
+                        mud.send_message(id, "got it.")
+
+                        setups[id]["setup"] = "merge"
+
+                # check if ready to merge with players
+
+                if setups[id]["setup"] == "merge":
+
+                    # Merge with players
+
+                    players[id]["name"] = setups[id]["name"]
+                    players[id]["email"] = setups[id]["email"]
+                    players[id]["password"] = setups[id]["password"]
+                    players[id]["race"] = setups[id]["race"]
+                    players[id]["job"] = setups[id]["job"]
+                    players[id]["user"] = "normal"
+                    players[id]["room"] = "Dungeon1"
+                    setups[id]["setup"] = None
+                    mud.send_message(id, "Thank you. Creation successful.")
+
+                    # Show the first look window
+                    # though not via 'look' command
+                    # i need to make them the same
+
+                    mud.send_message(id, motd.read())
+                    mud.send_message(id, "Welcome to the Nixheads-Mud, {}.\n".format(
 
                                                                 players[id]["name"]))
-                mud.send_message(id, "Type 'help' for a list of commands.")
-                mud.send_message(id, rooms[players[id]["room"]]["description"])
+                    mud.send_message(id, "Type 'help' for a list of commands.")
+                    mud.send_message(id, rooms[players[id]["room"]]["description"])
+
+
+        # Dragonkeeper
+        # Please leave appropriate comments for this function
+        # so it is readable as time passes. Add spacing
+        # so it flows like rest of file.
+
+        # save command
+        elif players[id]["waitingsave"] is 1:
+            if players[id]["password"] is None:
+                players[id]["password"] = command
+
+            # Dragonkeeper
+            # I dont wanna write these comments since its your work
+
+            mud.send_message(id, "saving")
+            userlist = database.get_name(userdata, players[id]["name"])
+            print(userlist)
+
+            if not userlist:
+
+                # Dragonkeeper
+                # ...or this
+                mud.send_message(id, "Creating new save")
+                database.save_name(userdata, players[id]["name"], players[id]["room"], players[id]["password"], players[id]["email"], players[id]["user"], players[id]["race"], players[id]["job"], players[id]["coin"])
+
+                # i think issue is here somehow
+
+                for user in database.get_name(userdata, players[id]["name"]):
+
+                    # Dragonkeeper
+                    # need to define user
+
+                    if user[0] is players[id]["name"]:
+                        mud.send_message(id, "New Save Created")
+            else:
+                for user in userlist:
+                     if user[0] == players[id]["name"]:
+                         mud.send_message(id, "found current user")
+                         if players[id]["password"] == user[2]:
+                             mud.send_message(id, "password match")
+                             database.update_name(userdata, players[id]["name"], players[id]["room"], players[id]["password"], players[id]["email"], players[id]["user"], players[id]["race"], players[id]["job"], players[id]["coin"])
+                             for users in database.get_name(userdata, players[id]["name"]):
+                                 if user[1] is players[id]["room"]:
+                                     mud.send_message(id, "Save Completed")
+                                 else:
+                                     mud.send_message(id, "Save Failed")
+                         else:
+                             mud.send_message(id, "Passwords do not match")
+            players[id]["waitingsave"] = 0
+
+        elif command == "save":
+            if players[id]["name"] is not None:
+                players[id]["waitingsave"] = 1
+                if players[id]["password"] is None:
+                    mud.send_message(id, "Type a password for " + players[id]["name"])
+                else:
+                    mud.send_message(id, "Saving...")
+            else:
+                mud.send_message(id, "Your name is invalid. please set a username")
+
 
         elif command == "help":
 
             # send the player back the list of possible commands
+            # this will be overhauled to allow lower param
 
             mud.send_message(id, "Commands:")
 
@@ -390,8 +669,14 @@ while True:
             mud.send_message(id, "  exam           - Give a closer look at an object "
                                  + "e.g 'exam chair'")
 
+        # 'system' command
 
+        elif command == "system":
 
+            for pid, pl in players.items():
+
+                mud.send_message(pid, "{}: SYSTEM MESSAGE!!: {}".format(
+                                                                players[id]["name"], params))
 
         # 'say' command
 
@@ -454,11 +739,17 @@ while True:
 
             # check to see if any exist
 
-            if rm["creaturecheck"]["number"] != "none":
+            if rm["creaturecheck"] != None:
 
-                mud.send_message(id, "{}".format(
+                for cr in rm:
+                    mud.send_message(id, "{}".format(
+                            ", ".join(credb[[rm["creaturecheck"]]["desc"]])))
 
-                                          "\n".join(rm["creaturedesc"])))
+                # fallbacks below
+
+                #mud.send_message(id, "{}".format(
+
+                 #                         "\n".join(rm["creaturedesc"])))
 
                 # mud.send_message(id, "Creatures here: {}".format(
 
