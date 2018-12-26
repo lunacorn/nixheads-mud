@@ -1,0 +1,290 @@
+{
+
+        "Dungeon1": {
+
+            "name": "Underground Beach",
+
+            "description": "You Stand at the shore of an underground beach.  Dimly lit though you can see a beatup\n old 'plaque' near the shore.  you see a path leading toward the 'south'.  The air\nis very humid and the smell of mold in this room is overwhelming.",
+
+            "creaturecheck": {
+                "spider": "spider"
+            },
+
+            "creatures": {
+
+                "none": "none"
+
+            },
+            
+            "objects": {
+                "plaque": "The plaque is chipped n rotten in spots.  You seem the remainins of\nred paint spelling out the words: The old world left behind. 2018\n you begin to wonder what year and where are you...  more importantly, What now?"
+            },
+
+            "exits": {
+
+                "east": "####",
+                "south": "Dungeon2"
+
+            }
+
+        },
+
+        "Dungeon2": {
+
+            "description": "Room",
+
+            "exits": {
+
+                "north": "Dungeon1",
+                "south": "Dungeon3"
+
+            }
+
+        },
+
+        "Dungeon3": {
+
+            "description": "Room",
+
+            "exits": {
+
+                "north": "Dungeon2",
+                "west": "Dungeon4"
+
+
+            }
+
+        },
+
+        "Dungeon4": {
+
+            "description": "Room",
+
+            "exits": {
+
+                "north": "Dungeon5",
+                "east": "Dungeon3",
+                "south": "Dungeon2",
+                "west": "Dungeon7",
+                "northwest": "Dungeon8"
+
+
+
+            }
+
+        },
+
+        "Dungeon5": {
+
+            "description": "Room",
+
+            "exits": {
+
+                "east": "Dungeon6",
+                "south": "Dungeon4",
+                "west": "Dungeon8"
+
+            }
+
+        },
+
+        "Dungeon6": {
+
+            "description": "Room",
+
+            "exits": {
+
+                "west": "Dungeon5"
+
+            }
+
+        },
+
+        "Dungeon7": {
+
+            "description": "Room",
+
+            "exits": {
+
+                "north": "Dungeon10",
+                "east": "Dungeon4"
+
+            }
+
+        },
+
+        "Dungeon8": {
+
+            "description": "Room",
+
+            "exits": {
+
+                "north": "Dungeon9",
+                "east": "Dungeon5",
+                "south": "Dungeon4",
+                "west": "Dungeon10"
+
+            }
+
+        },
+
+        "Dungeon9": {
+
+            "description": "Room",
+
+            "exits": {
+
+                "south": "Dungeon8",
+                "west": "Dungeon10"
+
+            }
+
+        },
+
+        "Dungeon10": {
+
+            "description": "Room",
+
+            "exits": {
+
+                "northeast": "Dungeon9",
+                "east": "Dungeon8",
+                "south": "Dungeon7",
+                "west": "Dungeon11"
+
+            }
+
+        },
+
+        "Dungeon11": {
+
+            "description": "Room",
+
+            "exits": {
+
+                "east": "Dungeon10",
+                "west": "Dungeon12"
+
+            }
+
+        },
+
+        "Dungeon12": {
+
+            "description": "Room",
+
+            "exits": {
+
+                "east": "Dungeon11",
+                "south": "Dungeon13",
+                "west": "Dungeon14"
+
+            }
+
+        },
+
+        "Dungeon13": {
+
+            "description": "Room",
+
+            "exits": {
+
+                "north": "Dungeon12",
+                "south": "Dungeon17"
+
+            }
+
+        },
+
+        "Dungeon14": {
+
+            "description": "Room",
+
+            "exits": {
+
+                "east": "Dungeon12",
+                "west": "Dungeon15"
+
+            }
+
+        },
+
+        "Dungeon15": {
+
+            "description": "Room",
+
+            "exits": {
+
+                "east": "Dungeon14",
+                "south": "Dungeon16"
+
+            }
+
+        },
+
+        "Dungeon16": {
+
+            "description": "Room",
+
+            "exits": {
+
+                "north": "Dungeon15"
+
+            }
+
+        },
+
+        "Dungeon17": {
+
+            "description": "Room",
+
+            "exits": {
+
+                "north": "Dungeon13",
+                "south": "Dungeon18"
+
+            }
+
+        },
+
+        "Dungeon18": {
+
+            "description": "You see a slipply slope",
+
+            "exits": {
+
+                "north": "Dungeon17",
+                "east": "Dungeon19",
+                "down": "Dungeon20"
+
+            }
+
+        },
+
+        "Dungeon19": {
+
+            "description": "Room",
+
+            "exits": {
+
+                "west": "Dungeon18"
+
+            }
+
+        },
+
+        "Dungeon20": {
+
+            "description": "Boss",
+
+            "exits": {
+
+                "up": "######"
+
+            }
+
+        }
+
+}
+
+
