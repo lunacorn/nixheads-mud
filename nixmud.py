@@ -622,6 +622,8 @@ while True:
                                 if stat == jobs:
                                     value = json.dumps(startjobs[pj][stat])
                                     players[id][stat] = int(attribs) + int(value)
+                                else:
+                                    players[id][stat] = int(attribs)
                         
                     print("new player ids")
                     print(players[id])
