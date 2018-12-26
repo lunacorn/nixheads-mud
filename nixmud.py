@@ -48,8 +48,8 @@ This version implements the following features
 
 --------------------------------------------------------------------
 
-    New player creation will be updated next version to allow login
-and make use of the db and save feature.
+    New player creation with the ability to save and login via
+    character name and password.
 
 ---------------------------------------------------------------------
 
@@ -63,7 +63,16 @@ implemnented.  For now they are very loose fitings.
 
 ---------------------------------------------------------------------
 
-Team: Dragonkeeper, Lunacorn  Dec 25th, 2018
+-- System Message
+
+---------------------------------------------------------------------
+
+    A command 'system' allows your to speak to whole of server as a
+channel.  Similar to say, though it works beyond a single room.
+
+---------------------------------------------------------------------
+
+Team: Dragonkeeper, Lunacorn  Dec 25th-26th, 2018
 
 """""""""""
 
@@ -656,8 +665,14 @@ while True:
             mud.send_message(id, "  exam           - Give a closer look at an object "
                                  + "e.g 'exam chair'")
 
+        # 'system' command
 
+        elif command == "system":
 
+            for pid, pl in players.items():
+
+                mud.send_message(pid, "{}: SYSTEM MESSAGE!!: {}".format(
+                                                                players[id]["name"], params))
 
         # 'say' command
 
