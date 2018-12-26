@@ -295,6 +295,10 @@ while True:
                 command = "login"
             if login[id]["process"] == "done":
                 login[id]["process"] = None
+            if login[id]["process"] == "reset":
+                mud.send_message(id, "Hmm... something went wrong.\nLet's try that again")
+                login[id]["process"] = None
+                command = "reset"
 
         # Check the process of setting up new character
 
@@ -337,6 +341,8 @@ while True:
         # to see if they have GM priveleges and thus new
         # commands other users do not have.
 
+        # login command
+
         elif command == "login":
 
             if login[id]["name"] is None:
@@ -364,6 +370,11 @@ while True:
 
                     # Dragonkeepr:
                     # I need to check against all names in userlist
+
+                    if not userlist: # if cant find a user save list will come back blank
+
+                        mud.send_message(id, "No save present for current username")
+                        login[id]["process"] = "reset"
 
                     for check in userlist:
                         if check[0] == login[id]["name"]:
@@ -410,6 +421,7 @@ while True:
                             login[id]["name"] = None
                             login[id]["password"] = None
                             login[id]["process"] = None
+
 
 
         elif command == "new":
@@ -624,7 +636,6 @@ while True:
             # Dragonkeeper
             # I dont wanna write these comments since its your work
 
-            mud.send_message(id, "saving")
             userlist = database.get_name(userdata, players[id]["name"])
             print(userlist)
 
@@ -650,9 +661,15 @@ while True:
                          mud.send_message(id, "found current user")
                          if players[id]["password"] == user[2]:
                              mud.send_message(id, "password match")
+
+
+                             ## Debug Command
+                             ##print(players[id]["name"] + players[id]["room"] + players[id]["password"] + players[id]["email"] + players[id]["user"] + players[id]["race"] + players[id]["job"] + players[id]["coin"])
+
                              database.update_name(userdata, players[id]["name"], players[id]["room"], players[id]["password"], players[id]["email"], players[id]["user"], players[id]["race"], players[id]["job"], players[id]["coin"])
                              for users in database.get_name(userdata, players[id]["name"]):
-                                 if user[1] is players[id]["room"]:
+                                 if user[1] == players[id]["room"]:
+
                                      mud.send_message(id, "Save Completed")
                                  else:
                                      mud.send_message(id, "Save Failed")
@@ -670,6 +687,21 @@ while True:
             else:
                 mud.send_message(id, "Your name is invalid. please set a username")
 
+        # emergency reset
+
+        elif command == "reset":
+
+            mud.send_message(id, logascii.read())
+            mud.send_message(id, "Are you a 'new' player or would you like to 'login'?")
+
+        # character sheet
+
+        elif command == "sheet":
+            # very basic character sheet
+
+            mud.send_message(id, "Name: ")
+
+        # help file command
 
         elif command == "help":
 

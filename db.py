@@ -33,7 +33,7 @@ def save_name(db, name, room, password, email, user, race, job, coin):
 
 def update_name(db, name, room, password, email, user, race, job, coin ):
     cursor = db.cursor()
-    cursor.execute("UPDATE player SET room = ? email = ? user = ? race = ? job= ? coin = ? WHERE name = ?",(room, name, email, user, race, job, coin))
+    cursor.execute("UPDATE player SET room = ?, password = ?, email = ?, user = ?, race = ?, job = ?, coin = ? WHERE name = ?",(room, password, email, user, race, job, coin, name))
     db.commit()
     return
 
