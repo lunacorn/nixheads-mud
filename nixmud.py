@@ -291,6 +291,10 @@ while True:
             if login[id]["process"] == "done":
                 login[id]["process"] = None
 
+            if login[id]["process"] == "new":
+                command = "new"
+                mud.send_message(id, "Entering new user creation")
+
         # Check the process of setting up new character
 
         if setups[id]["setup"] != None:
@@ -356,8 +360,9 @@ while True:
                     userlist = database.get_name(userdata, login[id]["name"])
                     print(userlist)
 
-                    # Dragonkeepr:
-                    # I need to check against all names in userlist
+                    if not userlist: # if cant find a user save list will come back blank
+                        mud.send_message(id, "No save present for current username")
+                        login[id]["process"] = "new"
 
                     for check in userlist:
                         if check[0] == login[id]["name"]:
