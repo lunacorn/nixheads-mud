@@ -2,13 +2,13 @@
 
         "elvari": {
 
-            "desc": "elvari info here",
+            "description": "elvari info here",
             "hp": "17"
         },
 
         "humani": {
 
-            "desc": "humani info here",
+            "description": "humani info here",
             "hp": "20"
         },
 

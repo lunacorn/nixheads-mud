@@ -1,14 +1,14 @@
 {
 
-        "warrior:": {
+        "warrior": {
 
-            "desc": "warrior info here",
+            "description": "warrior info here",
             "hpmod": "10"
         },
 
         "blackmage": {
 
-            "desc": "blackmage info here",
+            "description": "blackmage info here",
             "hpmod": "5"
         },
 

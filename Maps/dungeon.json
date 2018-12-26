@@ -2,7 +2,23 @@
 
         "Dungeon1": {
 
-            "description": "Room",
+            "name": "Underground Beach",
+
+            "description": "You Stand at the shore of an underground beach.  Dimly lit though you can see a beatup\n old 'plaque' near the shore.  you see a path leading toward the 'south'.  The air\nis very humid and the smell of mold in this room is overwhelming.",
+
+            "creaturecheck": {
+                "number": "none"
+            },
+
+            "creatures": {
+
+                "none": "none"
+
+            },
+            
+            "objects": {
+                "plaque": "The plaque is chipped n rotten in spots.  You seem the remainins of\nred paint spelling out the words: The old world left behind. 2018\n you begin to wonder what year and where are you...  more importantly, What now?"
+            },
 
             "exits": {
 
