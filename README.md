@@ -20,8 +20,6 @@ for a very open ended and customizable mud
 
 codebase.
 
-Brought to you by your friends at:
-
 -----------------------------------------------------------
 
 =^..^=   =^..^=   =^..^=    =^..^=    =^..^=    =^..^=    =^.^=
