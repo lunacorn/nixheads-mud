@@ -1,0 +1,204 @@
+{
+
+        "HousePath": {
+
+            "description": "You find your self in front of the house\n to your east is a cobble path",
+
+            "exits": {
+
+                "open": "###",
+                "east": "TownCenter"
+
+            }
+
+        },
+
+        "TownCenter": {
+
+            "description": "test",
+
+            "exits": {
+
+                "north": "Bridge",
+                "east": "FoodStorePath",
+                "south": "LakePath",
+                "west": "HousePath"
+
+            }
+
+        },
+
+
+        "Bridge": {
+
+            "description": "test",
+
+            "exits": {
+
+                "north": "OnBridge",
+                "south": "TownCenter"
+
+            }
+
+        },
+
+        "OnBridge": {
+
+            "description": "test",
+
+            "exits": {
+
+                "north": "###",
+                "south": "TownCenter",
+                "jump": "River"
+
+            }
+
+        },
+
+        "River": {
+
+            "description": "you jumped off the bridge and landed into the river below\n The current is too strong and it carries you away",
+
+            "exits": {
+
+                "###": "###"
+            }
+
+        },
+
+        "LakePath": {
+
+            "description": "test",
+
+            "exits": {
+
+                "north": "TownCenter",
+                "south": "ForestPath",
+                "west": "Lake"
+
+            }
+
+        },
+
+        "Lake": {
+
+            "description": "test",
+
+            "exits": {
+
+                "east": "LakePath"
+
+            }
+
+        },
+
+        "ForestPath": {
+
+            "description": "test",
+
+            "exits": {
+
+                "north": "LakePath",
+                "south": "SwampPath",
+                "west": "Forest"
+
+            }
+
+        },
+
+        "SwampPath": {
+
+            "description": "test",
+
+            "exits": {
+
+                "north": "ForestPath",
+                "south": "Swamp"
+
+            }
+
+        },
+
+        "Swamp": {
+
+            "description": "test",
+
+            "exits": {
+
+                "north": "SwampPath",
+                "west": "SeaSide"
+
+            }
+
+        },
+
+        "SeaSide": {
+
+            "description": "test",
+
+            "exits": {
+
+                "east": "Swamp",
+                "sail": "###"
+
+            }
+
+        },
+
+        "FoodStorePath": {
+
+            "description": "test",
+
+            "exits": {
+
+                "open": "FoodStore",
+                "east": "WeaponStorePath",
+                "west": "TownCenter"
+
+            }
+
+        },
+
+        "WeaponStorePath": {
+
+            "description": "test",
+
+            "exits": {
+
+                "open": "WeaponStore",
+                "east": "PotionStorePath",
+                "west": "FoodStorePath"
+
+            }
+
+        },
+
+        "PotionStorePath": {
+
+            "description": "test",
+
+            "exits": {
+
+                "open": "PotionStore",
+                "east": "ArmorStorePath",
+                "west": "WeaponStorePath"
+
+            }
+
+        },
+
+        "ArmorStorePath": {
+
+            "description": "test",
+
+            "exits": {
+
+                "open": "ArmorStore",
+                "west": "PotionStorePath"
+
+            }
+
+        }
+
+}

@@ -1,0 +1,50 @@
+{
+
+        "FoodStore": {
+
+            "description": "test",
+
+            "exits": {
+
+                "open": "FoodStorePath"
+
+            }
+
+        },
+
+        "WeaponStore": {
+
+            "description": "test",
+
+            "exits": {
+
+                "open": "WeaponStorePath"
+
+            }
+
+        },
+
+        "PotionStore": {
+
+            "description": "test",
+
+            "exits": {
+
+                "open": "PotionStorePath"
+
+            }
+
+        },
+
+        "ArmorStore": {
+
+            "description": "test",
+
+            "exits": {
+
+                "open": "ArmorStorePath"
+
+            }
+
+        }
+}

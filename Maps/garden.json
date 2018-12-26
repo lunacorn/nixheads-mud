@@ -1,0 +1,17 @@
+{
+
+        "Garden": {
+
+            "description": "You find yourself in the garden",
+
+            "exits": {
+
+                "trap": "##",
+                "door": "##"
+
+
+            }
+
+        }
+
+}
