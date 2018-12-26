@@ -1,0 +1,67 @@
+{
+
+
+        "Lounge": {
+
+            "description": "You find yourself in the new adventurers lounge.  This is the place\nwhere all new players can learn about the land of nix test their\nskills and get aquainted with the game.  There is a chair in the room, a\nbookshelf, and a door leading onward.  The lighting is good in here and\nyou can see spiderwebs in the corner on the room's ceiling.\nPerhaps something you can examine closer.\n",
+
+            "objects": {
+                
+                "spider": "you examine the spider.  She stares back at you and you can hear in your mind\nNo Need to check creatures before you fight them.\n Just run in and smash everything.  You will be fine.",
+
+                "books": "You read through the books on the shelf.  However it is in a strange foreign language.\none bit of information is written in a language you understand. It says:\nDon't Trust the spider.\n"
+            },
+            
+            "creaturecheck": {
+                "number": "2",
+                "spider": "spider",
+                "test": "test"
+            },
+
+            "creaturedesc": {
+                "A spider hangs in a web in the corner.": "spider",
+                "A test hangs in air": "test"
+
+            },
+            "exits": {
+
+                "south": "Hall",
+                "gm": "GM"
+            }
+
+        },
+
+        "Hall": {
+
+            "description": "This hall is dark with two doors on either side one labeled: The outside\nWorld to the east,the other labeled: Training Grounds which is to the\nwest.  The hall is dimly lit by candles on hanging from the walls... There is a man Standing down the hall waiting for you to notice him.\n",
+            
+            "creaturecheck": {
+                "number": "none"
+            },
+
+            "creatures": {
+                "none": "none"
+            
+            },
+            
+            "objects":{
+
+            },
+
+            "exits": {
+
+                "north": "Lounge",
+                "west": "Grounds",
+                "east": "desert1"
+            }
+
+        },
+
+        "Grounds": {
+            "description": "Put monsters here",
+            "exits": {
+                "east": "Hall"
+            }
+        }
+
+}

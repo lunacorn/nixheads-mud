@@ -1,0 +1,10 @@
+room :: lounge
+name :: spider
+desc :: A spider hangs from her web in the corner
+clvl :: 100
+cstr :: 10
+cdmg :: 5
+cdef :: 9
+clfe :: 100
+cspc :: web - player bound
+ctmr :: 5
