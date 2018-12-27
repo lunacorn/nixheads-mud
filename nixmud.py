@@ -129,6 +129,32 @@ import credb as creaturedb
 
 from mudserver import MudServer
 
+### create a class to map all the creatures into
+### saving space and effort adding in all creatures
+### automatically adding in new creatures added to json
+class Creatures(object):
+
+    creatures = {}
+
+    def __init__(self, cid, name, room, desc, clvl, cstr ,cdmg ,cdef ,clfe ,life ,moves ,drops ,cspc ,csnm , ctmr, corp):
+        self.cid = cid
+        self.name = name
+        self.room = room
+        self.desc = desc
+        self.clvl = clvl
+        self.cstr = cstr
+        self.cdmg = cdmg
+        self.cdef = cdef
+        self.clfe = clfe
+        self.life = life
+        self.moves = moves
+        self.drops = drops
+        self.cspc = cspc
+        self.csnm = csnm
+        self.ctmr = ctmr
+        self.corp = corp
+        Creatures.creatures[name] = self
+
 # import map files
 
 with open("Maps/starter.json") as room:
@@ -201,6 +227,49 @@ userdata = database.connect()
 creaturedata = creaturedb.connect()
 
 # main game loop. We loop forever (i.e. until the program is terminated)
+
+
+########### this grabs from the json for creatures
+for cid in credb.keys():
+    for stat in credb[cid]:
+# pulls needed data as normal and removes any " " from results
+        value = str(json.dumps(credb[cid][stat])).replace('"', '')
+### quick ifs to check if values match what need and stores them to be imported after
+        if stat == "name":
+            name = value
+        if stat == "room":
+            room = value
+        if stat == "desc":
+            desc = value
+        if stat == "clvl":
+            clvl = value
+        if stat == "cstr":
+            cstr = value
+        if stat == "cdmg":
+            cdmg = value
+        if stat == "cdef":
+            cdef = value
+        if stat == "clfe":
+            clfe = value
+        if stat == "life":
+            life = value
+        if stat == "moves":
+            moves = value
+        if stat == "drops":
+            drops = value
+        if stat == "cspc":
+            cspc = value
+        if stat == "csnm":
+            csnm = value
+        if stat == "ctmr":
+            ctmr = value
+        if stat == "corp":
+            corp = value
+############ loads every creature into class
+    Creatures(cid, name, room, desc, clvl, cstr, cdmg, cdef, clfe, life, moves, drops, cspc, csnm, ctmr, corp)
+          #### dumps to database
+    creaturedb.cload(creaturedata, Creatures.creatures[cid].name, Creatures.creatures[cid].room, Creatures.creatures[cid].desc, Creatures.creatures[cid].clvl, Creatures.creatures[cid].cstr, Creatures.creatures[cid].cdmg, Creatures.creatures[cid].cdef, Creatures.creatures[cid].clfe, Creatures.creatures[cid].life, Creatures.creatures[cid].moves, Creatures.creatures[cid].drops, Creatures.creatures[cid].cspc, Creatures.creatures[cid].csnm, Creatures.creatures[cid].ctmr, Creatures.creatures[cid].corp)
+
 
 while True:
 
@@ -401,6 +470,17 @@ while True:
         # it becomes refined
 
         elif command == "login":
+
+            ########### examples of pulling the creature data
+            print(Creatures.creatures['rat'].cid)
+            print(Creatures.creatures['rat'].name)
+            print(Creatures.creatures['rat'].life)
+            print(Creatures.creatures['rat'].desc)
+            print(Creatures.creatures['spider'].cid)
+            print(Creatures.creatures['spider'].ctmr)
+            print(Creatures.creatures['spider'].room)
+            print(Creatures.creatures['spider'].corp)
+
 
             if login[id]["name"] is None:
 
