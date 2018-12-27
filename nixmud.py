@@ -36,7 +36,7 @@ author: Mark Frimston - mfrimston@gmail.com
 
 --------------------------------------------------------------------
 
-Nix-mud 0.1.0                           https://nixheads.co.uk
+Nix-mud 0.1.3                           https://nixheads.co.uk
 
 --------------------------------------------------------------------
 
@@ -44,38 +44,82 @@ This version implements the following features
 
 --------------------------------------------------------------------
 
--- New player creation
+-- refined player creation
 
 --------------------------------------------------------------------
 
-    New player creation with the ability to save and login via
-    character name and password.
+    New player creation pulls from the static race and job files
+    it also populates the majority of neccessary variables for
+    'sheet' command.  which is a work in progress to display
+    most character information and stats.
+
+    self made character description is to come in the finished
+    'sheet' command.  As the level and combat system are developed
+    the skills and spells will be shown on char sheet as well.
+    expect unlocked jobs to appear in upcoming micro releases.
 
 ---------------------------------------------------------------------
 
--- objects
+-- Creature Database / Object Overhaul
 
 ---------------------------------------------------------------------
 
-    Objects are allowed to be examined, or attacked.  This will go
-through heavy overhaul in the version to come as a combat system is
-implemnented.  For now they are very loose fitings.
+    As mentioned in the first minor release the objects and maps
+    are going through an overhaul.  there is a creature database
+    created though not yet implemented.  It will give creatures
+    assigned unique numbers and seperate them from static maps.
+
+    Allowing them to move and be interacted with and killed as
+    well as looted once the inventory database is set up.
 
 ---------------------------------------------------------------------
 
--- System Message
+-- Refined maps
 
 ---------------------------------------------------------------------
 
-    A command 'system' allows your to speak to whole of server as a
-channel.  Similar to say, though it works beyond a single room.
+    Maps are currently being templated to work with the current
+    manner of interaction.  They will be bare, however crash proof
+    allowing characters to move around and get aquainted with the
+    game.  There will be a few randoom poke objects to interact
+    with and make use of some of the commands.
 
 ---------------------------------------------------------------------
 
-Team: Dragonkeeper, Lunacorn  Dec 25th-26th, 2018
+-- Comment Cleanup
+
+---------------------------------------------------------------------
+
+    Though this does not affect the user, the goal is to provide
+    clear documentation and templates for the nixmud codebase.
+    Therefore it is essential to make sure current features have
+    reasonably neat and readable comments.
+
+    You will find that much more useable moving forward, and
+    expect the documentation to continue with further releases.
+
+----------------------------------------------------------------------
+
+-- Emergency Reset
+
+----------------------------------------------------------------------
+
+    We have implemented a failsafe which in times of server crash
+    risk it will disconnect the player in question, and send them
+    back to a usable login screen.  This will help with error
+    handling and is a nice bump to start for known issues.
+
+    currently it is only used when issues of eternal loops occur.
+
+----------------------------------------------------------------------
+
+Team: Dragonkeeper, Lunacorn  Dec 26th, 2018
 
 """""""""""
 
+# basic files to import
+# including the json
+# library
 
 import time
 import db as database
@@ -99,10 +143,10 @@ with open("Maps/garden.json") as room:
     map5 = json.load(room)
 with open("Maps/desert.json") as room:
     map6 = json.load(room)
-with open("Maps/gm.json") as room:
+with open("Maps/swamp.json") as room:
     map7 = json.load(room)
 
-# put all the map files together
+# all the map files together
 
 rooms = {**map1, **map2, **map3, **map4, **map5, **map6, **map7}
 
@@ -118,15 +162,23 @@ logascii   = open("Art/login")
 todo       = open("Art/todo")
 
 # import help files
+# this will be implemented
+# in the near future.
+# currently still using
+# 'help' command
+
 with open("Help/help1.json") as helpfile:
 
     helpfiles = json.load(helpfile)
+
 # import race files
+
 with open("Races/races.json") as raceoptions:
 
     races = json.load(raceoptions)
 
 # import jobs (currently classes)
+
 with open("Classes/classes.json") as joboptions:
 
     startjobs = json.load(joboptions)
@@ -238,10 +290,10 @@ while True:
 
 
         # send the new player a login screen
+        # identical to the 'reset' command.
 
-        mud.send_message(id, "Hey there...")
         mud.send_message(id, logascii.read())
-        mud.send_message(id, "Are you a 'new' player or would you like to 'login'? ")
+        mud.send_message(id, "Are you a 'new' player or would you like to 'login'?")
 
 
 
@@ -249,9 +301,9 @@ while True:
 
     for id in mud.get_disconnected_players():
 
-        # if for any reason the player isn't in the player map, skip them and
-
-        # move on to the next one
+        # if for any reason the player
+        #isn't in the player map, skip
+        #them and move on to the next one
 
         if id not in players:
 
@@ -261,9 +313,8 @@ while True:
 
         for pid, pl in players.items():
 
-            # send each player a message to tell them about the diconnected
-
-            # player
+            # send each player a message to tell
+            # them about the diconnected player
 
             mud.send_message(pid, "{} quit the game".format(
 
@@ -279,13 +330,13 @@ while True:
     for id, command, params in mud.get_commands():
 
         # if for any reason the player isn't in the player map, skip them and
-
         # move on to the next one
-
         # move the above comments down
 
-
         # Check the login process
+        # currently making use of 'reset'
+        # command until a fix is made
+
         if login[id]["process"] != None:
 
             if login[id]["process"] == "name":
@@ -297,7 +348,6 @@ while True:
             if login[id]["process"] == "done":
                 login[id]["process"] = None
             if login[id]["process"] == "reset":
-                mud.send_message(id, "Hmm... something went wrong.\nLet's try that again")
                 login[id]["process"] = None
                 command = "reset"
 
@@ -337,12 +387,18 @@ while True:
                                                         players[id]["name"]))
 
 
-        # Here we have a place to add commands for the user.
-        # Later :: check commands against players[id]["user"]
-        # to see if they have GM priveleges and thus new
-        # commands other users do not have.
+
+        # commands section
+        # soon to come
+        # GM commands
 
         # login command
+        # this function is faulty
+        # so it is backed up
+        # by the 'reset' command
+        # better documentation
+        # for this will come as
+        # it becomes refined
 
         elif command == "login":
 
@@ -367,14 +423,12 @@ while True:
                     # check the database
 
                     userlist = database.get_name(userdata, login[id]["name"])
-                    print(userlist)
-
-                    # Dragonkeepr:
-                    # I need to check against all names in userlist
+                    print("checking database for")
+                    print(login[id]["name"])
 
                     if not userlist: # if cant find a user save list will come back blank
 
-                        mud.send_message(id, "No save present for current username")
+                        mud.send_message(id, "Bad username.")
                         login[id]["process"] = "reset"
 
                     for check in userlist:
@@ -390,19 +444,59 @@ while True:
                                 players[id]["race"]        = check[5]
                                 players[id]["job"]         = check[6]
                                 players[id]["coin"]        = check[7]
+
+                                # populate players with race and class info
+
+                                print("original player values")
+                                print(players[id])
+
+                                pr = players[id]["race"]
+                                pj = players[id]["job"]
+                                for stat in races[pr]:
+                                    attribs = json.dumps(races[pr][stat])
+                                    if stat != "description":
+                                        for jobs in startjobs[pj]:
+                                            if stat == jobs:
+                                                value = json.dumps(startjobs[pj][stat])
+                                                players[id][stat] = int(attribs) + int(value)
+                                            else:
+                                                players[id][stat] = int(attribs)
+
+                                print("new player ids")
+                                print(players[id])
+                                players[id]["maxhp"] = players[id]["hp"]
+                                players[id]["maxmp"] = players[id]["mp"]
+                                players[id]["pvp"] = "no"
+                                players[id]["tp"] = 0
+                                players[id]["exp"] = 0
+                                players[id]["level"] = 0
+                                players[id]["next"] = 3000
+                                players[id]["ujob"] = {
+                                                        "warrior",
+                                                        "blackmage",
+                                                        "whitemage",
+                                                        "thief"
+                                                     }
                                 players[id]["waitingsave"] = 0
+
 
                                 mud.send_message(id, "Successfully loaded: {}.\n".format(
                                                                                     players[id]["name"]))
+
+                                # print serverside a player logged in
+                                print("New login")
+                                print(players[id]["name"])
+
+                                # possible fix for the reset loop issue.
                                 #login[id]["process"] is None
 
                                 mud.send_message(id, motd.read())
                                 mud.send_message(id, "You are being pulled through a dimensional gateway.")
                                 mud.send_message(id, "Welcome back to NixMud, {}.".format(
                                                                                     players[id]["name"]))
-                                mud.send_message(id, "Type 'look' to get your bearings.  It's always")
-                                mud.send_message(id, "and adjustment to warp dimesnions")
-
+                                mud.send_message(id, "Have a 'look' around...")
+                                mud.send_message(id, "A lot changes here and interdimensional travel")
+                                mud.send_message(id, "is always a pain in the ass.")
 
                                 login[id]["process"] = "done"
 
@@ -414,10 +508,10 @@ while True:
                             login[id]["password"] = None
                             login[id]["process"] = None
 
-                        if check[2] != login[id]["password"]:
 
+                        if check[2] != login[id]["password"]:
                             mud.send_message(id, "Bad password.")
-                            mud.send_message(id, "Enter a new command: ('login' or 'new')")
+                            mud.send_message(id, "Are you a 'new' player or would you like to 'login'?")
 
                             login[id]["name"] = None
                             login[id]["password"] = None
@@ -619,8 +713,9 @@ while True:
 
                     # populate players with race and class info
 
-                    print("original player values")
-                    print(players[id])
+                    #print serverside a new player was added
+                    print("New Player Added to server")
+                    print(players[id]["name"])
 
                     pr = players[id]["race"]
                     pj = players[id]["job"]
@@ -634,8 +729,8 @@ while True:
                                 else:
                                     players[id][stat] = int(attribs)
 
-                    print("new player ids")
-                    print(players[id])
+                    print("new player id for")
+                    print(players[id]["name"])
                     players[id]["maxhp"] = players[id]["hp"]
                     players[id]["maxmp"] = players[id]["mp"]
                     players[id]["pvp"] = "no"
@@ -667,30 +762,30 @@ while True:
                     mud.send_message(id, rooms[players[id]["room"]]["description"])
 
 
-        # Dragonkeeper
-        # Please leave appropriate comments for this function
-        # so it is readable as time passes. Add spacing
-        # so it flows like rest of file.
+
+        # This section initilizes a database
+        # for storing players allowing
+        # login function to load
+        # from the database
 
         # save command
         elif players[id]["waitingsave"] is 1:
             if players[id]["password"] is None:
                 players[id]["password"] = command
 
-            # Dragonkeeper
-            # I dont wanna write these comments since its your work
+            # outputs userlist serverside
 
             userlist = database.get_name(userdata, players[id]["name"])
             print(userlist)
 
             if not userlist:
 
-                # Dragonkeeper
-                # ...or this
+                # function for when a userlist does not exists
+
                 mud.send_message(id, "Creating new save")
                 database.save_name(userdata, players[id]["name"], players[id]["room"], players[id]["password"], players[id]["email"], players[id]["user"], players[id]["race"], players[id]["job"], players[id]["coin"])
 
-                # i think issue is here somehow
+                # save function
 
                 for user in database.get_name(userdata, players[id]["name"]):
 
@@ -698,12 +793,17 @@ while True:
                     # need to define user
 
                     if user[0] is players[id]["name"]:
+
                         mud.send_message(id, "New Save Created")
+
             else:
+
                 for user in userlist:
                      if user[0] == players[id]["name"]:
+
                          mud.send_message(id, "found current user")
                          if players[id]["password"] == user[2]:
+
                              mud.send_message(id, "password match")
 
 
@@ -797,13 +897,34 @@ while True:
                                  + "e.g 'exam chair'")
 
         # 'system' command
-
+        # outputs a message to all users in game
+        # useful during server maintenace to warn players to save.
         elif command == "system":
 
             for pid, pl in players.items():
 
                 mud.send_message(pid, "{}: SYSTEM MESSAGE!!: {}".format(
                                                                 players[id]["name"], params))
+        # 'tell' command
+
+        elif command == "tell":
+
+            st = params.lower()
+            mud.send_message(id, "You tell {}: {}".format(st, params))
+            # go through every player in the game
+
+            for pid, pl in players.items():
+
+                # if name matches
+
+                if st == players[pid]["name"]:
+
+                    mud.send_message(pid, "{} whispers: {}".format(players[id]["name"], params))
+
+
+                if st != players[pid]["name"]:
+
+                    mud.send_message(id, "That use cannot be found...")
 
         # 'say' command
 
@@ -811,11 +932,12 @@ while True:
 
             # go through every player in the game
 
+
             for pid, pl in players.items():
 
                 # if they're in the same room as the player
 
-                if players[pid]["room"] == players[id]["room"]:
+                if players[pid]["name"] == players[id]["room"]:
 
                     # send them a message telling them what the player said
 
@@ -833,7 +955,17 @@ while True:
 
             # send the player back the description of their current room
 
+            #mud.send_message(id, rm["description"])
+            mud.send_message(id, "***************************************************************")
+            mud.send_message(id, rm["name"])
+            mud.send_message(id, "***************************************************************")
             mud.send_message(id, rm["description"])
+            mud.send_message(id, "***************************************************************")
+            mud.send_message(id, "**** HP: {} **** MP: {} **** NEXT: {} **** PVP: {} ****".format(players[id]["hp"],players[id]["mp"],players[id]["next"],players[id]["pvp"]))
+            mud.send_message(id, "***************************************************************")
+            mud.send_message(id, "Exits are: {}".format(", ".join(rm["exits"])))
+            mud.send_message(id, "***************************************************************")
+
 
             # list of players in room
 
@@ -857,9 +989,7 @@ while True:
 
             ### send player a message containing the list of players in the room
 
-            mud.send_message(id, "Players here: {}".format(
-
-                                                    ", ".join(playershere)))
+            mud.send_message(id, "Players here: {}".format(", ".join(playershere)))
 
 
             # send player a message containing the list of creatures in the room
@@ -873,6 +1003,8 @@ while True:
             #           .cupdate
             #           .ccorpse
             #           .cspawn
+            # Thanks!
+
             cr = rm["creaturecheck"]
 
             #for cd in creature.get_description(userdata, cr):
@@ -886,12 +1018,12 @@ while True:
 
             # send player a message containing the list of exits from this room
 
-            mud.send_message(id, "Exits are: {}".format(
+            #mud.send_message(id, "Exits are: {}".format(", ".join(rm["exits"])))
 
-                                                    ", ".join(rm["exits"])))
         # 'exam' command
 
         elif command == "exam":
+
             # store the object name
 
             oj = params.lower()
@@ -987,11 +1119,18 @@ while True:
                 # possible place for description after moving
                 rm = rooms[players[id]["room"]]
 
+                mud.send_message(id, "***************************************************************")
+                mud.send_message(id, rm["name"])
+                mud.send_message(id, "***************************************************************")
                 mud.send_message(id, rm["description"])
+                mud.send_message(id, "***************************************************************")
+                mud.send_message(id, "**** HP: {} **** MP: {} **** NEXT: {} **** PVP: {} ****".format(players[id]["hp"],players[id]["mp"],players[id]["next"],players[id]["pvp"]))
+                mud.send_message(id, "***************************************************************")
+                mud.send_message(id, "Exits are: {}".format(", ".join(rm["exits"])))
+                mud.send_message(id, "***************************************************************")
 
 
                 rm = rooms[players[id]["room"]]
-
                 # go through all the players in the game
 
                 for pid, pl in players.items():
@@ -1013,11 +1152,6 @@ while True:
 
                                                       players[id]["name"], ex))
 
-                # send the player a message telling them where they are now
-
-                mud.send_message(id, "You arrive at '{}'".format(
-
-                                                          players[id]["room"]))
 
             # the specified exit wasn't found in the current room
 
@@ -1035,6 +1169,6 @@ while True:
 
             # send back an 'unknown command' message
 
-                mud.send_message(id, "Unknown command '{}'".format(command))
+                mud.send_message(id, "This is not a valid command '{}', silly dumb dumb.".format(command))
 
 
