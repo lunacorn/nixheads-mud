@@ -267,8 +267,11 @@ for cid in credb.keys():
             corp = value
 ############ loads every creature into class
     Creatures(cid, name, room, desc, clvl, cstr, cdmg, cdef, clfe, life, moves, drops, cspc, csnm, ctmr, corp)
-          #### dumps to database
-    creaturedb.cload(creaturedata, Creatures.creatures[cid].name, Creatures.creatures[cid].room, Creatures.creatures[cid].desc, Creatures.creatures[cid].clvl, Creatures.creatures[cid].cstr, Creatures.creatures[cid].cdmg, Creatures.creatures[cid].cdef, Creatures.creatures[cid].clfe, Creatures.creatures[cid].life, Creatures.creatures[cid].moves, Creatures.creatures[cid].drops, Creatures.creatures[cid].cspc, Creatures.creatures[cid].csnm, Creatures.creatures[cid].ctmr, Creatures.creatures[cid].corp)
+          #### dumps to database after checking if its not there
+    result = creaturedb.cspawn(creaturedata, name)
+    if not result:
+        print("added "+name+" to db")
+        creaturedb.cload(creaturedata, Creatures.creatures[cid].name, Creatures.creatures[cid].room, Creatures.creatures[cid].desc, Creatures.creatures[cid].clvl, Creatures.creatures[cid].cstr, Creatures.creatures[cid].cdmg, Creatures.creatures[cid].cdef, Creatures.creatures[cid].clfe, Creatures.creatures[cid].life, Creatures.creatures[cid].moves, Creatures.creatures[cid].drops, Creatures.creatures[cid].cspc, Creatures.creatures[cid].csnm, Creatures.creatures[cid].ctmr, Creatures.creatures[cid].corp)
 
 
 while True:
@@ -480,6 +483,10 @@ while True:
             print(Creatures.creatures['spider'].ctmr)
             print(Creatures.creatures['spider'].room)
             print(Creatures.creatures['spider'].corp)
+            ##checking if result from db prints
+            for result in creaturedb.cspawn(creaturedata, Creatures.creatures['spider'].name):
+                print(result[0])
+                print(result)
 
 
             if login[id]["name"] is None:
