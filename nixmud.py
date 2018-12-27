@@ -533,9 +533,11 @@ while True:
 
                 if setups[id]["match"] == "yes":
 
-                    mud.send_message(id, "Now lets take a second to pick a race.\n'elvari' hail from Kelfram, they are very good with magic.\nThey tend to be tall thing characters.\n'humani' are descendents of the children of earth.\nThey are balanced in both strengths and weaknesses\n'dragani' are hybrid dragonic humanoids from the Mistlands.\n  They have wings to fly short distances and can see in the dark.\n'krei' are an ancient mystical race of catlike humanoids from The Villa")
-
-                    mud.send_message(id, "of Neff.  They are ferocious and agile.")
+                    mud.send_message(id, "Here's a list of races:")
+                    mud.send_message(id, "elavari: {}".format("".join(races["elvari"]["description"])))
+                    mud.send_message(id, "humani: {}".format("".join(races["humani"]["description"])))
+                    mud.send_message(id, "dragani: {}".format("".join(races["dragani"]["description"])))
+                    mud.send_message(id, "krei: {}".format("".join(races["krei"]["description"])))
 
                 if setups[id]["setup"] == "pickrace":
 
@@ -568,11 +570,16 @@ while True:
 
                 if setups[id]["setup"] == "pickclass":
 
-                    mud.send_message(id, "Put class info here")
+                    mud.send_message(id, "Jobs you would hope to see:")
 
             if setups[id]["setup"] == "pickclass":
 
-               mud.send_message(id, "warrior, blackmage, whitemage, thief.\n#write up descriptions.\nFor now pick one:")
+                mud.send_message(id, "warrior: {}".format("".join(startjobs["warrior"]["description"])))
+                mud.send_message(id, "blackmage: {}".format("".join(startjobs["blackmage"]["description"])))
+                mud.send_message(id, "whitemage: {}".format("".join(startjobs["whitemage"]["description"])))
+                mud.send_message(id, "thief: {}".format("".join(startjobs["thief"]["description"])))
+                mud.send_message(id, "What job you gonna start with?")
+
             # Now we have input for our choice of class
 
             if setups[id]["pickclass"] != None:
@@ -609,6 +616,42 @@ while True:
                     players[id]["user"] = "normal"
                     players[id]["room"] = "Dungeon1"
                     setups[id]["setup"] = None
+
+                    # populate players with race and class info
+
+                    print("original player values")
+                    print(players[id])
+
+                    pr = players[id]["race"]
+                    pj = players[id]["job"]
+                    for stat in races[pr]:
+                        attribs = json.dumps(races[pr][stat])
+                        if stat != "description":
+                            for jobs in startjobs[pj]:
+                                if stat == jobs:
+                                    value = json.dumps(startjobs[pj][stat])
+                                    players[id][stat] = int(attribs) + int(value)
+                                else:
+                                    players[id][stat] = int(attribs)
+
+                    print("new player ids")
+                    print(players[id])
+                    players[id]["maxhp"] = players[id]["hp"]
+                    players[id]["maxmp"] = players[id]["mp"]
+                    players[id]["pvp"] = "no"
+                    players[id]["tp"] = 0
+                    players[id]["exp"] = 0
+                    players[id]["level"] = 0
+                    players[id]["next"] = 3000
+                    players[id]["ujob"] = {
+                                            "warrior",
+                                            "blackmage",
+                                            "whitemage",
+                                            "thief"
+                                         }
+
+
+                    # acknowladge the foolish user.
 
                     mud.send_message(id, "Thank you. Creation successful.")
 
@@ -704,55 +747,30 @@ while True:
         elif command == "sheet":
             # very basic character sheet
             mud.send_message(id, "::Basic Stats::")
-
             mud.send_message(id, "Name: {}".format(players[id]["name"]))
-
             mud.send_message(id, "Race: {}".format(players[id]["race"]))
-
-            mud.send_message(id, "PvP Status: ")
-
+            mud.send_message(id, "PvP Status: {}".format(players[id]["pvp"]))
             mud.send_message(id, "Coin: {}".format(players[id]["coin"]))
-
-            mud.send_message(id, "Level:")
-
-            mud.send_message(id, "Exp/Next:")
-
-            mud.send_message(id, "HP/Max: ")
-
-            mud.send_message(id, "Mp/Max: ")
-
-            mud.send_message(id, "Tech Points: ")
-
+            mud.send_message(id, "Level: {}".format(players[id]["level"]))
+            mud.send_message(id, "Exp/Next: "+ str(players[id]["exp"]) +"/" + str(players[id]["next"]))
+            mud.send_message(id, "HP/Max: {}/{}".format(players[id]["hp"], players[id]["maxhp"]))
+            mud.send_message(id, "Mp/Max: {}/{}".format(players[id]["mp"], players[id]["maxmp"]))
+            mud.send_message(id, "Tech Points: {}".format(players[id]["tp"]))
             mud.send_message(id, "::Character Stats::")
-
-            mud.send_message(id, "Strength: ")
-
-            mud.send_message(id, "Dexterity: ")
-
-            mud.send_message(id, "Vitality: ")
-
-            mud.send_message(id, "Intelligence: ")
-
-            mud.send_message(id, "Mind: ")
-
-            mud.send_message(id, "Charisma: ")
-
-            mud.send_message(id, "Crit. Modifer: ")
-
+            mud.send_message(id, "Strength: {}".format(players[id]["str"]))
+            mud.send_message(id, "Dexterity: {}".format(players[id]["dex"]))
+            mud.send_message(id, "Vitality: {}".format(players[id]["vit"]))
+            mud.send_message(id, "Intelligence: {}".format(players[id]["int"]))
+            mud.send_message(id, "Mind: {}".format(players[id]["mnd"]))
+            mud.send_message(id, "Charisma: {}".format(players[id]["cha"]))
+            mud.send_message(id, "Crit. Modifer: {}".format(players[id]["crit"]))
             mud.send_message(id, "::Spells::")
-
             mud.send_message(id, " ")
-
             mud.send_message(id, "::Skills::")
-
             mud.send_message(id, " ")
-
             mud.send_message(id, "::User Rank:::::::::Current Job::")
-
-            mud.send_message(id, "               ::  {}".format(players[id]["job"]))
-
+            mud.send_message(id, ":: {}".format(players[id]["user"]) + "      ::  {}".format(players[id]["job"]))
             mud.send_message(id, "::Unlocked Jobs::")
-
             mud.send_message(id, " ")
 
         # help file command

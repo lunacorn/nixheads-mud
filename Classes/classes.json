@@ -2,15 +2,16 @@
 
         "warrior": {
 
-            "description": "warrior info here",
-            "hpmod": 10,
-            "mpmod": -8,
-            "strmod": 7,
-            "dexmod": 2,
-            "vitmod": 6,
-            "intmod": -4,
-            "mndmod": -3,
-            "critmod": 1,
+            "description": "Tank Job? If you want. You can provoke enemies or just pulverize 'em.'",            
+            "hp": 10,
+            "mp": -8,
+            "str": 7,
+            "dex": 2,
+            "vit": 6,
+            "int": -4,
+            "mnd": -3,
+            "cha": -3,
+            "crit": 1,
             "Spells": {
                 "1": "none"
             },
@@ -24,15 +25,16 @@
 
         "blackmage": {
 
-            "description": "blackmage info here",
-            "hpmod": 2,
-            "mpmod": 7,
-            "strmod": -1,
-            "dexmod": 3,
-            "vitmod": 0,
-            "intmod": 5,
-            "mndmod": 1,
-            "critmod": 1,
+            "description": "Boomcannon! Nuke your enemies quick u squishie!!",            
+            "hp": 2,
+            "mp": 7,
+            "str": -1,
+            "dex": 3,
+            "vit": 0,
+            "int": 5,
+            "mnd": 1,
+            "cha": 0,
+            "crit": 1,
             "spells": {
                 "1":{
                     "fire": 10,
@@ -47,15 +49,16 @@
 
         "whitemage": {
 
-            "description": "whitemage info here",
-            "hpmod": -2,
-            "mpmod":  10,
-            "strmod": 1,
-            "dexmod": 2,
-            "vitmod": 0,
-            "intmod": 4,
-            "mndmod": 5,
-            "critmod": 0,
+            "description": "A strong healer, hard job to learn but neccessary for groups",            
+            "hp": -2,
+            "mp":  10,
+            "str": 1,
+            "dex": 2,
+            "vit": 0,
+            "int": 4,
+            "mnd": 5,
+            "cha": 2,
+            "crit": 0,
             "spells": {
                 "1":{
                     "cure": 5
@@ -71,15 +74,16 @@
 
         "thief": {
 
-            "description": "thief info here",
-            "hpmod": 8,
-            "mpmod": -4,
-            "strmod": 3,
-            "dexmod": 7,
-            "vitmod": 4,
-            "intmod": 0,
-            "mndmod": -3,
-            "critmod": 2, 
+            "description": "Pickpocket and rogue. a great first job for new players",            
+            "hp": 8,
+            "mp": -4,
+            "str": 3,
+            "dex": 7,
+            "vit": 4,
+            "int": 0,
+            "mnd": -3,
+            "cha": 4, 
+            "crit": 2, 
             "spells": {
                 "1": "none",
             "skills": {
