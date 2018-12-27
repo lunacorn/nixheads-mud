@@ -2,7 +2,7 @@
 
         "elvari": {
 
-            "description": "elvari info here",
+            "description": "Good with magic, but super squish. Heal and nuke, but be gentle.",
             "hp": 17,
             "mp": 15,
             "str": 7,
@@ -16,7 +16,7 @@
 
         "humani": {
 
-            "description": "humani info here",
+            "description": "Fairly balanced stats... why? cause humanlike beings are just average.",
             "hp": 20,
             "mp": 7,
             "str": 11,
@@ -31,7 +31,7 @@
 
         "dragani": {
 
-            "description": "dragani info here",
+            "description": "Dragonkin peeps so hell yea fandom, minus magical ability you might expect.",
             "hp": 26,
             "mp": 10,
             "str": 18,
@@ -46,14 +46,14 @@
 
         "krei": {
 
-            "description": "krei info here",
+            "description": "Agile and quick like a cat race should be. However, you are kinda dumb.",
             "hp": 15,
             "mp": 6,
             "str": 8,
             "dex": 18,
             "vit": 16,
             "int": 5,
-            "mnt": 14,
+            "mnd": 14,
             "cha": 11,
             "crit": 2
         }
