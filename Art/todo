@@ -1,25 +1,48 @@
 * make objects in room work
 -----------------------------
 
---give creatures a database and adjust code in [current project]
+--give creatures a database and adjust code in [almost done]
 **map.json files
 **nixmud.py in look command and fight command
 
 --Ncurses Interface to:  for id, command, params in mud.get_commands():
 **Line 145 : simplemud.py
 
---Write character sheet
+-- fix spelling of they from there in check contraptions
+
+-- add exit through portal in town to dungeon [ill do this]
+
+-- fix spelling of elvari in race choice within new section
+
+--Write character sheet [progress]
 
 --Save players [done]
 
---add to newcharacter section [current project]
+--add to newcharacter section [done for now]
 
 --set up system messages [done]
+-- examine system message to help fix tells.  system message allows spaces
 
---update db.py with new player info when finished.
+-- do not allow same player to login twice at same time
+
+-- add an id option to character shee so other players can exam you and see it
+
+-- do not let you send tells to yourself.
+
+--update db.py with new player info when finished. [done]
 
 --set up a way to become GM
 
---set up a job change system
+--set up a job change system [needs to check against ujobs]
+
+--login bad username causes a one command loop.  [done]
+
+--populate stats upon job change. [want function in process to do this thus reduce code]
+
+--try to get ujobs working against corefunctions.json
+
+--add races to corefunctions.json [done]
 
 upon update the system expects a room and a name for a character.  need to be able to always start wit those in hand.
+
+try and make choices using json files
