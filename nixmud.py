@@ -529,12 +529,22 @@ while True:
                                 players[id]["next"] = 3000
                                 # idea for future >> if ["ujob"][x] == 1 send message x
                                 players[id]["ujob"] = {
-                                        "warrior": 1,
-                                        "blackmage": 1,
-                                        "whitemage":1,
-                                        "thief": 1,
-                                        "samurai": 0
-                                                     }
+                                        "warrior",
+                                        "whitemage",
+                                        "thief",
+                                        "indecisive",
+                                        "bard",
+                                        "blackmage",
+                                        "samurai",
+                                        "ninja",
+                                        "bartender",
+                                        "mog",
+                                        "linecook",
+                                        "inventor",
+                                        "landscaper",
+                                        "druid",
+                                        "witch"
+                                        }
                                 players[id]["waitingsave"] = 0
                                 mud.send_message(id, "Successfully loaded: {}.\n".format(players[id]["name"]))
                                 # print serverside a player logged in
@@ -673,10 +683,21 @@ while True:
                 players[id]["level"] = 0
                 players[id]["next"] = 3000
                 players[id]["ujob"] = {
-                        "warrior":1,
-                        "blackmage":1,
-                        "whitemage":1,
-                        "thief":1
+                        "warrior": "X",
+                        "whitemage": "X",
+                        "thief": "X",
+                        "indecisive": " ",
+                        "bard": " ",
+                        "blackmage": "X",
+                        "samurai": " ",
+                        "ninja": " ",
+                        "bartender": " ",
+                        "mog": " ",
+                        "linecook": " ",
+                        "inventor": " ",
+                        "landscaper": " ",
+                        "druid": " ",
+                        "witch": " "
                         }
                 mud.send_message(id, "Thank you. Creation successful.")
 
@@ -726,33 +747,57 @@ while True:
 
         # character sheet
         elif command == "sheet":
-            # very basic character sheet
-            mud.send_message(id, "::Basic Stats::")
-            mud.send_message(id, "Name: {}".format(players[id]["name"]))
-            mud.send_message(id, "Race: {}".format(players[id]["race"]))
-            mud.send_message(id, "PvP Status: {}".format(players[id]["pvp"]))
-            mud.send_message(id, "Coin: {}".format(players[id]["coin"]))
-            mud.send_message(id, "Level: {}".format(players[id]["level"]))
-            mud.send_message(id, "Exp/Next: "+ str(players[id]["exp"]) +"/" + str(players[id]["next"]))
-            mud.send_message(id, "HP/Max: {}/{}".format(players[id]["hp"], players[id]["maxhp"]))
-            mud.send_message(id, "Mp/Max: {}/{}".format(players[id]["mp"], players[id]["maxmp"]))
-            mud.send_message(id, "Tech Points: {}".format(players[id]["tp"]))
-            mud.send_message(id, "::Character Stats::")
-            mud.send_message(id, "Strength: {}".format(players[id]["str"]))
-            mud.send_message(id, "Dexterity: {}".format(players[id]["dex"]))
-            mud.send_message(id, "Vitality: {}".format(players[id]["vit"]))
-            mud.send_message(id, "Intelligence: {}".format(players[id]["int"]))
-            mud.send_message(id, "Mind: {}".format(players[id]["mnd"]))
-            mud.send_message(id, "Charisma: {}".format(players[id]["cha"]))
-            mud.send_message(id, "Crit. Modifer: {}".format(players[id]["crit"]))
-            mud.send_message(id, "::Spells::")
-            mud.send_message(id, " ")
-            mud.send_message(id, "::Skills::")
-            mud.send_message(id, " ")
-            mud.send_message(id, "::User Rank:::::::::Current Job::")
-            mud.send_message(id, ":: {}".format(players[id]["user"]) + "      ::  {}".format(players[id]["job"]))
-            mud.send_message(id, "::Unlocked Jobs::")
-            mud.send_message(id, " ")
+
+            # add unlocked jobs (ujobs) spells and skills
+
+            mud.send_message(id, "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
+            mud.send_message(id, "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
+            mud.send_message(id, "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
+            mud.send_message(id, ":::::::::::::::::::::::CHARACTER SHEET::::::::::::::::::::::::")
+            mud.send_message(id, "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
+            mud.send_message(id, "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
+            mud.send_message(id, ":::Name:{}::::::::Race:{}   :::::::Level:{}   :::::".format(players[id]["name"],players[id]["race"],players[id]["level"]))
+            mud.send_message(id, "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
+            mud.send_message(id, ":::HP:{}   ::::MAX HP:{}   :::::MP:{}   :::::MAX MP:{}   ::::::".format(players[id]["hp"],players[id]["maxhp"],players[id]["mp"],players[id]["maxmp"]))
+            mud.send_message(id, "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
+            mud.send_message(id, "::::::::::::::::::::: Character Stats ::::::::::::::::::::::::")
+            mud.send_message(id, "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
+            mud.send_message(id, "::STR:{} ::DEX:{} ::VIT:{} ::INT:{} ::::MND:{} ::CHA:{} ::::::::".format(players[id]["str"],players[id]["dex"],players[id]["vit"],players[id]["int"],players[id]["mnd"],players[id]["cha"]))
+            mud.send_message(id, "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
+            mud.send_message(id, "::Crit. Modifer::: {} :::Coin::: {} :::::TNL::: {} :::::::".format(players[id]["crit"],players[id]["coin"],(players[id]["next"] - players[id]["exp"])))
+            mud.send_message(id, "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
+            mud.send_message(id, "::Spells::::::::::::::::::::::::::::::::::::::::::::::::::::::")
+            mud.send_message(id, "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
+            mud.send_message(id, "::                                                          ::")
+            mud.send_message(id, "::                                                          ::")
+            mud.send_message(id, "::                                                          ::")
+            mud.send_message(id, "::                                                          ::")
+            mud.send_message(id, "::                                                          ::")
+            mud.send_message(id, "::                                                          ::")
+            mud.send_message(id, "::                                                          ::")
+            mud.send_message(id, "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
+            mud.send_message(id, "::Skills::::::::::::::::::::::::::::::::::::::::::::::::::::::")
+            mud.send_message(id, "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
+            mud.send_message(id, "::                                                          ::")
+            mud.send_message(id, "::                                                          ::")
+            mud.send_message(id, "::                                                          ::")
+            mud.send_message(id, "::                                                          ::")
+            mud.send_message(id, "::                                                          ::")
+            mud.send_message(id, "::                                                          ::")
+            mud.send_message(id, "::                                                          ::")
+            mud.send_message(id, "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
+            mud.send_message(id, "::User Rank:::::::::Current Job::::::PVP Status:::::::TP::::::")
+            mud.send_message(id, ":: {}".format(players[id]["user"]) + "     ::::::::  {} :::::::  {} :::::::: {} :::::".format(players[id]["job"],players[id]["pvp"],players[id]["tp"]))
+            mud.send_message(id, "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
+            mud.send_message(id, "::Unlocked Jobs:::::::::::::::::::::::::::::::::::::::::::::::")
+            mud.send_message(id, ":::warrior:{}::whitemage:{}::thief:{}::indecisive:{}::bard:{}::::::".format(players[id]["ujob"]["warrior"],players[id]["ujob"]["whitemage"],players[id]["ujob"]["thief"],players[id]["ujob"]["indecisive"],players[id]["ujob"]["bard"]))
+            mud.send_message(id, "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
+            mud.send_message(id, ":::blackmage:{}::samurai:{}::ninja:{}::bartender:{}::mog:{}::::::::".format(players[id]["ujob"]["blackmage"],players[id]["ujob"]["samurai"],players[id]["ujob"]["ninja"],players[id]["ujob"]["bartender"],players[id]["ujob"]["mog"]))
+            mud.send_message(id, "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
+            mud.send_message(id, ":::linecook:{}::inventor:{}::landscaper:{}::druid:{}::witch:{}:::::".format(players[id]["ujob"]["linecook"],players[id]["ujob"]["inventor"],players[id]["ujob"]["landscaper"],players[id]["ujob"]["druid"],players[id]["ujob"]["witch"]))
+            mud.send_message(id, "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
+            mud.send_message(id, "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
+            mud.send_message(id, "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
 
         # help file command
         # rewrite all this
