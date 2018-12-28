@@ -17,8 +17,44 @@
         "corp": "no"
     },
 
-    "rat": {
+    "monkey": {
         "room": "Dungeon1",
+        "name": "monkey",
+        "desc": "A spider sits quietly in her web.",
+        "clvl": 1,
+        "cstr": 3,
+        "cdmg": 5,
+        "cdef": 6,
+        "clfe": 15,
+        "life": 15,
+        "moves": "no",
+        "drops": "venom sack",
+        "cspc": "bind",
+        "csnm": "web",
+        "ctmr": 5,
+        "corp": "no"
+    },
+
+    "pig": {
+        "room": "Dungeon1",
+        "name": "pig",
+        "desc": "A spider sits quietly in her web.",
+        "clvl": 1,
+        "cstr": 3,
+        "cdmg": 5,
+        "cdef": 6,
+        "clfe": 15,
+        "life": 15,
+        "moves": "no",
+        "drops": "venom sack",
+        "cspc": "bind",
+        "csnm": "web",
+        "ctmr": 5,
+        "corp": "no"
+    },
+
+    "rat": {
+        "room": "Dungeon2",
         "name": "rat",
         "desc": "a rat scuttles around the room.",
         "clvl": 1,

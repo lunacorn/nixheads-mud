@@ -279,7 +279,12 @@ for cid in credb.keys():
     if not result:
         print("added "+name+" to db")
         creaturedb.cload(creaturedata, Creatures.creatures[cid].name, Creatures.creatures[cid].room, Creatures.creatures[cid].desc, Creatures.creatures[cid].clvl, Creatures.creatures[cid].cstr, Creatures.creatures[cid].cdmg, Creatures.creatures[cid].cdef, Creatures.creatures[cid].clfe, Creatures.creatures[cid].life, Creatures.creatures[cid].moves, Creatures.creatures[cid].drops, Creatures.creatures[cid].cspc, Creatures.creatures[cid].csnm, Creatures.creatures[cid].ctmr, Creatures.creatures[cid].corp)
+########## test section
 
+print(creaturedb.croom(creaturedata, "Dungeon1"))
+
+
+##########
 
 # main game loop. We loop forever (i.e. until the program is terminated)
 while True:
