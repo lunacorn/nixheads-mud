@@ -5,9 +5,6 @@
 
             "name": "Oasis",
             "description": "This is a lovely oasis.  Bright sunny sky, cool breeze, good\nplace to lay down and take a 'nap'.  I bet it would pay off.",
-            "creaturecheck": {
-                "seagull": "what a beautiful bird."
-            },
 
             "exits": {
 

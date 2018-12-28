@@ -155,6 +155,9 @@ class Creatures(object):
         self.corp = corp
         Creatures.creatures[name] = self
 
+# import core values
+with open("corefunctions.json") as funcs:
+    fun = json.load(funcs)
 # import map files
 
 with open("Maps/starter.json") as room:
@@ -220,6 +223,9 @@ class creatures(object):
         self.room = room
         self.desc = desc
 
+# initilize dictionaries
+
+playerprocess = {}
 login = {}
 setups = {}
 players = {}
@@ -303,6 +309,10 @@ while True:
         # The attributes for login credentials
         # just a character name and password
         # and where it is in its process
+        playerprocess[id] = {
+                "process": None
+
+                }
 
         login[id] = {
 
@@ -400,7 +410,7 @@ while True:
 
                                                         players[id]["name"]))
 
-        # remove the player's entry in the player dictionary
+    # remove the player's entry in the player dictionary
 
         del(players[id])
 
@@ -417,8 +427,32 @@ while True:
         # currently making use of 'reset'
         # command until a fix is made
 
+        if playerprocess[id]["process"] == "sendtell":
+             for pid, pl in players.items():
+
+                 # if the names match as the player
+
+                 if players[pid]["name"] == st:
+
+                    mud.send_message(pid, "{} whispers: {}".format(players[id]["name"],command))
+                    mud.send_message(id, "sent {},: {}".format(st,command))
+                    command = "blank"
+
+        if playerprocess[id]["process"] == "jobchange":
+            command = "setjob"
+
+        if playerprocess[id]["process"] == "pickjob":
+            if command in fun["corevalues"]["jobs"]:
+                players[id]["job"] = command
+                mud.send_message(id, "Job Changed to {}".format(command))
+            else:
+                mud.send_message(id, "Thats not a valid job.")
+        playerprocess[id]["process"] = None
+
         if login[id]["process"] != None:
 
+            if command == 'reset':
+                login[id]["process"] = None,
             if login[id]["process"] == "name":
                 login[id]["name"] = command
                 command = "login"
@@ -478,6 +512,16 @@ while True:
         # soon to come
         # GM commands
 
+        elif command == "setjob":
+
+            for x in fun["corevalues"]["jobs"]:
+
+                mud.send_message(id, "{}: {}".format(fun["corevalues"]["jobs"][x],startjobs[x]["description"]))
+
+            mud.send_message(id, "What job you gonna start with?")
+            playerprocess[id]["process"] = "pickjob"
+
+
         # login command
         # this function is faulty
         # so it is backed up
@@ -515,6 +559,11 @@ while True:
                     if not userlist: # if cant find a user save list will come back blank
 
                         mud.send_message(id, "Bad username.")
+                    # i have the ability to type reset now
+                    # which means i built in a work around.
+                    # for the issue.  however its easier to
+                    # just have it run it.
+
                         login[id]["process"] = "reset"
 
                     for check in userlist:
@@ -922,7 +971,15 @@ while True:
             mud.send_message(id, "::Unlocked Jobs::")
             mud.send_message(id, " ")
 
+        # test of player idea if options
+
+        elif command == "test":
+            if playerprocess[id]["process"] == 'new':
+                print("it worked")
+
+
         # help file command
+
 
         elif command == "help":
 
@@ -954,13 +1011,15 @@ while True:
 
                 mud.send_message(pid, "{}: SYSTEM MESSAGE!!: {}".format(
                                                                 players[id]["name"], params))
+
         # 'tell' command
 
         elif command == "tell":
 
-            st = params.lower()
-            mud.send_message(id, "You tell {}: {}".format(st, params))
+
             # go through every player in the game
+
+            st = params
 
             for pid, pl in players.items():
 
@@ -968,12 +1027,13 @@ while True:
 
                 if st == players[pid]["name"]:
 
-                    mud.send_message(pid, "{} whispers: {}".format(players[id]["name"], params))
+                    mud.send_message(id, "what would you like to tell them?")
+                    mud.send_message(id, "currently cant use spaces so use _ instead")
+                    playerprocess[id]["process"] = "sendtell"
 
-
-                if st != players[pid]["name"]:
-
-                    mud.send_message(id, "That use cannot be found...")
+                    # add a way for spaces
+                    # also add a way to check if player is online without spitting back
+                    # all the players this function does not match untill you find it
 
         # 'say' command
 
@@ -986,7 +1046,7 @@ while True:
 
                 # if they're in the same room as the player
 
-                if players[pid]["name"] == players[id]["room"]:
+                if players[pid]["room"] == players[id]["room"]:
 
                     # send them a message telling them what the player said
 
@@ -1228,8 +1288,8 @@ while True:
 
         else:
 
-            # send back an 'unknown command' message
-
+            # send back an 'unknown command' imessage
+            if playerprocess[id]["process"] == None:
                 mud.send_message(id, "This is not a valid command '{}', silly dumb dumb.".format(command))
 
 
