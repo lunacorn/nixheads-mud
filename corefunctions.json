@@ -1,0 +1,10 @@
+{
+    "corevalues": {
+        "jobs": {
+            "warrior": "warrior",
+            "thief": "thief",
+            "blackmage": "blackmage",
+            "whitemage": "whitemage"
+        }
+    }
+}
