@@ -30,7 +30,7 @@
             "description": "Thank goodness this place seems abandoned.  There are strange\ncontraptions that most certainly where made to dismember\npeople scattered around the room.  You smell a faint but foul\nsmell coming from nearby.\nHow long has this place been abandoned?",
 
             "creaturecheck": {
-                "none":"none"
+                
             },
 
             "objects":{
@@ -52,7 +52,7 @@
             "description": "There are three glowing portals in this room. A white one with\nan image of a town, a grey one that resembles a swamp\nand a bright and windy one that seems to smell like a desert.\nSure...there are other exits..  but come on... portals.",
 
             "creaturecheck": {
-                "none": "none"
+               
             },
 
             "exits": {

@@ -129,6 +129,32 @@ import credb as creaturedb
 
 from mudserver import MudServer
 
+### create a class to map all the creatures into
+### saving space and effort adding in all creatures
+### automatically adding in new creatures added to json
+class Creatures(object):
+
+    creatures = {}
+
+    def __init__(self, cid, name, room, desc, clvl, cstr ,cdmg ,cdef ,clfe ,life ,moves ,drops ,cspc ,csnm , ctmr, corp):
+        self.cid = cid
+        self.name = name
+        self.room = room
+        self.desc = desc
+        self.clvl = clvl
+        self.cstr = cstr
+        self.cdmg = cdmg
+        self.cdef = cdef
+        self.clfe = clfe
+        self.life = life
+        self.moves = moves
+        self.drops = drops
+        self.cspc = cspc
+        self.csnm = csnm
+        self.ctmr = ctmr
+        self.corp = corp
+        Creatures.creatures[name] = self
+
 # import map files
 
 with open("Maps/starter.json") as room:
@@ -188,6 +214,12 @@ with open("Classes/classes.json") as joboptions:
 # players is the players found in game.  A player will not be seen
 # by anyone while in the setups group.
 
+class creatures(object):
+    def init(self, name, room, desc):
+        self.name = name
+        self.room = room
+        self.desc = desc
+
 login = {}
 setups = {}
 players = {}
@@ -199,6 +231,54 @@ mud = MudServer()
 ##connect to db for player saves
 userdata = database.connect()
 creaturedata = creaturedb.connect()
+
+########### this grabs from the json for creatures
+for cid in credb.keys():
+    for stat in credb[cid]:
+# pulls needed data as normal and removes any " " from results
+        value = str(json.dumps(credb[cid][stat])).replace('"', '')
+### quick ifs to check if values match what need and stores them to be imported after
+        if stat == "name":
+            name = value
+        if stat == "room":
+            room = value
+        if stat == "desc":
+            desc = value
+        if stat == "clvl":
+            clvl = value
+        if stat == "cstr":
+            cstr = value
+        if stat == "cdmg":
+            cdmg = value
+        if stat == "cdef":
+            cdef = value
+        if stat == "clfe":
+            clfe = value
+        if stat == "life":
+            life = value
+        if stat == "moves":
+            moves = value
+        if stat == "drops":
+            drops = value
+        if stat == "cspc":
+            cspc = value
+        if stat == "csnm":
+            csnm = value
+        if stat == "ctmr":
+            ctmr = value
+        if stat == "corp":
+            corp = value
+
+############ loads every creature into class
+    Creatures(cid, name, room, desc, clvl, cstr, cdmg, cdef, clfe, life, moves, drops, cspc, csnm, ctmr, corp)
+          #### dumps to database
+
+    # Dumps to database if creature is not already there
+    result = creaturedb.cspawn(creaturedata, name)
+    if not result:
+        print("added "+name+" to db")
+        creaturedb.cload(creaturedata, Creatures.creatures[cid].name, Creatures.creatures[cid].room, Creatures.creatures[cid].desc, Creatures.creatures[cid].clvl, Creatures.creatures[cid].cstr, Creatures.creatures[cid].cdmg, Creatures.creatures[cid].cdef, Creatures.creatures[cid].clfe, Creatures.creatures[cid].life, Creatures.creatures[cid].moves, Creatures.creatures[cid].drops, Creatures.creatures[cid].cspc, Creatures.creatures[cid].csnm, Creatures.creatures[cid].ctmr, Creatures.creatures[cid].corp)
+
 
 # main game loop. We loop forever (i.e. until the program is terminated)
 
@@ -356,6 +436,12 @@ while True:
         if setups[id]["setup"] != None:
             if setups[id]["setup"] == "name":
                 setups[id]["name"] = command
+                #checks for name in database
+                userlist = database.get_name(userdata, setups[id]["name"])
+                for user in userlist:
+                    if setups[id]["name"] == user[0]:
+                        mud.send_message(id, "That name is taken, Enter a new name:")
+                        setups[id]["name"] = None
             if setups[id]["setup"] == "email":
                 setups[id]["email"] = command
             if setups[id]["setup"] == "password":
@@ -447,9 +533,6 @@ while True:
 
                                 # populate players with race and class info
 
-                                print("original player values")
-                                print(players[id])
-
                                 pr = players[id]["race"]
                                 pj = players[id]["job"]
                                 for stat in races[pr]:
@@ -462,8 +545,6 @@ while True:
                                             else:
                                                 players[id][stat] = int(attribs)
 
-                                print("new player ids")
-                                print(players[id])
                                 players[id]["maxhp"] = players[id]["hp"]
                                 players[id]["maxmp"] = players[id]["mp"]
                                 players[id]["pvp"] = "no"
@@ -754,14 +835,21 @@ while True:
                     # though not via 'look' command
                     # i need to make them the same
 
+                    rm = rooms[players[id]["room"]]
                     mud.send_message(id, motd.read())
                     mud.send_message(id, "Welcome to the Nixheads-Mud, {}.\n".format(
 
                                                                 players[id]["name"]))
                     mud.send_message(id, "Type 'help' for a list of commands.")
-                    mud.send_message(id, rooms[players[id]["room"]]["description"])
-
-
+                    mud.send_message(id, "***************************************************************")
+                    mud.send_message(id, rm["name"])
+                    mud.send_message(id, "***************************************************************")
+                    mud.send_message(id, rm["description"])
+                    mud.send_message(id, "***************************************************************")
+                    mud.send_message(id, "**** HP: {} **** MP: {} **** NEXT: {} **** PVP: {} ****".format(players[id]["hp"],players[id]["mp"],players[id]["next"],players[id]["pvp"]))
+                    mud.send_message(id, "***************************************************************")
+                    mud.send_message(id, "Exits are: {}".format(", ".join(rm["exits"])))
+                    mud.send_message(id, "***************************************************************")
 
         # This section initilizes a database
         # for storing players allowing
@@ -769,14 +857,12 @@ while True:
         # from the database
 
         # save command
-        elif players[id]["waitingsave"] is 1:
-            if players[id]["password"] is None:
-                players[id]["password"] = command
+        elif command == 'save': #players[id]["waitingsave"] is 1:
 
-            # outputs userlist serverside
+
+            # checks database
 
             userlist = database.get_name(userdata, players[id]["name"])
-            print(userlist)
 
             if not userlist:
 
@@ -784,52 +870,15 @@ while True:
 
                 mud.send_message(id, "Creating new save")
                 database.save_name(userdata, players[id]["name"], players[id]["room"], players[id]["password"], players[id]["email"], players[id]["user"], players[id]["race"], players[id]["job"], players[id]["coin"])
-
-                # save function
-
-                for user in database.get_name(userdata, players[id]["name"]):
-
-                    # Dragonkeeper
-                    # need to define user
-
-                    if user[0] is players[id]["name"]:
-
-                        mud.send_message(id, "New Save Created")
+                print("Created a new save file for:")
+                print(players[id]["name"])
 
             else:
 
-                for user in userlist:
-                     if user[0] == players[id]["name"]:
-
-                         mud.send_message(id, "found current user")
-                         if players[id]["password"] == user[2]:
-
-                             mud.send_message(id, "password match")
-
-
-                             ## Debug Command
-                             ##print(players[id]["name"] + players[id]["room"] + players[id]["password"] + players[id]["email"] + players[id]["user"] + players[id]["race"] + players[id]["job"] + players[id]["coin"])
-
-                             database.update_name(userdata, players[id]["name"], players[id]["room"], players[id]["password"], players[id]["email"], players[id]["user"], players[id]["race"], players[id]["job"], players[id]["coin"])
-                             for users in database.get_name(userdata, players[id]["name"]):
-                                 if user[1] == players[id]["room"]:
-
-                                     mud.send_message(id, "Save Completed")
-                                 else:
-                                     mud.send_message(id, "Save Failed")
-                         else:
-                             mud.send_message(id, "Passwords do not match")
-            players[id]["waitingsave"] = 0
-
-        elif command == "save":
-            if players[id]["name"] is not None:
-                players[id]["waitingsave"] = 1
-                if players[id]["password"] is None:
-                    mud.send_message(id, "Type a password for " + players[id]["name"])
-                else:
-                    mud.send_message(id, "Saving...")
-            else:
-                mud.send_message(id, "Your name is invalid. please set a username")
+                database.update_name(userdata, players[id]["name"], players[id]["room"], players[id]["password"], players[id]["email"], players[id]["user"], players[id]["race"], players[id]["job"], players[id]["coin"])
+                mud.send_message(id, "Updated your file.")
+                print("Updated save file for:")
+                print(players[id]["name"])
 
         # emergency reset
 
@@ -945,6 +994,31 @@ while True:
 
                                                 players[id]["name"], params))
 
+        # 'shutdown' command
+        # shutdowns server
+        # make this a gm command later
+
+        elif command == 'shutdown':
+            print("Mud shutdown")
+            print("Reason: ", params)
+            for pid, pl in players.items():
+                mud.send_message(pid, "Saving your data because server is shutting down.")
+                userlist = database.get_name(userdata, players[id]["name"])
+                print(players[pid]["name"])
+                if not userlist:
+                    mud.send_message(pid, "Creating new save.")
+                    database.save_name(userdata, players[pid]["name"], players[pid]["room"], players[pid]["password"],        players[pid]["email"], players[pid]["user"], players[pid]["race"], players[pid]["job"], players[pid]["coin"])
+                    print("Saved")
+                else:
+
+                    for user in userlist:
+                        if user[0] == players[pid]["name"]:
+                                database.update_name(userdata, players[pid]["name"], players[pid]["room"], players[pid]["password"], players[pid]["email"], players[pid]["user"], players[pid]["race"], players[pid]["job"], players[pid]["coin"])
+                                print("saved")
+
+            mud.shutdown()
+
+
         # 'look' command
 
         elif command == "look":
@@ -994,31 +1068,17 @@ while True:
 
             # send player a message containing the list of creatures in the room
 
-            # check to see if any exist
             # Dragonkeeper:
-            # not sure how to build a database.  help out.
-            ## so i added the new database in
-            ## creaturedb.command( )
-            ## creaturedb.cload
-            #           .cupdate
-            #           .ccorpse
-            #           .cspawn
-            # Thanks!
+            # not sure how to get this info from the live database
+            # we cannot explicitly check for each individual monster
+            # whatever room we are in.  there will be thousands.
 
-            cr = rm["creaturecheck"]
+            for cid in credb.keys():
+                #for stat in credb[cid]:
+                if credb[cid]["room"] == players[id]["room"]:
+                    cx = credb[cid]["desc"]
+                    mud.send_message(id, "{}".format("".join(cx)))
 
-            #for cd in creature.get_description(userdata, cr):
-            # got it to pull out desc, need to create a db for all
-            # creatures so we can manipulate them individually
-            # as in above commented command
-
-            for cd in cr:
-                cx = credb[cd]["desc"]
-                mud.send_message(id, "{}".format("".join(cx)))
-
-            # send player a message containing the list of exits from this room
-
-            #mud.send_message(id, "Exits are: {}".format(", ".join(rm["exits"])))
 
         # 'exam' command
 
@@ -1052,19 +1112,20 @@ while True:
 
             # store the target
 
-            ck = params.lower()
+            #ck = params.lower()
 
             # store the player's current room
 
-            rm = rooms[players[id]["room"]]
+            #rm = rooms[players[id]["room"]]
 
             # check if target is the target in room
 
-            if ck in rm["creaturecheck"]:
+            mud.send_message(id, "not setup yet")
+            #if ck in rm["creaturecheck"]:
 
                 # insert combat code here and remove the test
 
-                mud.send_message(id, "You squish the " + rm["creaturecheck"][ck])
+                #mud.send_message(id, "You squish the " + rm["creaturecheck"][ck])
 
                 # set a timer to make the spider disapeer
 
@@ -1072,9 +1133,9 @@ while True:
 
             # Call the player stupid
 
-            else:
+            #else:
 
-                mud.send_message(id, "There is nothing like that to fight.")
+               # mud.send_message(id, "There is nothing like that to fight.")
 
 
         # 'go' command
