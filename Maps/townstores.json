@@ -1,0 +1,59 @@
+{
+
+        "FoodStore": {
+
+            "name": "Inside the Foodshop",
+
+            "description": "You entered the store\n This place is filled with food... you hear someone shout: hey fatty! looking for a cream cake?. but you arent discouraged on your mission for creamed cakey goodness",
+
+            "exits": {
+
+                "open": "FoodStorePath"
+
+            }
+
+        },
+
+        "WeaponStore": {
+
+            "name": "Inside the Weaponshop",
+
+            "description": "You entered the store of weapons.\n Youre wondering how you will handle these... you managed to cut yourself with a spoon the other day.",
+
+            "exits": {
+
+                "open": "WeaponStorePath"
+
+            }
+
+        },
+
+        "PotionStore": {
+
+            "name": "Inside the Potionshop",
+
+            "description": "Potion Store!\n Where any bottled liquid can be sold if you put a label on it\n you see the shop keeper in the back room, he zips up his pants and places a freshly filled bottle on the shelf before walking towards you",
+
+            "exits": {
+
+                "open": "PotionStorePath"
+
+            }
+
+        },
+
+        "ArmorStore": {
+
+            "name": "Inside the Armorshop",
+
+            "description": "You enter the armor store\n These items look dull and preowned, like everything else you have",
+
+            "exits": {
+
+                "open": "ArmorStorePath"
+
+            }
+
+        }
+}
+

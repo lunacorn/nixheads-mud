@@ -1,0 +1,38 @@
+{
+    "spider": {
+        "room": "Dungeon1",
+        "name": "spider",
+        "desc": "A spider sits quietly in her web.",
+        "clvl": 1,
+        "cstr": 3,
+        "cdmg": 5,
+        "cdef": 6,
+        "clfe": 15,
+        "life": 15,
+        "moves": "no",
+        "drops": "venom sack",
+        "cspc": "bind",
+        "csnm": "web",
+        "ctmr": 5,
+        "corp": "no"
+    },
+
+    "rat": {
+        "room": "Dungeon1",
+        "name": "rat",
+        "desc": "a rat scuttles around the room.",
+        "clvl": 1,
+        "cstr": 2,
+        "cdmg": 2,
+        "cdef": 3,
+        "clfe": 7,
+        "life": 7,
+        "moves": "yes",
+        "drops": "rat tail",
+        "cspc": "none",
+        "csnm": "none",
+        "ctmr": 3,
+        "corp": "no"
+    }
+}
+
