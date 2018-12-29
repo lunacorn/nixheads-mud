@@ -976,4 +976,3 @@ while True:
         elif commandflag == 0:
             #if command == '':
             mud.send_message(id, "This is not a valid command '{}', silly dumb dumb.".format(command))
-
