@@ -124,7 +124,8 @@ Team: Dragonkeeper, Lunacorn  Dec 26th, 2018
 import time
 import db as database
 import json
-import credb as creaturedb
+import invdb as invendb
+
 # import the MUD server class
 
 from mudserver import MudServer
@@ -153,7 +154,7 @@ class Creatures(object):
         self.csnm = csnm
         self.ctmr = ctmr
         self.corp = corp
-        Creatures.creatures[name] = self
+        Creatures.creatures[cid] = self
 
 # import core values
 with open("corefunctions.json") as funcs:
@@ -217,8 +218,6 @@ def ChangeJob(pr, pj):
                 if stat == jobs:
                     value = int(attribs) + int(fun["corevalues"]["jobs"][pj][jobs])
                     players[id][stat] = value
-                    print(str(stat)+' '+str(jobs)+' '+str(int(attribs))+' '+str(int(fun["corevalues"]["jobs"][pj][jobs]))+'  = '+str(int(value)))
-                    print(players[id])
 
 # initilize dictionaries
 
@@ -233,18 +232,25 @@ mud = MudServer()
 
 ##connect to db for player saves
 userdata = database.connect()
-creaturedata = creaturedb.connect()
+invdata = invendb.connect()
 
+## list holds all data for creature names when they get dumped to class
+creaturelist = []
+room = []
+myroom = []
+monstercount = 0
 ########### this grabs from the json for creatures
+
 for cid in credb.keys():
+    number = 0
     for stat in credb[cid]:
 # pulls needed data as normal and removes any " " from results
         value = str(json.dumps(credb[cid][stat])).replace('"', '')
 ### quick ifs to check if values match what need and stores them to be imported after
+        if stat == "cid":
+            ncid = value
         if stat == "name":
             name = value
-        if stat == "room":
-            room = value
         if stat == "desc":
             desc = value
         if stat == "clvl":
@@ -271,16 +277,31 @@ for cid in credb.keys():
             ctmr = value
         if stat == "corp":
             corp = value
-
+        if stat == "room":
+            room = []
+            for place in credb[cid][stat]:
+                value = str(json.dumps(credb[cid][stat][place])).replace('"', '')
+                room.append(place+":"+value)
+    print(room)
 ############ loads every creature into class
-    Creatures(cid, name, room, desc, clvl, cstr, cdmg, cdef, clfe, life, moves, drops, cspc, csnm, ctmr, corp)
-          #### dumps to database
-
-    # Dumps to database if creature is not already there
-    result = creaturedb.cspawn(creaturedata, name)
-    if not result:
-        print("added "+name+" to db")
-        creaturedb.cload(creaturedata, Creatures.creatures[cid].name, Creatures.creatures[cid].room, Creatures.creatures[cid].desc, Creatures.creatures[cid].clvl, Creatures.creatures[cid].cstr, Creatures.creatures[cid].cdmg, Creatures.creatures[cid].cdef, Creatures.creatures[cid].clfe, Creatures.creatures[cid].life, Creatures.creatures[cid].moves, Creatures.creatures[cid].drops, Creatures.creatures[cid].cspc, Creatures.creatures[cid].csnm, Creatures.creatures[cid].ctmr, Creatures.creatures[cid].corp)
+    if room:
+        print(len(room))
+        for sweetpad in room:
+            myroom = [x.strip() for x in sweetpad.split(':')]
+            print(myroom)
+            print("entered loop")
+            count = 1
+            while count <= int(myroom[1]):
+                count += 1
+                monstercount += 1
+                print("count: "+str(count))
+                print("cid value: "+ncid+str(monstercount))
+                print("name value: "+name)
+                if not str(ncid+str(monstercount)) in creaturelist:
+                    Creatures(str(ncid+str(monstercount)), name, myroom[0], desc, clvl, cstr, cdmg, cdef, clfe, life, moves, drops, cspc, csnm, ctmr, corp)
+                    print("added "+str(ncid+str(monstercount))+" to db")
+                    creaturelist.append(Creatures.creatures[str(ncid+str(monstercount))].cid)
+                    print(creaturelist)
 
 
 #
@@ -346,6 +367,18 @@ def AssignNewPlayersIDs():
         "job": None,
         "ujob": None,
         "pvp": None,
+        "inventoryspace": 7,
+        "inventoryused": 0,
+        "inventoryslot": {
+            "slot1": "0",
+            "slot2": "0",
+            "slot3": "0",
+            "slot4": "0",
+            "slot5": "0",
+            "slot6": "0",
+            "slot7": "0",
+            "slot8": "0"
+            },
         "coin": 0
     }
 
@@ -356,6 +389,17 @@ def AssignNewPlayersIDs():
 
 
 #### functions for commands
+def InventoryCommand():
+    mud.send_message(id, "You can hold {} more items.".format((players[id]["inventoryspace"] - players[id]["inventoryused"])))
+    mud.send_message(id, "::::::::::::::::::::::::::::::::::::")
+    mud.send_message(id, ":::::::::::::INVENTORY::::::::::::::")
+    mud.send_message(id, "::::::::::::::::::::::::::::::::::::")
+
+    for x in players[id]["inventoryslot"]:
+        if players[id]["inventoryslot"][x] == "0":
+            x = "Empty"
+            mud.send_message(id, "::{}".format(x))
+
 def HelpCommand():
     # send the player back the list of possible commands
     # this will be overhauled to allow lower param
@@ -387,10 +431,12 @@ def SaveCommand():
         # function for when a userlist does not exists
         mud.send_message(id, "Creating new save")
         database.save_name(userdata, players[id]["name"], players[id]["room"], players[id]["password"], players[id]["email"], players[id]["user"], players[id]["race"], players[id]["job"], players[id]["coin"], json.dumps(players[id]["ujob"]))
+        invendb.save_name(invdata, players[id]["name"], players[id]["inventoryslot"]["slot1"], players[id]["inventoryslot"]["slot2"], players[id]["inventoryslot"]["slot3"], players[id]["inventoryslot"]["slot4"],  players[id]["inventoryslot"]["slot5"], players[id]["inventoryslot"]["slot6"], players[id]["inventoryslot"]["slot7"], players[id]["inventoryslot"]["slot8"])
         print("Created a new save file for: "+players[id]["name"])
     else:
         # updates save file
         database.update_name(userdata, players[id]["name"], players[id]["room"], players[id]["password"], players[id]["email"], players[id]["user"], players[id]["race"], players[id]["job"], players[id]["coin"],json.dumps(players[id]["ujob"]))
+        invendb.update_name(invdata, players[id]["name"], players[id]["inventoryslot"]["slot1"], players[id]["inventoryslot"]["slot2"], players[id]["inventoryslot"]["slot3"], players[id]["inventoryslot"]["slot4"],  players[id]["inventoryslot"]["slot5"], players[id]["inventoryslot"]["slot6"], players[id]["inventoryslot"]["slot7"], players[id]["inventoryslot"]["slot8"])
         mud.send_message(id, "Updated your file.")
         print("Updated save file for: "+players[id]["name"])
 
@@ -553,6 +599,17 @@ def LoginCommand():
                         mud.send_message(id, "is always a pain in the ass.")
                         LookCommand()
                         login[id]["process"] = "done"
+                        invlist = invendb.get_name(invdata, login[id]["name"])
+                        for checkinv in invlist:
+                            players[id]["inventoryslot"]["slot1"] = checkinv[1]
+                            players[id]["inventoryslot"]["slot2"] = checkinv[2]
+                            players[id]["inventoryslot"]["slot3"] = checkinv[3]
+                            players[id]["inventoryslot"]["slot4"] = checkinv[4]
+                            players[id]["inventoryslot"]["slot5"] = checkinv[5]
+                            players[id]["inventoryslot"]["slot6"] = checkinv[6]
+                            players[id]["inventoryslot"]["slot7"] = checkinv[7]
+                            players[id]["inventoryslot"]["slot8"] = checkinv[8]
+
                 if check[0] != login[id]["name"]:
                     mud.send_message(id, "Failed to find that character name.")
                     login[id]["name"] = None
@@ -645,9 +702,10 @@ def NewCommand():
                 mud.send_message(id, "Pick a valid race:")
                 setups[id]["pickrace"] = None
             else:
-                setups[id]["race"] = setups[id]["pickrace"]
-                setups[id]["setup"] = "pickjob"
-                SetjobCommand()
+                if setups[id]["job"] == None:
+                    setups[id]["race"] = setups[id]["pickrace"]
+                    setups[id]["setup"] = "pickjob"
+                    SetjobCommand()
     # Now we have input for our choice of class
     if setups[id]["job"] != None:
     # Merge with players
@@ -753,16 +811,22 @@ def LookCommand():
             ### send player a message containing the list of players in the room
     mud.send_message(id, "Players here: {}".format(", ".join(playershere)))
             # send player a message containing the list of creatures in the room
+    for cre in CreatureCheckRoom(players[id]["room"]):
+        monster = ''.join([i for i in cre if not i.isdigit()])
+        mud.send_message(id, "creature in room : "+monster)
 
-            # Dragonkeeper:
-            # not sure how to get this info from the live database
-            # we cannot explicitly check for each individual monster
-            # whatever room we are in.  there will be thousands.
-    for cid in credb.keys():
-    #for stat in credb[cid]:
-        if credb[cid]["room"] == players[id]["room"]:
-            cx = credb[cid]["desc"]
-            mud.send_message(id, "{}".format("".join(cx)))
+
+def CreatureCheckRoom(pr):
+    creatures = []
+    for items in creaturelist:
+       if items == Creatures.creatures[items].cid:
+           if pr == Creatures.creatures[items].room:
+               creatures.append(items)
+    return creatures
+
+#
+#
+
 
 
 # main game loop. We loop forever (i.e. until the program is terminated)
@@ -821,6 +885,7 @@ while True:
             commandflag = 1
             if command in fun["corevalues"]["jobs"]:
                 if setups[id]["setup"] == "pickjob":
+                        playerprocess[id]["process"] = None
                         setups[id]["job"] = command
                         setups[id]["setup"] = "merge"
                         playerprocess[id]["selection"] = None
@@ -958,17 +1023,17 @@ while True:
         elif command == "look":
             LookCommand()
 
-
         elif command == "exam":
             ExamCommand()
         elif command == "fight":
             FightCommand()
 
-
         # 'go' command
         elif command == "go":
             GoCommand()
 
+        elif command == "inv":
+            InventoryCommand()
         #Random text entered
         #elif command == 'blank':
         #    continue

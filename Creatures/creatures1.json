@@ -1,6 +1,10 @@
 {
     "spider": {
-        "room": "Dungeon1",
+        "cid": "spider",
+        "room": {
+            "Dungeon1": 1,
+            "Dungeon2": 4
+             },
         "name": "spider",
         "desc": "A spider sits quietly in her web.",
         "clvl": 1,
@@ -15,12 +19,16 @@
         "csnm": "web",
         "ctmr": 5,
         "corp": "no"
-    },
-
+     },
+    
     "monkey": {
-        "room": "Dungeon1",
+        "cid": "monkey",
+        "room": {
+            "Dungeon1": 2,
+            "Dungeon2": 1
+             },
         "name": "monkey",
-        "desc": "A spider sits quietly in her web.",
+        "desc": "A monkey snarls it's face at you",
         "clvl": 1,
         "cstr": 3,
         "cdmg": 5,
@@ -36,9 +44,14 @@
     },
 
     "pig": {
-        "room": "Dungeon1",
+        "cid": "pig",
+        "room": {
+            "Dungeon1": 5,
+            "Dungeon2": 1,
+            "Dungeon3": 17
+             },
         "name": "pig",
-        "desc": "A spider sits quietly in her web.",
+        "desc": "A pig snorts as it looks at you.",
         "clvl": 1,
         "cstr": 3,
         "cdmg": 5,
@@ -54,7 +67,11 @@
     },
 
     "rat": {
-        "room": "Dungeon2",
+        "cid": "rat",
+        "room": {
+            "Dungeon1": 2,
+            "Dungeon2": 2
+             },
         "name": "rat",
         "desc": "a rat scuttles around the room.",
         "clvl": 1,
