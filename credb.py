@@ -53,6 +53,11 @@ def ccorpse(db, name):
 def cspawn(db, name):
     cursor = db.cursor()
     rows = cursor.execute('SELECT name, room, desc, clvl, cstr, cdmg, cdef, clfe, life, moves, drops, cspc, csnm, ctmr, corp FROM creature').fetchall()
-    player = [row for row in rows if name in row[0]]
-    return player
+    creature = [row for row in rows if name in row[0]]
+    return creature
 
+def croom(db, room):
+    cursor = db.cursor()
+    rows = cursor.execute('SELECT * FROM creature WHERE room = ?',[room]).fetchall()
+    room = [row for row in rows if room in row[1]]
+    return room
