@@ -392,7 +392,7 @@ while True:
                  if players[pid]["name"] == st:
                     mud.send_message(pid, "{} whispers: {}".format(players[id]["name"],command))
                     mud.send_message(id, "sent {},: {}".format(st,command))
-                    commandflag = 0
+                    commandflag = 1
 
         # Job change command process
         if playerprocess[id]["process"] == "jobchange":
@@ -406,10 +406,10 @@ while True:
                 else:
                     players[id]["job"] = command
                     mud.send_message(id, "Job Changed to {}".format(command))
-                    commandflag = 0
+                    commandflag = 1
             else:
                 mud.send_message(id, "Thats not a valid job.")
-                commandflag = 0
+                commandflag = 1
         playerprocess[id]["process"] = None
 
         # login command process
@@ -508,9 +508,11 @@ while True:
                                 players[id]["race"]        = check[5]
                                 players[id]["job"]         = check[6]
                                 players[id]["coin"]        = check[7]
+                                players[id]["ujob"]        = check[8]
                                 # populate players with race and class info
                                 pr = players[id]["race"]
                                 pj = players[id]["job"]
+                                play
                                 for stat in races[pr]:
                                     attribs = json.dumps(races[pr][stat])
                                     if stat != "description":
@@ -527,31 +529,10 @@ while True:
                                 players[id]["exp"] = 0
                                 players[id]["level"] = 0
                                 players[id]["next"] = 3000
-                                # idea for future >> if ["ujob"][x] == 1 send message x
-                                players[id]["ujob"] = {
-                                        "warrior",
-                                        "whitemage",
-                                        "thief",
-                                        "indecisive",
-                                        "bard",
-                                        "blackmage",
-                                        "samurai",
-                                        "ninja",
-                                        "bartender",
-                                        "mog",
-                                        "linecook",
-                                        "inventor",
-                                        "landscaper",
-                                        "druid",
-                                        "witch"
-                                        }
-                                players[id]["waitingsave"] = 0
                                 mud.send_message(id, "Successfully loaded: {}.\n".format(players[id]["name"]))
                                 # print serverside a player logged in
                                 print("New login")
                                 print(players[id]["name"])
-                                # possible fix for the reset loop issue.
-                                #login[id]["process"] is None
                                 mud.send_message(id, motd.read())
                                 mud.send_message(id, "You are being pulled through a dimensional gateway.")
                                 mud.send_message(id, "Welcome back to NixMud, {}.".format(players[id]["name"]))
@@ -726,12 +707,12 @@ while True:
             if not userlist:
                 # function for when a userlist does not exists
                 mud.send_message(id, "Creating new save")
-                database.save_name(userdata, players[id]["name"], players[id]["room"], players[id]["password"], players[id]["email"], players[id]["user"], players[id]["race"], players[id]["job"], players[id]["coin"])
+                database.save_name(userdata, players[id]["name"], players[id]["room"], players[id]["password"], players[id]["email"], players[id]["user"], players[id]["race"], players[id]["job"], players[id]["coin"], players[id]["ujob"])
                 print("Created a new save file for:")
                 print(players[id]["name"])
             else:
                 # updates save file
-                database.update_name(userdata, players[id]["name"], players[id]["room"], players[id]["password"], players[id]["email"], players[id]["user"], players[id]["race"], players[id]["job"], players[id]["coin"])
+                database.update_name(userdata, players[id]["name"], players[id]["room"], players[id]["password"], players[id]["email"], players[id]["user"], players[id]["race"], players[id]["job"], players[id]["coin"],players[id]["ujob"])
                 mud.send_message(id, "Updated your file.")
                 print("Updated save file for:")
                 print(players[id]["name"])
@@ -991,11 +972,9 @@ while True:
                 mud.send_message(id, "Unknown exit '{}'".format(ex))
 
         #Random text entered
-        elif command == 'blank':
-            continue
+        #elif command == 'blank':
+        #    continue
         # some other, unrecognised command
-        if command == 1:
-            if command == 'blank':
-                continue
-            else:
-                mud.send_message(id, "This is not a valid command '{}', silly dumb dumb.".format(command))
+        elif commandflag == 0:
+            #if command == '':
+            mud.send_message(id, "This is not a valid command '{}', silly dumb dumb.".format(command))
