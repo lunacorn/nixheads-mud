@@ -208,17 +208,17 @@ with open("Classes/classes.json") as joboptions:
 # move this next comment down and comment for class
 
 def ChangeJob(pr, pj):
-    for stat in races[pr]:
-        attribs = json.dumps(races[pr][stat])
+
+    for stat in fun["corevalues"]["races"][pr]:
         if stat != "description":
-            for jobs in startjobs[pj]:
+            attribs = json.dumps(fun["corevalues"]["races"][pr][stat])
+            statvalues = json.dumps(fun["corevalues"]["jobs"][pj])
+            for jobs in fun["corevalues"]["jobs"][pj]:
                 if stat == jobs:
-                    value = json.dumps(startjobs[pj][stat])
-                    players[id][stat] = int(attribs) + int(value)
-                    print(stat+' '+jobs+' '+value+' '+attribs)
-                else:
-                    players[id][stat] = int(attribs)
-                    print(stat+' '+jobs+' '+attribs)
+                    value = int(attribs) + int(fun["corevalues"]["jobs"][pj][jobs])
+                    players[id][stat] = value
+                    print(str(stat)+' '+str(jobs)+' '+str(int(attribs))+' '+str(int(fun["corevalues"]["jobs"][pj][jobs]))+'  = '+str(int(value)))
+                    print(players[id])
 
 # initilize dictionaries
 
