@@ -548,9 +548,10 @@ def LoginCommand():
                         mud.send_message(id, motd.read())
                         mud.send_message(id, "You are being pulled through a dimensional gateway.")
                         mud.send_message(id, "Welcome back to NixMud, {}.".format(players[id]["name"]))
-                        mud.send_message(id, "Have a 'look' around...")
+                        #mud.send_message(id, "Have a 'look' around...")
                         mud.send_message(id, "A lot changes here and interdimensional travel")
                         mud.send_message(id, "is always a pain in the ass.")
+                        LookCommand()
                         login[id]["process"] = "done"
                 if check[0] != login[id]["name"]:
                     mud.send_message(id, "Failed to find that character name.")
@@ -695,8 +696,8 @@ def NewCommand():
         mud.send_message(id, motd.read())
         mud.send_message(id, "Welcome to the Nixheads-Mud, {}.\n".format(players[id]["name"]))
         mud.send_message(id, "Type 'help' for a list of commands.")
-        mud.send_message(id, "Type 'look' to get your bearings in this new world")
-
+        #mud.send_message(id, "Type 'look' to get your bearings in this new world")
+        LookCommand()
 
 def GoCommand():
     # store the player's current room
@@ -715,17 +716,7 @@ def GoCommand():
                 # update the player's current room to the one the exit leads to
         players[id]["room"] = rm["exits"][ex]
                 # possible place for description after moving
-        rm = rooms[players[id]["room"]]
-        mud.send_message(id, "*"*62)
-        mud.send_message(id, rm["name"])
-        mud.send_message(id, "*"*62)
-        mud.send_message(id, rm["description"])
-        mud.send_message(id, "*"*62)
-        mud.send_message(id, "**** HP: {} **** MP: {} **** NEXT: {} **** PVP: {} ****".format(players[id]["hp"],players[id]["mp"],players[id]["next"],players[id]["pvp"]))
-        mud.send_message(id, "*"*62)
-        mud.send_message(id, "Exits are: {}".format(", ".join(rm["exits"])))
-        mud.send_message(id, "*"*62)
-        rm = rooms[players[id]["room"]]
+        LookCommand()
         # go through all the players in the game
         for pid, pl in players.items():
         # if player is in the same (new) room and isn't the player sending the command
