@@ -124,7 +124,6 @@ Team: Dragonkeeper, Lunacorn  Dec 26th, 2018
 import time
 import db as database
 import json
-import credb as creaturedb
 # import the MUD server class
 
 from mudserver import MudServer
@@ -153,7 +152,7 @@ class Creatures(object):
         self.csnm = csnm
         self.ctmr = ctmr
         self.corp = corp
-        Creatures.creatures[name] = self
+        Creatures.creatures[cid] = self
 
 # import core values
 with open("corefunctions.json") as funcs:
@@ -217,8 +216,6 @@ def ChangeJob(pr, pj):
                 if stat == jobs:
                     value = int(attribs) + int(fun["corevalues"]["jobs"][pj][jobs])
                     players[id][stat] = value
-                    print(str(stat)+' '+str(jobs)+' '+str(int(attribs))+' '+str(int(fun["corevalues"]["jobs"][pj][jobs]))+'  = '+str(int(value)))
-                    print(players[id])
 
 # initilize dictionaries
 
@@ -233,18 +230,23 @@ mud = MudServer()
 
 ##connect to db for player saves
 userdata = database.connect()
-creaturedata = creaturedb.connect()
-
+## list holds all data for creature names when they get dumped to class
+creaturelist = []
+room = []
+myroom = []
+monstercount = 0
 ########### this grabs from the json for creatures
+
 for cid in credb.keys():
+    number = 0
     for stat in credb[cid]:
 # pulls needed data as normal and removes any " " from results
         value = str(json.dumps(credb[cid][stat])).replace('"', '')
 ### quick ifs to check if values match what need and stores them to be imported after
+        if stat == "cid":
+            ncid = value
         if stat == "name":
             name = value
-        if stat == "room":
-            room = value
         if stat == "desc":
             desc = value
         if stat == "clvl":
@@ -271,16 +273,31 @@ for cid in credb.keys():
             ctmr = value
         if stat == "corp":
             corp = value
-
+        if stat == "room":
+            room = []
+            for place in credb[cid][stat]:
+                value = str(json.dumps(credb[cid][stat][place])).replace('"', '')
+                room.append(place+":"+value)
+    print(room)
 ############ loads every creature into class
-    Creatures(cid, name, room, desc, clvl, cstr, cdmg, cdef, clfe, life, moves, drops, cspc, csnm, ctmr, corp)
-          #### dumps to database
-
-    # Dumps to database if creature is not already there
-    result = creaturedb.cspawn(creaturedata, name)
-    if not result:
-        print("added "+name+" to db")
-        creaturedb.cload(creaturedata, Creatures.creatures[cid].name, Creatures.creatures[cid].room, Creatures.creatures[cid].desc, Creatures.creatures[cid].clvl, Creatures.creatures[cid].cstr, Creatures.creatures[cid].cdmg, Creatures.creatures[cid].cdef, Creatures.creatures[cid].clfe, Creatures.creatures[cid].life, Creatures.creatures[cid].moves, Creatures.creatures[cid].drops, Creatures.creatures[cid].cspc, Creatures.creatures[cid].csnm, Creatures.creatures[cid].ctmr, Creatures.creatures[cid].corp)
+    if room:
+        print(len(room))
+        for sweetpad in room:
+            myroom = [x.strip() for x in sweetpad.split(':')]
+            print(myroom)
+            print("entered loop")
+            count = 1
+            while count <= int(myroom[1]):
+                count += 1
+                monstercount += 1
+                print("count: "+str(count))
+                print("cid value: "+ncid+str(monstercount))
+                print("name value: "+name)
+                if not str(ncid+str(monstercount)) in creaturelist:
+                    Creatures(str(ncid+str(monstercount)), name, myroom[0], desc, clvl, cstr, cdmg, cdef, clfe, life, moves, drops, cspc, csnm, ctmr, corp)
+                    print("added "+str(ncid+str(monstercount))+" to db")
+                    creaturelist.append(Creatures.creatures[str(ncid+str(monstercount))].cid)
+                    print(creaturelist)
 
 
 #
@@ -753,16 +770,25 @@ def LookCommand():
             ### send player a message containing the list of players in the room
     mud.send_message(id, "Players here: {}".format(", ".join(playershere)))
             # send player a message containing the list of creatures in the room
+    for cre in CreatureCheckRoom(players[id]["room"]):
+        monster = ''.join([i for i in cre if not i.isdigit()])
+        mud.send_message(id, "creature in room : "+monster)
 
-            # Dragonkeeper:
-            # not sure how to get this info from the live database
-            # we cannot explicitly check for each individual monster
-            # whatever room we are in.  there will be thousands.
-    for cid in credb.keys():
-    #for stat in credb[cid]:
-        if credb[cid]["room"] == players[id]["room"]:
-            cx = credb[cid]["desc"]
-            mud.send_message(id, "{}".format("".join(cx)))
+
+def CreatureCheckRoom(pr):
+    creatures = []
+    for items in creaturelist:
+       if items == Creatures.creatures[items].cid:
+           if pr == Creatures.creatures[items].room:
+               creatures.append(items)
+    return creatures
+
+
+def InventoryCommand():
+    pass
+#
+#
+
 
 
 # main game loop. We loop forever (i.e. until the program is terminated)
@@ -969,6 +995,8 @@ while True:
         elif command == "go":
             GoCommand()
 
+        elif command == "inventory" or command == "i":
+            InventoryCommand()
         #Random text entered
         #elif command == 'blank':
         #    continue
