@@ -282,32 +282,23 @@ for cid in credb.keys():
             for place in credb[cid][stat]:
                 value = str(json.dumps(credb[cid][stat][place])).replace('"', '')
                 room.append(place+":"+value)
-    print(room)
 ############ loads every creature into class
     if room:
-        print(len(room))
         for sweetpad in room:
             myroom = [x.strip() for x in sweetpad.split(':')]
-            print(myroom)
-            print("entered loop")
             count = 1
             while count <= int(myroom[1]):
                 count += 1
                 monstercount += 1
-                print("count: "+str(count))
-                print("cid value: "+ncid+str(monstercount))
-                print("name value: "+name)
                 if not str(ncid+str(monstercount)) in creaturelist:
                     Creatures(str(ncid+str(monstercount)), name, myroom[0], desc, clvl, cstr, cdmg, cdef, clfe, life, moves, drops, cspc, csnm, ctmr, corp)
-                    print("added "+str(ncid+str(monstercount))+" to db")
                     creaturelist.append(Creatures.creatures[str(ncid+str(monstercount))].cid)
-                    print(creaturelist)
 
 
 #
 #
 ######function to assign blank ids for new players
-def AssignNewPlayersIDs():
+def AssignNewPlayersIDsP():
     # customizable player process per id
     playerprocess[id] = {
         "process": None,
@@ -336,7 +327,7 @@ def AssignNewPlayersIDs():
         "email": None,
         "password": None,
         }
-
+def AssignNewPlayersIDs():
     players[id] = {
         "name": None,
         "email": None,
@@ -543,6 +534,7 @@ def SayCommand():
             mud.send_message(pid, "{} says: {}".format(players[id]["name"], params))
 
 def LoginCommand():
+    AssignNewPlayersIDs()
     if login[id]["name"] is None:
         mud.send_message(id, "Please enter your character name:")
         login[id]["process"] = "name"
@@ -598,7 +590,7 @@ def LoginCommand():
                         mud.send_message(id, "A lot changes here and interdimensional travel")
                         mud.send_message(id, "is always a pain in the ass.")
                         LookCommand()
-                        login[id]["process"] = "done"
+                       # login[id]["process"] = "done"
                         invlist = invendb.get_name(invdata, login[id]["name"])
                         for checkinv in invlist:
                             players[id]["inventoryslot"]["slot1"] = checkinv[1]
@@ -609,7 +601,7 @@ def LoginCommand():
                             players[id]["inventoryslot"]["slot6"] = checkinv[6]
                             players[id]["inventoryslot"]["slot7"] = checkinv[7]
                             players[id]["inventoryslot"]["slot8"] = checkinv[8]
-
+                        login[id]["process"] = "done"
                 if check[0] != login[id]["name"]:
                     mud.send_message(id, "Failed to find that character name.")
                     login[id]["name"] = None
@@ -731,6 +723,7 @@ def NewCommand():
         players[id]["exp"] = 0
         players[id]["level"] = 0
         players[id]["next"] = 3000
+
         players[id]["ujob"] = {
                 "warrior": "X",
                 "whitemage": "X",
@@ -840,6 +833,7 @@ while True:
 
     # go through any newly connected players
     for id in mud.get_new_players():
+        AssignNewPlayersIDsP()
         AssignNewPlayersIDs()
 
     # go through any recently disconnected players
