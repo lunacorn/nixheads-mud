@@ -18,22 +18,22 @@ def connect():
 
 def init_db(db):
     cursor = db.cursor()
-    cursor.execute('CREATE TABLE IF NOT EXISTS player(name, room, password, email, user, race, job, coin)')
+    cursor.execute('CREATE TABLE IF NOT EXISTS player(name, room, password, email, user, race, job, coin, ujob)')
 
 # Execute 'save' command
 
-def save_name(db, name, room, password, email, user, race, job, coin):
+def save_name(db, name, room, password, email, user, race, job, coin, ujob):
     cursor = db.cursor()
-    cursor.execute('INSERT INTO player(name, room, password, email, user, race, job, coin) VALUES(?,?,?,?,?,?,?,?)',
-            (name, room, password, email, user, race, job, coin))
+    cursor.execute('INSERT INTO player(name, room, password, email, user, race, job, coin, ujob) VALUES(?,?,?,?,?,?,?,?,?)',
+            (name, room, password, email, user, race, job, coin, ujob))
     db.commit()
     return
 
 # Not sure how to add the other features yet
 
-def update_name(db, name, room, password, email, user, race, job, coin ):
+def update_name(db, name, room, password, email, user, race, job, coin, ujob):
     cursor = db.cursor()
-    cursor.execute("UPDATE player SET room = ?, password = ?, email = ?, user = ?, race = ?, job = ?, coin = ? WHERE name = ?",(room, password, email, user, race, job, coin, name))
+    cursor.execute("UPDATE player SET room = ?, password = ?, email = ?, user = ?, race = ?, job = ?, coin = ?, ujob = ? WHERE name = ?",(room, password, email, user, race, job, coin, ujob, name))
     db.commit()
     return
 
@@ -50,9 +50,10 @@ def delete_name(db, name):
 def get_name(db, name):
     '''Returns a list of rows representing "player"'''
     cursor = db.cursor()
-    rows = cursor.execute('SELECT name, room, password, email, user, race, job, coin FROM player').fetchall()
+    rows = cursor.execute('SELECT name, room, password, email, user, race, job, coin, ujob FROM player').fetchall()
     player = [row for row in rows if name in row[0]]
 #    delete_player(db, name)
     return player
+
 
 
