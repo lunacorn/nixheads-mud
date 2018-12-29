@@ -207,16 +207,18 @@ with open("Classes/classes.json") as joboptions:
 
 # move this next comment down and comment for class
 
-# stores the players in the game
-# setups is the newly created characters during generation process
-# players is the players found in game.  A player will not be seen
-# by anyone while in the setups group.
-
-class creatures(object):
-    def init(self, name, room, desc):
-        self.name = name
-        self.room = room
-        self.desc = desc
+def ChangeJob(pr, pj):
+    for stat in races[pr]:
+        attribs = json.dumps(races[pr][stat])
+        if stat != "description":
+            for jobs in startjobs[pj]:
+                if stat == jobs:
+                    value = json.dumps(startjobs[pj][stat])
+                    players[id][stat] = int(attribs) + int(value)
+                    print(stat+' '+jobs+' '+value+' '+attribs)
+                else:
+                    players[id][stat] = int(attribs)
+                    print(stat+' '+jobs+' '+attribs)
 
 # initilize dictionaries
 
@@ -510,17 +512,7 @@ while True:
                                 players[id]["coin"]        = check[7]
                                 players[id]["ujob"]        = json.loads(check[8])
                                 # populate players with race and class info
-                                pr = players[id]["race"]
-                                pj = players[id]["job"]
-                                for stat in races[pr]:
-                                    attribs = json.dumps(races[pr][stat])
-                                    if stat != "description":
-                                        for jobs in startjobs[pj]:
-                                            if stat == jobs:
-                                                value = json.dumps(startjobs[pj][stat])
-                                                players[id][stat] = int(attribs) + int(value)
-                                            else:
-                                                players[id][stat] = int(attribs)
+                                ChangeJob(players[id]["race"], players[id]["job"])
                                 players[id]["maxhp"] = players[id]["hp"]
                                 players[id]["maxmp"] = players[id]["mp"]
                                 players[id]["pvp"] = "no"
@@ -642,17 +634,7 @@ while True:
                 #print serverside a new player was added
                 print("New Player Added to server")
                 print(players[id]["name"])
-                pr = players[id]["race"]
-                pj = players[id]["job"]
-                for stat in races[pr]:
-                    attribs = json.dumps(races[pr][stat])
-                    if stat != "description":
-                        for jobs in startjobs[pj]:
-                            if stat == jobs:
-                                value = json.dumps(startjobs[pj][stat])
-                                players[id][stat] = int(attribs) + int(value)
-                            else:
-                                players[id][stat] = int(attribs)
+                ChangeJob(players[id]["race"], players[id]["job"])
                 print("new player id for")
                 print(players[id]["name"])
                 players[id]["maxhp"] = players[id]["hp"]
