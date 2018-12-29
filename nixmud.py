@@ -407,6 +407,7 @@ while True:
                         setups[id]["setup"] = "merge"
                 else:
                     players[id]["job"] = command
+                    ChangeJob(players[id]["race"], players[id]["job"])
                     mud.send_message(id, "Job Changed to {}".format(command))
                     commandflag = 1
             else:
