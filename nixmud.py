@@ -218,6 +218,17 @@ class creatures(object):
         self.room = room
         self.desc = desc
 
+def ChangeJob(pr, pj):
+    for stat in races[pr]:
+        attribs = json.dumps(races[pr][stat])
+        if stat != "description":
+            for jobs in startjobs[pj]:
+                if stat == jobs:
+                    value = json.dumps(startjobs[pj][stat])
+                    players[id][stat] = int(attribs) + int(value)
+                else:
+                    players[id][stat] = int(attribs)
+
 # initilize dictionaries
 
 playerprocess = {}
@@ -642,17 +653,7 @@ while True:
                 #print serverside a new player was added
                 print("New Player Added to server")
                 print(players[id]["name"])
-                pr = players[id]["race"]
-                pj = players[id]["job"]
-                for stat in races[pr]:
-                    attribs = json.dumps(races[pr][stat])
-                    if stat != "description":
-                        for jobs in startjobs[pj]:
-                            if stat == jobs:
-                                value = json.dumps(startjobs[pj][stat])
-                                players[id][stat] = int(attribs) + int(value)
-                            else:
-                                players[id][stat] = int(attribs)
+                ChangeJob(players[id]["race"], players[id]["job"])
                 print("new player id for")
                 print(players[id]["name"])
                 players[id]["maxhp"] = players[id]["hp"]
