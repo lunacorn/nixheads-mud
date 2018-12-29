@@ -6,8 +6,8 @@
                 "warrior": {
                     "name": "warrior",
                     "description": "Tank Job? If you want. You can provoke enemies or just pulverize 'em.'",            
-                    "hp": 10,
-                    "mp": -8,
+                    "maxhp": 10,
+                    "maxmp": -8,
                     "str": 7,
                     "dex": 2,
                     "vit": 6,
@@ -30,8 +30,8 @@
 
                     "name": "blackmage",
                     "description": "Boomcannon! Nuke your enemies quick u squishie!!",            
-                    "hp": 2,
-                    "mp": 7,
+                    "maxhp": 2,
+                    "maxmp": 7,
                     "str": -1,
                     "dex": 3,
                     "vit": 0,
@@ -55,8 +55,8 @@
                     
                     "name": "whitemage",
                     "description": "A strong healer, hard job to learn but neccessary for groups",            
-                    "hp": -2,
-                    "mp":  10,
+                    "maxhp": -2,
+                    "maxmp":  10,
                     "str": 1,
                     "dex": 2,
                     "vit": 0,
@@ -80,8 +80,8 @@
                 "thief": {
                     "name": "thief",
                     "description": "Pickpocket and rogue. a great first job for new players",            
-                    "hp": 8,
-                    "mp": -4,
+                    "maxhp": 8,
+                    "maxmp": -4,
                     "str": 3,
                     "dex": 7,
                     "vit": 4,
@@ -107,8 +107,8 @@
                 "elvari": {
 
                     "description": "Good with magic, but super squish. Heal and nuke, but be gentle.",
-                    "hp": 17,
-                    "mp": 15,
+                    "maxhp": 17,
+                    "maxmp": 15,
                     "str": 7,
                     "dex": 11,
                     "vit": 9,
@@ -121,8 +121,8 @@
                 "humani": {
 
                     "description": "Fairly balanced stats... why? cause humanlike beings are just average.",
-                    "hp": 20,
-                    "mp": 7,
+                    "maxhp": 20,
+                    "maxmp": 7,
                     "str": 11,
                     "dex": 10,
                     "vit": 11,
@@ -136,8 +136,8 @@
                 "dragani": {
 
                     "description": "Dragonkin peeps so hell yea fandom, minus magical ability you might expect.",
-                    "hp": 26,
-                    "mp": 10,
+                    "maxhp": 26,
+                    "maxmp": 10,
                     "str": 18,
                     "dex": 13,
                     "vit": 17,
@@ -151,8 +151,8 @@
                 "krei": {
 
                     "description": "Agile and quick like a cat race should be. However, you are kinda dumb.",
-                    "hp": 15,
-                    "mp": 6,
+                    "maxhp": 15,
+                    "maxmp": 6,
                     "str": 8,
                     "dex": 18,
                     "vit": 16,

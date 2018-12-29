@@ -289,7 +289,8 @@ for cid in credb.keys():
 def AssignNewPlayersIDs():
     # customizable player process per id
     playerprocess[id] = {
-        "process": None
+        "process": None,
+        "selection": None
         }
 
     login[id] = {
@@ -452,7 +453,7 @@ def SheetCommand():
     mud.send_message(id, ":"*62)
     mud.send_message(id, "{}STR:{} {}DEX:{} {}VIT:{} {}INT:{} {}MND:{} {}CHA:{} {}".format(":"*2,players[id]["str"],":"*2,players[id]["dex"],":"*2,players[id]["vit"],":"*2,players[id]["int"],":"*4,players[id]["mnd"],":"*2,players[id]["cha"],":"*6))
     mud.send_message(id, ":"*62)
-    mud.send_message(id, "{}Crit. Modifer{} {} {}Coin{} {} {}TNL{} {} {}".format(":"*2,":"*3,players[id]["crit"],":"*3,":"*3,players[id]["coin"],":"*5,":"*3,players[id]["next"],":"*5,players[id]["exp"],":"))
+    mud.send_message(id, "{}Crit. Chance{} {}% {}Coin{} {} {}TNL{} {} {}".format(":"*2,":"*3,players[id]["crit"],":"*3,":"*3,players[id]["coin"],":"*5,":"*3,players[id]["next"],":"*5,players[id]["exp"],":"))
     mud.send_message(id, ":"*62)
     mud.send_message(id, "::Spells"+":"*54)
     mud.send_message(id, ":"*62)
@@ -533,8 +534,8 @@ def LoginCommand():
                         players[id]["ujob"]        = json.loads(check[8])
                       # populate players with race and class info
                         ChangeJob(players[id]["race"], players[id]["job"])
-                        players[id]["maxhp"] = players[id]["hp"]
-                        players[id]["maxmp"] = players[id]["mp"]
+                        players[id]["hp"] = players[id]["maxhp"]
+                        players[id]["mp"] = players[id]["maxmp"]
                         players[id]["pvp"] = "no"
                         players[id]["tp"] = 0
                         players[id]["exp"] = 0
@@ -547,9 +548,10 @@ def LoginCommand():
                         mud.send_message(id, motd.read())
                         mud.send_message(id, "You are being pulled through a dimensional gateway.")
                         mud.send_message(id, "Welcome back to NixMud, {}.".format(players[id]["name"]))
-                        mud.send_message(id, "Have a 'look' around...")
+                        #mud.send_message(id, "Have a 'look' around...")
                         mud.send_message(id, "A lot changes here and interdimensional travel")
                         mud.send_message(id, "is always a pain in the ass.")
+                        LookCommand()
                         login[id]["process"] = "done"
                 if check[0] != login[id]["name"]:
                     mud.send_message(id, "Failed to find that character name.")
@@ -566,11 +568,15 @@ def LoginCommand():
 def SetjobCommand():
 #prints available jobs
     #change to ujobs
-    for x in fun["corevalues"]["jobs"]:
-        mud.send_message(id, "{}: {}".format(fun["corevalues"]["jobs"][x]["name"],fun["corevalues"]["jobs"][x]["description"]))
+    if playerprocess[id]["selection"] == None:
+        for x in fun["corevalues"]["jobs"]:
+            mud.send_message(id, "{}: {}".format(fun["corevalues"]["jobs"][x]["name"],fun["corevalues"]["jobs"][x]["description"]))
+        playerprocess[id]["selection"] = "job"
         # moves to player process function
         playerprocess[id]["process"] = "pickjob"
-    mud.send_message(id, "What job you gonna go with?")
+    if playerprocess[id]["selection"] == "job":
+        mud.send_message(id, "What job you gonna go with?")
+
 
 def NewCommand():
     #   The 'new' command gets input for a new player from the user
@@ -626,26 +632,24 @@ def NewCommand():
     if setups[id]["pickrace"] is None:
         if setups[id]["match"] == "yes":
             mud.send_message(id, "Here's a list of races:")
-            mud.send_message(id, "elavari: {}".format("".join(races["elvari"]["description"])))
+            mud.send_message(id, "elvari: {}".format("".join(races["elvari"]["description"])))
             mud.send_message(id, "humani: {}".format("".join(races["humani"]["description"])))
             mud.send_message(id, "dragani: {}".format("".join(races["dragani"]["description"])))
             mud.send_message(id, "krei: {}".format("".join(races["krei"]["description"])))
-        if setups[id]["setup"] == "pickrace":
-            mud.send_message(id, "Pick a race:")
+            mud.send_message(id, "pick a race:")
+    if setups[id]["setup"] == "pickrace":
             # Now we have input for our choice of race
-    if setups[id]["pickrace"] != None:
+        if setups[id]["pickrace"] != None:
     # Check if input for race is valid
-        if setups[id]["pickrace"] not in races:
-            mud.send_message(id, "Not a valid race.\nPick a race:")
-            setups[id]["pickrace"] = None
-        else:
-            setups[id]["race"] = setups[id]["pickrace"]
-            setups[id]["setup"] = "pickjob"
+            if setups[id]["pickrace"] not in races:
+                mud.send_message(id, "Pick a valid race:")
+                setups[id]["pickrace"] = None
+            else:
+                setups[id]["race"] = setups[id]["pickrace"]
+                setups[id]["setup"] = "pickjob"
+                SetjobCommand()
     # Now we have input for our choice of class
     if setups[id]["job"] != None:
-    #      comment out the next two lines try to rid ourselves of merge
-        setups[id]["setup"] = "merge"
-    if setups[id]["setup"] == "merge":
     # Merge with players
         players[id]["name"] = setups[id]["name"]
         players[id]["email"] = setups[id]["email"]
@@ -662,8 +666,8 @@ def NewCommand():
         ChangeJob(players[id]["race"], players[id]["job"])
         print("new player id for")
         print(players[id]["name"])
-        players[id]["maxhp"] = players[id]["hp"]
-        players[id]["maxmp"] = players[id]["mp"]
+        players[id]["hp"] = players[id]["maxhp"]
+        players[id]["mp"] = players[id]["maxmp"]
         players[id]["pvp"] = "no"
         players[id]["tp"] = 0
         players[id]["exp"] = 0
@@ -692,8 +696,8 @@ def NewCommand():
         mud.send_message(id, motd.read())
         mud.send_message(id, "Welcome to the Nixheads-Mud, {}.\n".format(players[id]["name"]))
         mud.send_message(id, "Type 'help' for a list of commands.")
-        mud.send_message(id, "Type 'look' to get your bearings in this new world")
-
+        #mud.send_message(id, "Type 'look' to get your bearings in this new world")
+        LookCommand()
 
 def GoCommand():
     # store the player's current room
@@ -712,17 +716,7 @@ def GoCommand():
                 # update the player's current room to the one the exit leads to
         players[id]["room"] = rm["exits"][ex]
                 # possible place for description after moving
-        rm = rooms[players[id]["room"]]
-        mud.send_message(id, "*"*62)
-        mud.send_message(id, rm["name"])
-        mud.send_message(id, "*"*62)
-        mud.send_message(id, rm["description"])
-        mud.send_message(id, "*"*62)
-        mud.send_message(id, "**** HP: {} **** MP: {} **** NEXT: {} **** PVP: {} ****".format(players[id]["hp"],players[id]["mp"],players[id]["next"],players[id]["pvp"]))
-        mud.send_message(id, "*"*62)
-        mud.send_message(id, "Exits are: {}".format(", ".join(rm["exits"])))
-        mud.send_message(id, "*"*62)
-        rm = rooms[players[id]["room"]]
+        LookCommand()
         # go through all the players in the game
         for pid, pl in players.items():
         # if player is in the same (new) room and isn't the player sending the command
@@ -822,21 +816,31 @@ while True:
         # Job change command process
         if playerprocess[id]["process"] == "jobchange":
             command = "setjob"
+            player[process][id]["selection"] = None
         if playerprocess[id]["process"] == "pickjob":
             commandflag = 1
             if command in fun["corevalues"]["jobs"]:
                 if setups[id]["setup"] == "pickjob":
                         setups[id]["job"] = command
                         setups[id]["setup"] = "merge"
+                        playerprocess[id]["selection"] = None
                 else:
                     players[id]["job"] = command
                     ChangeJob(players[id]["race"], players[id]["job"])
+                    if players[id]["hp"] > players[id]["maxhp"]:
+                        players[id]["hp"] = players[id]["maxhp"]
+                    if players[id]["mp"] > players[id]["maxmp"]:
+                        players[id]["mp"] = players[id]["maxmp"]
                     mud.send_message(id, "Job Changed to {}".format(command))
+                    playerprocess[id]["selection"] = None
                     commandflag = 1
             else:
                 mud.send_message(id, "Thats not a valid job.")
                 commandflag = 1
+                if setups[id]["job"] != None:
+                    playerprocess[id]["selection"] = None
         playerprocess[id]["process"] = None
+
 
         # login command process
         if login[id]["process"] != None:
@@ -872,11 +876,8 @@ while True:
                 setups[id]["confirm"] = command
             if setups[id]["setup"] == "pickrace":
                 setups[id]["pickrace"]  = command
-                if setups[id]["pickrace"] in races:
-                    mud.send_message(id, "Thanks for being a {}.".format(setups[id]["pickrace"]))
-                    mud.send_message(id, "Press Enter to continue.")
             if setups[id]["setup"] == "pickjob":
-                command = "setjob"
+                SetjobCommand()
                 playerprocess[id]["process"] = "pickjob"
             if setups[id]["setup"] != "pickjob":
                 command = "new"
