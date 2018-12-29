@@ -218,17 +218,6 @@ class creatures(object):
         self.room = room
         self.desc = desc
 
-def ChangeJob(pr, pj):
-    for stat in races[pr]:
-        attribs = json.dumps(races[pr][stat])
-        if stat != "description":
-            for jobs in startjobs[pj]:
-                if stat == jobs:
-                    value = json.dumps(startjobs[pj][stat])
-                    players[id][stat] = int(attribs) + int(value)
-                else:
-                    players[id][stat] = int(attribs)
-
 # initilize dictionaries
 
 playerprocess = {}
@@ -361,8 +350,8 @@ while True:
             "job": None,
             "ujob": None,
             "pvp": None,
-            "coin": 0,
-            "waitingsave": None,
+            "coin": 0
+
         }
 
         # send the new player a login screen
@@ -653,7 +642,17 @@ while True:
                 #print serverside a new player was added
                 print("New Player Added to server")
                 print(players[id]["name"])
-                ChangeJob(players[id]["race"], players[id]["job"])
+                pr = players[id]["race"]
+                pj = players[id]["job"]
+                for stat in races[pr]:
+                    attribs = json.dumps(races[pr][stat])
+                    if stat != "description":
+                        for jobs in startjobs[pj]:
+                            if stat == jobs:
+                                value = json.dumps(startjobs[pj][stat])
+                                players[id][stat] = int(attribs) + int(value)
+                            else:
+                                players[id][stat] = int(attribs)
                 print("new player id for")
                 print(players[id]["name"])
                 players[id]["maxhp"] = players[id]["hp"]
@@ -680,6 +679,7 @@ while True:
                         "druid": " ",
                         "witch": " "
                         }
+                print(players[id]["ujob"])
                 mud.send_message(id, "Thank you. Creation successful.")
 
                     # can we send player straight to 'look'?
@@ -708,12 +708,14 @@ while True:
                 # function for when a userlist does not exists
                 mud.send_message(id, "Creating new save")
                 database.save_name(userdata, players[id]["name"], players[id]["room"], players[id]["password"], players[id]["email"], players[id]["user"], players[id]["race"], players[id]["job"], players[id]["coin"], json.dumps(players[id]["ujob"]))
-                print("Created a new save file for: "+players[id]["name"])
+                print("Created a new save file for:")
+                print(players[id]["name"])
             else:
                 # updates save file
-                database.update_name(userdata, players[id]["name"], players[id]["room"], players[id]["password"], players[id]["email"], players[id]["user"], players[id]["race"], players[id]["job"], players[id]["coin"], json.dumps(players[id]["ujob"]))
+                database.update_name(userdata, players[id]["name"], players[id]["room"], players[id]["password"], players[id]["email"], players[id]["user"], players[id]["race"], players[id]["job"], players[id]["coin"],json.dumps(players[id]["ujob"]))
                 mud.send_message(id, "Updated your file.")
-                print("Updated save file for: "+players[id]["name"])
+                print("Updated save file for:")
+                print(players[id]["name"])
 
         # emergency reset
         # also logout command
@@ -849,13 +851,11 @@ while True:
                 print(players[pid]["name"])
                 if not userlist:
                     mud.send_message(pid, "Creating new save.")
-                    database.save_name(userdata, players[pid]["name"], players[pid]["room"], players[pid]["password"],        players[pid]["email"], players[pid]["user"], players[pid]["race"], players[pid]["job"], players[pid]["coin"])
-                    print("Saved")
+                    database.save_name(userdata, players[pid]["name"], players[pid]["room"], players[pid]["password"], players[pid]["email"], players[pid]["user"], players[pid]["race"], players[pid]["job"], players[pid]["coin"], json.dumps(players[pid]["ujob"]))
+                    print("Saved.")
                 else:
-                    for user in userlist:
-                        if user[0] == players[pid]["name"]:
-                                database.update_name(userdata, players[pid]["name"], players[pid]["room"], players[pid]["password"], players[pid]["email"], players[pid]["user"], players[pid]["race"], players[pid]["job"], players[pid]["coin"])
-                                print("saved")
+                    database.update_name(userdata, players[pid]["name"], players[pid]["room"], players[pid]["password"], players[id]["email"], players[pid]["user"], players[pid]["race"], players[pid]["job"], players[pid]["coin"], json.dumps(players[pid]["ujob"]))
+                print("saved")
             mud.shutdown()
 
         # 'look' command
