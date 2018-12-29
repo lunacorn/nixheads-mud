@@ -395,7 +395,6 @@ def SaveCommand():
 
 def TellCommand():
     # go through every player in the game
-    st = params
     for pid, pl in players.items():
         # if name matches
         if st == players[pid]["name"]:
@@ -569,9 +568,9 @@ def SetjobCommand():
     #change to ujobs
     for x in fun["corevalues"]["jobs"]:
         mud.send_message(id, "{}: {}".format(fun["corevalues"]["jobs"][x]["name"],fun["corevalues"]["jobs"][x]["description"]))
-        mud.send_message(id, "What job you gonna go with?")
         # moves to player process function
         playerprocess[id]["process"] = "pickjob"
+    mud.send_message(id, "What job you gonna go with?")
 
 def NewCommand():
     #   The 'new' command gets input for a new player from the user
@@ -939,6 +938,7 @@ while True:
 
         # 'tell' command
         elif command == "tell":
+            st = params
             TellCommand()
 
         # 'say' command
