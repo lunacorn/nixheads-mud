@@ -1,6 +1,31 @@
 {
     "corevalues": {
-        
+            
+            "items": {
+                "equipment": {
+                
+                    "weapons": {
+                        "onehand": {
+                            "swords":{
+                                "wooden_sword":{
+                                    "name": "wooden_sword",
+                                    "description":{
+                                        "eq": "Activating denting paper ability!!",
+                                        "room": "The best sword in the world... lies here."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "objects":{
+
+                },
+                "stats":{
+
+                }
+            },
+            
             "jobs": {
 
                 "warrior": {
