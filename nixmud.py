@@ -373,9 +373,8 @@ def AssignNewPlayersIDs():
         "coin": 0
     }
 
-        # send the new player a login screen
-        # identical to the 'reset' command.
-    mud.send_message(id, logascii.read())
+
+def Login():
     mud.send_message(id, "Are you a 'new' player or would you like to 'login'?")
 
 
@@ -412,8 +411,7 @@ def ResetCommand():
     login[id] = {x: None for x in login[id]}
     players[id] = {x: None for x in players[id]}
     setups[id] = {x: None for x in setups[id]}
-    mud.send_message(id, logascii.read())
-    mud.send_message(id, "Are you a 'new' player or would you like to 'login'?")
+    Login()
 
 def SaveCommand():
     # checks database
@@ -538,7 +536,7 @@ def LoginCommand():
             print(login[id]["name"])
             if not userlist: # if cant find a user save list will come back blank
                 mud.send_message(id, "Bad username.")
-                mud.send_message(id, "Are you a 'new' player or would you like to 'login'?")
+                Login()
                     # i have the ability to type reset now
                     # which means i built in a work around.
                     # for the issue.  however its easier to
@@ -591,13 +589,12 @@ def LoginCommand():
                             players[id]["inventoryslot"]["slot8"] = checkinv[8]
                         login[id]["process"] = "done"
                 if check[0] != login[id]["name"]:
-                    mud.send_message(id, "Failed to find that character name.")
                     login[id]["name"] = None
                     login[id]["password"] = None
                     login[id]["process"] = None
                 if check[2] != login[id]["password"]:
                     mud.send_message(id, "Bad password.")
-                    mud.send_message(id, "Are you a 'new' player or would you like to 'login'?")
+                    Login()
                     login[id]["name"] = None
                     login[id]["password"] = None
                     login[id]["process"] = None
@@ -805,11 +802,6 @@ def CreatureCheckRoom(pr):
                creatures.append(items)
     return creatures
 
-#
-#
-
-
-
 # main game loop. We loop forever (i.e. until the program is terminated)
 while True:
     # pause for 1/5 of a second on each loop, so that we don't constantly
@@ -823,6 +815,8 @@ while True:
     for id in mud.get_new_players():
         AssignNewPlayersIDsP()
         AssignNewPlayersIDs()
+        mud.send_message(id, logascii.read())
+        Login()
 
     # go through any recently disconnected players
     for id in mud.get_disconnected_players():
@@ -975,11 +969,16 @@ while True:
                 mud.send_message(pid, "{}: SYSTEM MESSAGE!!: {}".format(players[id]["name"], params))
 
         elif command == "tell":
+            online = "offline"
             for pid, pl in players.items():
-                 text = str(params).split(' ')
-                 if players[pid]["name"] == text[0]:
+                text = str(params).split(' ')
+                if players[pid]["name"] == text[0]:
                     msgto = " ".join(str(x) for x in text[1:])
                     mud.send_message(pid, "{} whispers: {}".format(players[id]["name"],msgto))
+                    online = "online"
+
+            if online != "online":
+                mud.send_message(id, "That character is not logged in at this time.")
 
         # 'say' command
         elif command == "say":
