@@ -27,7 +27,7 @@
 
 -- add an id option to character shee so other players can exam you and see it
 
--- do not let you send tells to yourself.
+-- do not let you send tells to yourself.  [done]
 
 --update db.py with new player info when finished. [done]
 
