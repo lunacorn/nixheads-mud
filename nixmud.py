@@ -960,10 +960,14 @@ while True:
             online = "offline"
             for pid, pl in players.items():
                 text = str(params).split(' ')
-                if players[pid]["name"] == text[0]:
-                    msgto = " ".join(str(x) for x in text[1:])
-                    mud.send_message(pid, "{} whispers: {}".format(players[id]["name"],msgto))
-                    online = "online"
+                if players[id]["name"] != text[0]:
+                    if players[pid]["name"] == text[0]:
+                        msgto = " ".join(str(x) for x in text[1:])
+                        mud.send_message(pid, "{} whispers: {}".format(players[id]["name"],msgto))
+                        online = "online"
+                else:
+                     online = "online"
+                     mud.send_message(id, "you love to hear yourself talk huh.....")
             if online != "online":
                 mud.send_message(id, "That character is not logged in at this time.")
 
