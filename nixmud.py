@@ -134,9 +134,7 @@ from mudserver import MudServer
 ### saving space and effort adding in all creatures
 ### automatically adding in new creatures added to json
 class Creatures(object):
-
     creatures = {}
-
     def __init__(self, cid, name, room, desc, clvl, cstr ,cdmg ,cdef ,clfe ,life ,moves ,drops ,cspc ,csnm , ctmr, corp):
         self.cid = cid
         self.name = name
