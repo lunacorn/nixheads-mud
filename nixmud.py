@@ -654,16 +654,14 @@ def NewCommand():
     if setups[id]["pickrace"] is None:
         if setups[id]["match"] == "yes":
             mud.send_message(id, "Here's a list of races:")
-            mud.send_message(id, "elvari: "+fun["corevalues"]["races"]["elvari"]["description"])
-            mud.send_message(id, "humani:  "+fun["corevalues"]["races"]["humani"]["description"])
-            mud.send_message(id, "dragani:  "+fun["corevalues"]["races"]["dragani"]["description"])
-            mud.send_message(id, "krei:  "+fun["corevalues"]["races"]["krei"]["description"])
+            for newraces in fun["corevalues"]["races"]:
+                mud.send_message(id, newraces+" :  "+fun["corevalues"]["races"][newraces]["description"])
             mud.send_message(id, "pick a race:")
     if setups[id]["setup"] == "pickrace":
             # Now we have input for our choice of race
         if setups[id]["pickrace"] != None:
     # Check if input for race is valid
-            if setups[id]["pickrace"] not in  fun["corevalues"]:
+            if setups[id]["pickrace"] not in  fun["corevalues"]["races"]:
                 mud.send_message(id, "Pick a valid race:")
                 setups[id]["pickrace"] = None
             else:
