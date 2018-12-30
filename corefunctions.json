@@ -1,36 +1,50 @@
 {
     "corevalues": {
-            
+
             "items": {
                 "equipment": {
-                
-                    "weapons": {
-                        "onehand": {
-                            "swords":{
-                                "wooden_sword":{
-                                    "name": "wooden_sword",
-                                    "description":{
-                                        "eq": "Activating denting paper ability!!",
-                                        "room": "The best sword in the world... lies here."
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "objects":{
 
+                        "wooden_sword":{
+                           "iid": "wosw",
+                           "name": "wooden_sword",
+                           "invdesc": "Activating denting paper ability!!",
+                           "desc": "The best sword in the world... lies here.",
+                           "room": "Dungeon1",
+                           "type": "eq",
+                           "eqtype": "weapon",
+                           "bp": "no",
+                           "bpsize": "nil",
+                           "eqstata": "str",
+                           "eqstatb": "dex",
+                           "eqsvala": 2,
+                           "eqsvalb": 0,
+                           "dtmr": 1800,
+                           "stmr": 600
+                                    }
+
+                            }
+                },
+            "objects":{
+                  "Door": "closed",
+                  "tree": "heal",
+                  "barrel": "closed",
+                  "fountain": "drink",
+                  "trap": "closed",
+                  "ladder": "climb",
+                  "rope": "climb",
+                  "meat": "eat",
+                  "bucket": "fill",
+                  "fruit": "eat",
+                  "note": "papercut",
+                  "sword": "kick"
                 },
                 "stats":{
-
-                }
-            },
-            
+                },
             "jobs": {
 
                 "warrior": {
                     "name": "warrior",
-                    "description": "Tank Job? If you want. You can provoke enemies or just pulverize 'em.'",            
+                    "description": "Tank Job? If you want. You can provoke enemies or just pulverize 'em.'",
                     "maxhp": 10,
                     "maxmp": -8,
                     "str": 7,
@@ -54,7 +68,7 @@
                 "blackmage": {
 
                     "name": "blackmage",
-                    "description": "Boomcannon! Nuke your enemies quick u squishie!!",            
+                    "description": "Boomcannon! Nuke your enemies quick u squishie!!",
                     "maxhp": 2,
                     "maxmp": 7,
                     "str": -1,
@@ -77,9 +91,9 @@
 
 
                 "whitemage": {
-                    
+
                     "name": "whitemage",
-                    "description": "A strong healer, hard job to learn but neccessary for groups",            
+                    "description": "A strong healer, hard job to learn but neccessary for groups",
                     "maxhp": -2,
                     "maxmp":  10,
                     "str": 1,
@@ -104,7 +118,7 @@
 
                 "thief": {
                     "name": "thief",
-                    "description": "Pickpocket and rogue. a great first job for new players",            
+                    "description": "Pickpocket and rogue. a great first job for new players",
                     "maxhp": 8,
                     "maxmp": -4,
                     "str": 3,
@@ -112,8 +126,8 @@
                     "vit": 4,
                     "int": 0,
                     "mnd": -3,
-                    "cha": 4, 
-                    "crit": 2, 
+                    "cha": 4,
+                    "crit": 2,
                     "spells": {
                         "1": "none"
                         },
@@ -123,10 +137,10 @@
                             "sneak": 10
                             }
                         }
-                        
+
                     }
                 },
-    
+
             "races": {
 
                 "elvari": {
@@ -155,7 +169,7 @@
                     "mnd": 9,
                     "cha": 7,
                     "crit": 1
-                }, 
+                },
 
 
                 "dragani": {
@@ -187,7 +201,6 @@
                     "crit": 2
                 }
 
-            }
- 
-        }
-} 
+         }
+       }
+}

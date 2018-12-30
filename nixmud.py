@@ -125,7 +125,8 @@ import time
 import db as database
 import json
 import invdb as invendb
-
+##used random for item numbers
+import random
 # import the MUD server class
 
 from mudserver import MudServer
@@ -153,6 +154,24 @@ class Creatures(object):
         self.ctmr = ctmr
         self.corp = corp
         Creatures.creatures[cid] = self
+
+class Items(object):
+    allitems = {}
+    def __init__(self, iid, name, desc, room, type, eqtype, invdesc, bp, bpsize, eqstata, eqstatb, eqsvala, eqsvalb):
+        self.iid = iid
+        self.name = name
+        self.desc = desc
+        self.room = room
+        self.type = type
+        self.eqtype = eqtype
+        self.invdesc = invdesc
+        self.bp = bp
+        self.bpsize = bpsize
+        self.eqstata = eqstata
+        self.eqstatb = eqstatb
+        self.eqsvala = eqsvala
+        self.eqsvalb = eqsvalb
+        Items.allitems[iid] = self
 
 # import core values
 with open("corefunctions.json") as funcs:
@@ -196,17 +215,6 @@ with open("Help/help1.json") as helpfile:
 
 # move this next comment down and comment for class
 
-def ChangeJob(pr, pj):
-
-    for stat in fun["corevalues"]["races"][pr]:
-        if stat != "description":
-            attribs = json.dumps(fun["corevalues"]["races"][pr][stat])
-            statvalues = json.dumps(fun["corevalues"]["jobs"][pj])
-            for jobs in fun["corevalues"]["jobs"][pj]:
-                if stat == jobs:
-                    value = int(attribs) + int(fun["corevalues"]["jobs"][pj][jobs])
-                    players[id][stat] = value
-
 # initilize dictionaries
 
 playerprocess = {}
@@ -223,12 +231,13 @@ userdata = database.connect()
 invdata = invendb.connect()
 
 ## list holds all data for creature names when they get dumped to class
+allitemslist = []
+defaultsitemslist = []
 creaturelist = []
 room = []
 myroom = []
 monstercount = 0
 ########### this grabs from the json for creatures
-
 for cid in credb.keys():
     number = 0
     for stat in credb[cid]:
@@ -283,8 +292,80 @@ for cid in credb.keys():
                     creaturelist.append(Creatures.creatures[str(ncid+str(monstercount))].cid)
 
 
-#
-#
+
+#### we need to load the items into the class
+for item in fun["corevalues"]["items"]["equipment"]:
+        for stat in fun["corevalues"]["items"]["equipment"][item]:
+                value = str(json.dumps(fun["corevalues"]["items"]["equipment"][item][stat])).replace('"', '')
+                if stat == "iid":
+                    iid = value
+                if stat == "name":
+                    name = value
+                if stat == "desc":
+                    desc = value
+                if stat == "room":
+                    room = value
+                if stat == "type":
+                    type = value
+                if stat == "eqtype":
+                    eqtype = value
+                if stat == "invdesc":
+                    invdesc = value
+                if stat == "bp":
+                    bp = value
+                if stat == "bpsize":
+                    bpsize = value
+                if stat == "eqstata":
+                    eqstata = value
+                if stat == "eqstatb":
+                    eqstatb = value
+                if stat == "eqsvala":
+                    eqsvala = value
+                if stat == "eqsvalb":
+                    eqsvalb = value
+        newiid = str(iid)+str(random.randint(100,10000000000))
+        if not str(newiid) in allitemslist:
+            Items(newiid ,name, desc, room, type, eqtype, invdesc, bp, bpsize, eqstata, eqstatb, eqsvala, eqsvalb)
+            allitemslist.append(Items.allitems[str(newiid)].iid)
+
+#### we need to load the items into the class defaultly
+for item in fun["corevalues"]["items"]["equipment"]:
+        for stat in fun["corevalues"]["items"]["equipment"][item]:
+                value = str(json.dumps(fun["corevalues"]["items"]["equipment"][item][stat])).replace('"', '')
+                if stat == "iid":
+                    iid = value
+                if stat == "name":
+                    name = value
+                if stat == "desc":
+                    desc = value
+                if stat == "room":
+                    room = "fsdgd"
+                if stat == "type":
+                    type = value
+                if stat == "eqtype":
+                    eqtype = value
+                if stat == "invdesc":
+                    invdesc = value
+                if stat == "bp":
+                    bp = value
+                if stat == "bpsize":
+                    bpsize = value
+                if stat == "eqstata":
+                    eqstata = value
+                if stat == "eqstatb":
+                    eqstatb = value
+                if stat == "eqsvala":
+                    eqsvala = value
+                if stat == "eqsvalb":
+                    eqsvalb = value
+        if not str(iid) in defaultsitemslist:
+            Items(iid ,name, desc, room, type, eqtype, invdesc, bp, bpsize, eqstata, eqstatb, eqsvala, eqsvalb)
+            defaultsitemslist.append(Items.allitems[str(iid)].iid)
+
+for xx in allitemslist:
+    print(xx+" : "+Items.allitems[xx].room)
+for yy in defaultsitemslist:
+    print(yy+" : "+Items.allitems[yy].room)
 ######function to assign blank ids for new players
 def AssignNewPlayersIDsP():
     # customizable player process per id
@@ -346,35 +427,52 @@ def AssignNewPlayersIDs():
         "job": None,
         "ujob": None,
         "pvp": None,
-        "inventoryspace": 7,
+        "inventoryspace": 8,
         "inventoryused": 0,
         "inventoryslot": {
-            "slot1": "0",
-            "slot2": "0",
-            "slot3": "0",
-            "slot4": "0",
-            "slot5": "0",
-            "slot6": "0",
-            "slot7": "0",
-            "slot8": "0"
+            "slot2": "Empty",
+            "slot1": "Empty",
+            "slot3": "Empty",
+            "slot4": "Empty",
+            "slot5": "Empty",
+            "slot6": "Empty",
+            "slot7": "Empty",
+            "slot8": "Empty"
             },
         "coin": 0
     }
+#### functions for commands
+
+# change job function
+def ChangeJob(pr, pj):
+
+    for stat in fun["corevalues"]["races"][pr]:
+        if stat != "description":
+            attribs = json.dumps(fun["corevalues"]["races"][pr][stat])
+            statvalues = json.dumps(fun["corevalues"]["jobs"][pj])
+            for jobs in fun["corevalues"]["jobs"][pj]:
+                if stat == jobs:
+                    value = int(attribs) + int(fun["corevalues"]["jobs"][pj][jobs])
+                    players[id][stat] = value
+
 
 def Login():
     mud.send_message(id, "Are you a 'new' player or would you like to 'login'?")
 
-#### functions for commands
+## summon inventory list
 def InventoryCommand():
     mud.send_message(id, "You can hold {} more items.".format((players[id]["inventoryspace"] - players[id]["inventoryused"])))
-    mud.send_message(id, "::::::::::::::::::::::::::::::::::::")
+    mud.send_message(id, ":"*35)
     mud.send_message(id, ":::::::::::::INVENTORY::::::::::::::")
-    mud.send_message(id, "::::::::::::::::::::::::::::::::::::")
-
+    mud.send_message(id, ":"*35)
     for x in players[id]["inventoryslot"]:
-        if players[id]["inventoryslot"][x] == "0":
-            x = "Empty"
-            mud.send_message(id, "::{}".format(x))
+        print(x)
+        if players[id]["inventoryslot"][x] != "Empty":
+            for i in [players[id]["inventoryslot"][x]]:
+                print(Items.allitems[i].iid)
+                mud.send_message(id, "::"+str(Items.allitems[i].name))
+        else:
+            mud.send_message(id, "Empty")
 
 def HelpCommand():
     # send the player back the list of possible commands
@@ -394,6 +492,7 @@ def ShutdownCommand():
     mud.shutdown()
 
 def ResetCommand():
+
     login[id] = {x: None for x in login[id]}
     players[id] = {x: None for x in players[id]}
     setups[id] = {x: None for x in setups[id]}
@@ -416,24 +515,46 @@ def SaveCommand():
         print("Updated save file for: "+players[id]["name"])
 
 
+
+def ItemsCheckRoom(pr):
+    items = []
+    for itemsx in allitemslist:
+       if itemsx == Items.allitems[itemsx].iid:
+           if pr == Items.allitems[itemsx].room:
+               items.append(itemsx)
+    return items
+
+
 def GrabCommand():
-    item = fun["corevalues"]["items"]["equipment"]["weapons"]["onehand"]["swords"]["wooden_sword"]["name"]
-    print(item)
-    wb = params.lower()
-    if wb in item:
-        if players[id]["inventoryspace"] > players[id]["inventoryused"]:
-            for x in players[id]["inventoryslot"]:
-                for s in x:
-                    print(s)
-                    if s == "0":
-                        mud.send_message(id, "You pick up the {}".format(item))
-                        s = item["description"]["eq"]
-                        break
+    gotitem = 0 ## needed to check if item was taken
+    item = ItemsCheckRoom(players[id]["room"]) # takes all items in current room
+    for i in item:
+        if params.lower() != Items.allitems[i].name: #if command params are not same as the name of the iid of item
+            mud.send_message(id, "You think you're grabbing something?\n I think your VR broke.  welcome back to reality.")
         else:
-            mud.send_message(id, "Your inventory is full.")
-    if params.lower() != item:
-        print(wb)
-        mud.send_message(id, "You think you're grabbing something?\n I think your VR broke.  welcome back to reality.")
+            if players[id]["inventoryspace"] > players[id]["inventoryused"]:
+                for x in players[id]["inventoryslot"]:
+                    for s in [players[id]["inventoryslot"][x]]: ##extra [] for stoping s being char by char
+                        if s == "Empty":
+                            if gotitem == 0:
+                                mud.send_message(id, "You pick up the "+str(Items.allitems[i].name))
+                                Items.allitems[i].room = players[id]["name"]
+
+                                players[id]["inventoryslot"][x] = str(Items.allitems[i].iid)
+                                players[id]["inventoryused"] += 1
+                                gotitem = 1
+            else:
+                mud.send_message(id, "Your inventory is full.")
+
+def DropCommand():
+    for x in players[id]["inventoryslot"]:
+        for s in [players[id]["inventoryslot"][x]]:
+            if s != "Empty":
+                print(Items.allitems[s].name)
+                if params.lower() == Items.allitems[s].name:
+                    players[id]["inventoryslot"][x] = "Empty"
+                    Items.allitems[s].room = players[id]["room"]
+                    mud.send_message(id, "You drop: "+str(Items.allitems[s].name))
 
 def FightCommand():
     # store the target
@@ -581,17 +702,53 @@ def LoginCommand():
                         mud.send_message(id, "A lot changes here and interdimensional travel")
                         mud.send_message(id, "is always a pain in the ass.")
                         LookCommand()
-                       # login[id]["process"] = "done"
+                       # begin testing
+                       ###   This makes your unique iid work on login
+                       ###
+                       ###   WHAT THE ACTUAL FUCK!!!??? I KNOW IT WORKS BUT WTF
+                       ### if you fork our code never change this
+                       ###  you will never recover (6:44AM Dec 29 2018)
+                       ###      ........    seriously   ....  dont do it
+                       ###
                         invlist = invendb.get_name(invdata, login[id]["name"])
-                        for checkinv in invlist:
-                            players[id]["inventoryslot"]["slot1"] = checkinv[1]
-                            players[id]["inventoryslot"]["slot2"] = checkinv[2]
-                            players[id]["inventoryslot"]["slot3"] = checkinv[3]
-                            players[id]["inventoryslot"]["slot4"] = checkinv[4]
-                            players[id]["inventoryslot"]["slot5"] = checkinv[5]
-                            players[id]["inventoryslot"]["slot6"] = checkinv[6]
-                            players[id]["inventoryslot"]["slot7"] = checkinv[7]
-                            players[id]["inventoryslot"]["slot8"] = checkinv[8]
+                        slotlist = []
+                        if invlist:
+                            for checkinv in invlist:
+                                for item in checkinv:
+                                    if item != players[id]["name"] and item != "Empty":
+                                        orig = item[:4]
+                                        newiid = str(orig)+str(random.randint(100,10000000000))
+                                        while newiid in allitemslist:
+                                            newiid = str(orig)+str(random.randint(100,10000000000))
+                                        Items(newiid ,Items.allitems[orig].name, Items.allitems[orig].desc, players[id]["room"], Items.allitems[orig].type, Items.allitems[orig].eqtype, Items.allitems[orig].invdesc, Items.allitems[orig].bp, Items.allitems[orig].bpsize, Items.allitems[orig].eqstata, Items.allitems[orig].eqstatb, Items.allitems[orig].eqsvala, Items.allitems[orig].eqsvalb)
+                                        slotlist.append(Items.allitems[str(newiid)].iid)
+                        slotsfilled = int(0)-int(len(slotlist))
+                        totalslots = int(8)+int(slotsfilled)
+                        fillslots = 1
+                        print("length = "+str(len(slotlist)))
+                        while fillslots == 1:
+                            iteminlist = str(int(slotsfilled)+int(len(slotlist))+int(1))
+                            print(iteminlist)
+                            if len(slotlist) != int(iteminlist)-int(1):
+                                print("yay i filled in a slot your majesty")
+                                players[id]["inventoryslot"]["slot"+iteminlist] = slotlist[int(int(iteminlist)-int(1))]
+                            if len(slotlist) == int(iteminlist)-int(1):
+                                while totalslots != 0:
+                                    print("but these are empty you peasant")
+                                    players[id]["inventoryslot"]["slot"+iteminlist  ] = "Empty"
+                                    totalslots -= 1
+                            if slotsfilled == 0:
+                                print("you win!!!")
+                                fillslots = 0
+                            slotsfilled += 1
+
+                        #        players[id]["inventoryslot"]["slot2"] = checkinv[2]
+                        #        players[id]["inventoryslot"]["slot3"] = checkinv[3]
+                        #        players[id]["inventoryslot"]["slot4"] = checkinv[4]
+                        #        players[id]["inventoryslot"]["slot5"] = checkinv[5]
+                        #        players[id]["inventoryslot"]["slot6"] = checkinv[6]
+                        #        players[id]["inventoryslot"]["slot7"] = checkinv[7]
+                        #        players[id]["inventoryslot"]["slot8"] = checkinv[8]
                         login[id]["process"] = "done"
                 if check[0] != login[id]["name"]:
                     login[id]["name"] = None
@@ -729,6 +886,7 @@ def NewCommand():
                 "druid": " ",
                 "witch": " "
                 }
+
         mud.send_message(id, "Thank you. Creation successful.")
          # can we send player straight to 'look'?
         mud.send_message(id, motd.read())
@@ -794,7 +952,8 @@ def LookCommand():
     for cre in CreatureCheckRoom(players[id]["room"]):
         mud.send_message(id, Creatures.creatures[cre].desc)
             # send player a message containing items on the floor
-    mud.send_message(id, json.dumps(fun["corevalues"]["items"]["equipment"]["weapons"]["onehand"]["swords"]["wooden_sword"]["description"]["room"]))
+    for i in ItemsCheckRoom(players[id]["room"]):
+        mud.send_message(id, Items.allitems[i].desc)
 
 def CreatureCheckRoom(pr):
     creatures = []
@@ -994,8 +1153,11 @@ while True:
         # saves character data to database and prints
         # serverside for each character saved
         # make this a gm command later
-        elif command == 'shutdown':
+        elif command == "shutdown":
             ShutdownCommand()
+
+        elif command == "drop":
+            DropCommand()
 
         elif command == "grab":
             GrabCommand()
