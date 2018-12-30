@@ -196,16 +196,6 @@ todo       = open("Art/todo")
 with open("Help/help1.json") as helpfile:
     helpfiles = json.load(helpfile)
 
-## these next two files can be erased, we should migrate commands using them
-
-# import race files
-with open("Races/races.json") as raceoptions:
-    races = json.load(raceoptions)
-
-# import jobs (currently classes)
-with open("Classes/classes.json") as joboptions:
-    startjobs = json.load(joboptions)
-
 # move this next comment down and comment for class
 
 def ChangeJob(pr, pj):
@@ -372,11 +362,9 @@ def AssignNewPlayersIDs():
             },
         "coin": 0
     }
-
-
+    
 def Login():
     mud.send_message(id, "Are you a 'new' player or would you like to 'login'?")
-
 
 #### functions for commands
 def InventoryCommand():
@@ -666,16 +654,16 @@ def NewCommand():
     if setups[id]["pickrace"] is None:
         if setups[id]["match"] == "yes":
             mud.send_message(id, "Here's a list of races:")
-            mud.send_message(id, "elvari: {}".format("".join(races["elvari"]["description"])))
-            mud.send_message(id, "humani: {}".format("".join(races["humani"]["description"])))
-            mud.send_message(id, "dragani: {}".format("".join(races["dragani"]["description"])))
-            mud.send_message(id, "krei: {}".format("".join(races["krei"]["description"])))
+            mud.send_message(id, "elvari: "+fun["corevalues"]["races"]["elvari"]["description"])
+            mud.send_message(id, "humani:  "+fun["corevalues"]["races"]["humani"]["description"])
+            mud.send_message(id, "dragani:  "+fun["corevalues"]["races"]["dragani"]["description"])
+            mud.send_message(id, "krei:  "+fun["corevalues"]["races"]["krei"]["description"])
             mud.send_message(id, "pick a race:")
     if setups[id]["setup"] == "pickrace":
             # Now we have input for our choice of race
         if setups[id]["pickrace"] != None:
     # Check if input for race is valid
-            if setups[id]["pickrace"] not in races:
+            if setups[id]["pickrace"] not in  fun["corevalues"]:
                 mud.send_message(id, "Pick a valid race:")
                 setups[id]["pickrace"] = None
             else:
@@ -976,7 +964,6 @@ while True:
                     msgto = " ".join(str(x) for x in text[1:])
                     mud.send_message(pid, "{} whispers: {}".format(players[id]["name"],msgto))
                     online = "online"
-
             if online != "online":
                 mud.send_message(id, "That character is not logged in at this time.")
 
