@@ -431,18 +431,6 @@ def SaveCommand():
         mud.send_message(id, "Updated your file.")
         print("Updated save file for: "+players[id]["name"])
 
-def TellCommand():
-    # go through every player in the game
-    for pid, pl in players.items():
-        # if name matches
-        if st == players[pid]["name"]:
-            mud.send_message(id, "what would you like to tell them?")
-            mud.send_message(id, "currently cant use spaces so use _ instead")
-            #loop to playerprocess function
-            playerprocess[id]["process"] = "sendtell"
-            # add a way for spaces
-            # also add a way to check if player is online without spitting back
-            # all the players this function does not match untill you find it
 
 def FightCommand():
     # store the target
@@ -861,16 +849,6 @@ while True:
         # move on to the next one
         # move the above comments down
 
-        # Send tell command process
-        if playerprocess[id]["process"] == "sendtell":
-            commandflag = 1
-            for pid, pl in players.items():
-                 # if the names match as the player
-                 if players[pid]["name"] == st:
-                    mud.send_message(pid, "{} whispers: {}".format(players[id]["name"],command))
-                    mud.send_message(id, "sent {},: {}".format(st,command))
-                    commandflag = 1
-
         # Job change command process
         if playerprocess[id]["process"] == "jobchange":
             command = "setjob"
@@ -996,10 +974,12 @@ while True:
             for pid, pl in players.items():
                 mud.send_message(pid, "{}: SYSTEM MESSAGE!!: {}".format(players[id]["name"], params))
 
-        # 'tell' command
         elif command == "tell":
-            st = params
-            TellCommand()
+            for pid, pl in players.items():
+                 text = str(params).split(' ')
+                 if players[pid]["name"] == text[0]:
+                    msgto = " ".join(str(x) for x in text[1:])
+                    mud.send_message(pid, "{} whispers: {}".format(players[id]["name"],msgto))
 
         # 'say' command
         elif command == "say":
