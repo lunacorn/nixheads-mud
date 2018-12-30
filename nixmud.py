@@ -360,7 +360,7 @@ def AssignNewPlayersIDs():
             },
         "coin": 0
     }
-    
+
 def Login():
     mud.send_message(id, "Are you a 'new' player or would you like to 'login'?")
 
@@ -415,6 +415,25 @@ def SaveCommand():
         mud.send_message(id, "Updated your file.")
         print("Updated save file for: "+players[id]["name"])
 
+
+def GrabCommand():
+    item = fun["corevalues"]["items"]["equipment"]["weapons"]["onehand"]["swords"]["wooden_sword"]["name"]
+    print(item)
+    wb = params.lower()
+    if wb in item:
+        if players[id]["inventoryspace"] > players[id]["inventoryused"]:
+            for x in players[id]["inventoryslot"]:
+                for s in x:
+                    print(s)
+                    if s == "0":
+                        mud.send_message(id, "You pick up the {}".format(item))
+                        s = item["description"]["eq"]
+                        break
+        else:
+            mud.send_message(id, "Your inventory is full.")
+    if params.lower() != item:
+        print(wb)
+        mud.send_message(id, "You think you're grabbing something?\n I think your VR broke.  welcome back to reality.")
 
 def FightCommand():
     # store the target
@@ -710,7 +729,6 @@ def NewCommand():
                 "druid": " ",
                 "witch": " "
                 }
-        print(players[id]["ujob"])
         mud.send_message(id, "Thank you. Creation successful.")
          # can we send player straight to 'look'?
         mud.send_message(id, motd.read())
@@ -774,9 +792,9 @@ def LookCommand():
     mud.send_message(id, "Players here: {}".format(", ".join(playershere)))
             # send player a message containing the list of creatures in the room
     for cre in CreatureCheckRoom(players[id]["room"]):
-        monster = ''.join([i for i in cre if not i.isdigit()])
-        mud.send_message(id, "creature in room : "+monster)
-
+        mud.send_message(id, Creatures.creatures[cre].desc)
+            # send player a message containing items on the floor
+    mud.send_message(id, json.dumps(fun["corevalues"]["items"]["equipment"]["weapons"]["onehand"]["swords"]["wooden_sword"]["description"]["room"]))
 
 def CreatureCheckRoom(pr):
     creatures = []
@@ -978,6 +996,9 @@ while True:
         # make this a gm command later
         elif command == 'shutdown':
             ShutdownCommand()
+
+        elif command == "grab":
+            GrabCommand()
 
         # 'look' command
         elif command == "look":
