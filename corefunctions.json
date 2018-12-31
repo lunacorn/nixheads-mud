@@ -4,6 +4,23 @@
             "items": {
                 "equipment": {
 
+                         "candycane":{
+                           "iid": "caca",
+                           "name": "candycane",
+                           "invdesc": "Ultimate Elvish wand",
+                           "desc": "Ultimate Elvish Pepperminty power!!",
+                           "room": "Dungeon1",
+                           "type": "eq",
+                           "eqtype": "weapon",
+                           "bp": "no",
+                           "bpsize": "nil",
+                           "eqstata": "str",
+                           "eqstatb": "dex",
+                           "eqsvala": 2,
+                           "eqsvalb": 0,
+                           "dtmr": 1800,
+                           "stmr": 600
+                                    },
                         "wooden_sword":{
                            "iid": "wosw",
                            "name": "wooden_sword",
@@ -25,7 +42,18 @@
                             }
                 },
             "objects":{
-                  "Door": "closed",
+
+                  "Door": {
+                    "command": "open",
+                    "values": {
+                      "shut:": "You shut the door.",
+                      "ajar": "You open the door.",
+                      "exit": "y",
+                      "closed": "You walk into a door.  Are you drunk?"
+                    }
+                  },
+
+
                   "tree": "heal",
                   "barrel": "closed",
                   "fountain": "drink",

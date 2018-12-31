@@ -339,7 +339,7 @@ for item in fun["corevalues"]["items"]["equipment"]:
                 if stat == "desc":
                     desc = value
                 if stat == "room":
-                    room = "fsdgd"
+                    room = "fuckall"
                 if stat == "type":
                     type = value
                 if stat == "eqtype":
@@ -366,6 +366,8 @@ for xx in allitemslist:
     print(xx+" : "+Items.allitems[xx].room)
 for yy in defaultsitemslist:
     print(yy+" : "+Items.allitems[yy].room)
+    allitemslist.append(yy)
+
 ######function to assign blank ids for new players
 def AssignNewPlayersIDsP():
     # customizable player process per id
@@ -430,15 +432,29 @@ def AssignNewPlayersIDs():
         "inventoryspace": 8,
         "inventoryused": 0,
         "inventoryslot": {
-            "slot2": "Empty",
             "slot1": "Empty",
+            "slot2": "Empty",
             "slot3": "Empty",
             "slot4": "Empty",
             "slot5": "Empty",
             "slot6": "Empty",
             "slot7": "Empty",
-            "slot8": "Empty"
+            "slot8": "Empty",
             },
+        "head": "Empty",
+        "body": "Empty",
+        "hands": "Empty",
+        "legs": "Empty",
+        "feet": "Empty",
+        "weapon": "Empty",
+        "offhand": "Empty",
+        "ear": "Empty",
+        "neck": "Empty",
+        "waist": "Empty",
+        "ringl": "Empty",
+        "ringr": "Empty",
+        "back": "Empty",
+        "bag": "Empty",
         "coin": 0
     }
 #### functions for commands
@@ -466,7 +482,6 @@ def InventoryCommand():
     mud.send_message(id, ":::::::::::::INVENTORY::::::::::::::")
     mud.send_message(id, ":"*35)
     for x in players[id]["inventoryslot"]:
-        print(x)
         if players[id]["inventoryslot"][x] != "Empty":
             for i in [players[id]["inventoryslot"][x]]:
                 print(Items.allitems[i].iid)
@@ -524,37 +539,88 @@ def ItemsCheckRoom(pr):
                items.append(itemsx)
     return items
 
+#def OpenCommand():
+
+    #opens objects like doors or closed status
+    #containers.  checks object for open, closed
+    #switch. which might reveal an exit or a
+    #container
+
+
+def GiveCommand():
+    gaveitem = 0
+    for x in players[id]["inventoryslot"]:
+        for s in [players[id]["inventoryslot"][x]]:
+            if s != "Empty":
+                print(Items.allitems[s].name)
+                if params.lower() == Items.allitems[s].name and gaveitem == 0:
+                    mud.send_message(id, "go fuck yourself")
+################## DONT REMOVE THESE COMMENTS  \/\/\/\/\/
+#                    players[id]["inventoryslot"][x] = "Empty"
+#                    newiid = str(Items.allitems[s].iid)+str(random.randint(100,10000000000))
+#                    Items(newiid ,Items.allitems[s].name, Items.allitems[s].desc, players[id]["room"], Items.allitems[s].type, Items.allitems[s].eqtype, Items.allitems[s].invdesc, Items.allitems[s].bp, Items.allitems[s].bpsize, Items.allitems[s].eqstata, Items.allitems[s].eqstatb, Items.allitems[s].eqsvala, Items.allitems[s].eqsvalb)
+#                    allitemslist.append(Items.allitems[str(newiid)].iid)
+#                    allitemslist.remove(s)
+#                    droppeditem = 1
+#                    players[id]["inventoryused"] -= 1
+#                    mud.send_message(id, "You drop: "+str(Items.allitems[s].name))
+#                    del(Items.allitems[s])
+################## DONT REMOVE THESE COMMENTS  ^^^
+
+#def GetCommand():
+    # same as grab but an extra param for the container
+    # like the bucket.  maybe we can add this option to grab
+    # so grab (item): room
+    # grab (item) (bucket): container
+
+#def PutCommand():
+    # similar to grab n drop but puts the item into a container
+    # obeject like a bucket.  object needs to be checked for
+    # type : container in corefunctions, and the object class
+    # needs to be written to give inventory to the container
 
 def GrabCommand():
     gotitem = 0 ## needed to check if item was taken
     item = ItemsCheckRoom(players[id]["room"]) # takes all items in current room
     for i in item:
-        if params.lower() != Items.allitems[i].name: #if command params are not same as the name of the iid of item
-            mud.send_message(id, "You think you're grabbing something?\n I think your VR broke.  welcome back to reality.")
-        else:
-            if players[id]["inventoryspace"] > players[id]["inventoryused"]:
-                for x in players[id]["inventoryslot"]:
-                    for s in [players[id]["inventoryslot"][x]]: ##extra [] for stoping s being char by char
-                        if s == "Empty":
-                            if gotitem == 0:
-                                mud.send_message(id, "You pick up the "+str(Items.allitems[i].name))
-                                Items.allitems[i].room = players[id]["name"]
+        if gotitem == 0:
+            if params.lower() == Items.allitems[i].name:
+                if players[id]["inventoryspace"] > players[id]["inventoryused"]:
+                    for x in players[id]["inventoryslot"]:
+                        for s in [players[id]["inventoryslot"][x]]: ##extra [] for stoping s being char by char
+                            if s == "Empty":
+                                if gotitem == 0:
+                                    mud.send_message(id, "You pick up the "+str(Items.allitems[i].name))
+                                    Items.allitems[i].room = players[id]["name"]
+                                    players[id]["inventoryslot"][x] = str(Items.allitems[i].iid)
+                                    players[id]["inventoryused"] += 1
+                                    gotitem = 1
+                else:
+                    mud.send_message(id, "Your inventory is full.")
+                    gotitem = 1
+            elif gotitem == 1:
+                mud.send_message(id, "You think you're grabbing something?\n I think your VR broke.  welcome back to reality.")
+    if params.lower() != Items.allitems[i].name and gotitem == 0:
+        mud.send_message(id, "You think you're grabbing something?\n I think your VR broke.  welcome back to reality.")
 
-                                players[id]["inventoryslot"][x] = str(Items.allitems[i].iid)
-                                players[id]["inventoryused"] += 1
-                                gotitem = 1
-            else:
-                mud.send_message(id, "Your inventory is full.")
-
-def DropCommand():
+def DropCommand():  ## find item, assign new iid and room, delete old iid
+    droppeditem = 0
     for x in players[id]["inventoryslot"]:
         for s in [players[id]["inventoryslot"][x]]:
             if s != "Empty":
                 print(Items.allitems[s].name)
-                if params.lower() == Items.allitems[s].name:
+                if params.lower() == Items.allitems[s].name and droppeditem == 0:
                     players[id]["inventoryslot"][x] = "Empty"
-                    Items.allitems[s].room = players[id]["room"]
+                    newiid = str(Items.allitems[s].iid)+str(random.randint(100,10000000000))
+                    Items(newiid ,Items.allitems[s].name, Items.allitems[s].desc, players[id]["room"], Items.allitems[s].type, Items.allitems[s].eqtype, Items.allitems[s].invdesc, Items.allitems[s].bp, Items.allitems[s].bpsize, Items.allitems[s].eqstata, Items.allitems[s].eqstatb, Items.allitems[s].eqsvala, Items.allitems[s].eqsvalb)
+                    allitemslist.append(Items.allitems[str(newiid)].iid)
+                    allitemslist.remove(s)
+                    droppeditem = 1
+                    players[id]["inventoryused"] -= 1
                     mud.send_message(id, "You drop: "+str(Items.allitems[s].name))
+                    del(Items.allitems[s])
+    if droppeditem == 0:
+        mud.send_message(id, "Only thing dropping is your IQ.")
 
 def FightCommand():
     # store the target
@@ -637,6 +703,123 @@ def SheetCommand():
     mud.send_message(id, ":"*62)
     mud.send_message(id, ":"*62)
 
+def EquipmentCommand():
+    ###  prints slots available
+
+    mud.send_message(id, "***************************************")
+    mud.send_message(id, "******************EQ*******************")
+    mud.send_message(id, "***************************************")
+    if str(players[id]["head"]) != "Empty":
+        mud.send_message(id, "***Head: {}".format(str(Items.allitems[str(players[id]["head"])].name))) ##
+    else:
+        mud.send_message(id, "***Head: {}".format(players[id]["head"])) ##
+    if str(players[id]["body"]) != "Empty":
+        mud.send_message(id, "***Body: {}".format(str(Items.allitems[str(players[id]["body"])].name))) ##
+    else:
+        mud.send_message(id, "***Body: {}".format(players[id]["body"])) ##
+    if str(players[id]["hands"]) != "Empty":
+        mud.send_message(id, "**Hands: {}".format(str(Items.allitems[str(players[id]["hands"])].name))) ##
+    else:
+        mud.send_message(id, "**Hands: {}".format(players[id]["hands"])) ##
+    if str(players[id]["legs"]) != "Empty":
+        mud.send_message(id, "***Legs: {}".format(str(Items.allitems[str(players[id]["legs"])].name))) ##
+    else:
+        mud.send_message(id, "***Legs: {}".format(players[id]["legs"])) ##
+    if str(players[id]["feet"]) != "Empty":
+        mud.send_message(id, "***Feet: {}".format(str(Items.allitems[str(players[id]["feet"])].name))) ##
+    else:
+        mud.send_message(id, "***Feet: {}".format(players[id]["feet"])) ##
+    mud.send_message(id, "***************************************")
+    mud.send_message(id, "***************************************")
+    if str(players[id]["weapon"]) != "Empty":
+        mud.send_message(id, "***Weapon: {}".format(str(Items.allitems[str(players[id]["weapon"])].name))) ##
+    else:
+        mud.send_message(id, "***Weapon: {}".format(players[id]["weapon"])) ##
+    if str(players[id]["offhand"]) != "Empty":
+        mud.send_message(id, "**Offhand: {}".format(str(Items.allitems[str(players[id]["offhand"])].name))) ##
+    else:
+        mud.send_message(id, "**Offhand: {}".format(players[id]["offhand"])) ##
+    mud.send_message(id, "***************************************")
+    mud.send_message(id, "**************ACCESSORIES**************")
+    if str(players[id]["ear"]) != "Empty":
+        mud.send_message(id, "**Earrings: {}".format(str(Items.allitems[str(players[id]["ear"])].name))) ##
+    else:
+        mud.send_message(id, "**Earrings: {}".format(players[id]["ear"])) ##
+    mud.send_message(id, "***************************************")
+    if str(players[id]["neck"]) != "Empty":
+        mud.send_message(id, "******Neck: {}".format(str(Items.allitems[str(players[id]["neck"])].name))) ##
+    else:
+        mud.send_message(id, "******Neck: {}".format(players[id]["neck"])) ##
+    if str(players[id]["waist"]) != "Empty":
+        mud.send_message(id, "*****Waist: {}".format(str(Items.allitems[str(players[id]["waist"])].name))) ##
+    else:
+        mud.send_message(id, "*****Waist: {}".format(players[id]["waist"])) ##
+    if str(players[id]["ringl"]) != "Empty":
+        mud.send_message(id, "*****Ringl: {}".format(str(Items.allitems[str(players[id]["ringl"])].name))) ##
+    else:
+        mud.send_message(id, "****Ringl: {}".format(players[id]["ringl"])) ##
+    if str(players[id]["ringr"]) != "Empty":
+        mud.send_message(id, "*****Ringr: {}".format(str(Items.allitems[str(players[id]["ringr"])].name))) ##
+    else:
+        mud.send_message(id, "*****Ringr: {}".format(players[id]["ringr"])) ##
+    if str(players[id]["back"]) != "Empty":
+        mud.send_message(id, "******Back: {}".format(str(Items.allitems[str(players[id]["back"])].name))) ##
+    else:
+        mud.send_message(id, "******Back: {}".format(players[id]["back"])) ##
+    mud.send_message(id, "***************************************")
+    if str(players[id]["bag"]) != "Empty":
+        mud.send_message(id, "**BAG EQUIPPED:{}".format(str(Items.allitems[players[id]["bag"]].name))) ##
+    else:
+        mud.send_message(id, "***BACKPACK EQUIPPED: {}".format(players[id]["bag"])) ##
+    mud.send_message(id, "***************************************")
+
+
+def EquipCommand():
+    iequipped = 0
+    item = ItemsCheckRoom(players[id]["name"])
+    for i in item:
+        for x in players[id]["inventoryslot"]:
+            for s in [players[id]["inventoryslot"][x]]:
+                    if s == Items.allitems[i].iid and iequipped == 0:
+                        mud.send_message(id, "You equipped up the "+str(Items.allitems[i].name))
+                        players[id][str(Items.allitems[i].eqtype)] = Items.allitems[i].iid
+                        players[id]["inventoryslot"][x] = "Empty"
+
+#add eq stats here
+
+                        iequipped = 1
+            if iequipped == 0:
+                mud.send_message(id, "You have equipment in that slot.")
+                iequipped = 1
+    if iequipped == 0:
+        mud.send_message(id, "what are you trying to equip you fool!!")
+
+def UnequipCommand():
+    print("started unequip")
+    useableslots = ["head", "body", "hands", "legs", "feet", "weapon", "offhand", "ear", "neck", "waist", "ringl", "ringr", "back", "bag"]
+    iequipped = 1
+    emptyslots = 8
+    for d in useableslots:
+        for i in [players[id][d]]:
+            if d == params.lower() and iequipped == 1 and i != "Empty":
+                for y in players[id]["inventoryslot"]:#####
+                    for s in [players[id]["inventoryslot"][y]]:
+                            if s == "Empty" and iequipped == 1:
+                                players[id]["inventoryslot"][y] = players[id][d]
+                                players[id][d] = "Empty"
+                                iequipped = 0
+                                mud.send_message(id, "I just pulled out!")
+                            else:
+                                emptyslots -= 1
+                                if emptyslots == 0:
+                                    mud.send_message(id, "Nono emptys")####
+            elif d != params.lower() and iequipped == 1 and i != "Empty":
+                print(i)
+                mud.send_message(id, "Nothing like that to unequip jackass.")
+            elif d == params.lower() and iequipped == 1 and i == "Empty":
+                mud.send_message(id, "you have nothing to unequip, Lost your meds?")
+
+
 def SayCommand():
     # go through every player in the game
     for pid, pl in players.items():
@@ -646,6 +829,7 @@ def SayCommand():
             mud.send_message(pid, "{} says: {}".format(players[id]["name"], params))
 
 def LoginCommand():
+
     AssignNewPlayersIDs()
     if login[id]["name"] is None:
         mud.send_message(id, "Please enter your character name:")
@@ -713,15 +897,20 @@ def LoginCommand():
                         invlist = invendb.get_name(invdata, login[id]["name"])
                         slotlist = []
                         if invlist:
+                            print(invlist)
                             for checkinv in invlist:
+                                print(checkinv)
                                 for item in checkinv:
+                                    print(item)
                                     if item != players[id]["name"] and item != "Empty":
+                                        print("item is an item")
                                         orig = item[:4]
                                         newiid = str(orig)+str(random.randint(100,10000000000))
                                         while newiid in allitemslist:
                                             newiid = str(orig)+str(random.randint(100,10000000000))
-                                        Items(newiid ,Items.allitems[orig].name, Items.allitems[orig].desc, players[id]["room"], Items.allitems[orig].type, Items.allitems[orig].eqtype, Items.allitems[orig].invdesc, Items.allitems[orig].bp, Items.allitems[orig].bpsize, Items.allitems[orig].eqstata, Items.allitems[orig].eqstatb, Items.allitems[orig].eqsvala, Items.allitems[orig].eqsvalb)
+                                        Items(newiid ,Items.allitems[orig].name, Items.allitems[orig].desc, players[id]["name"], Items.allitems[orig].type, Items.allitems[orig].eqtype, Items.allitems[orig].invdesc, Items.allitems[orig].bp, Items.allitems[orig].bpsize, Items.allitems[orig].eqstata, Items.allitems[orig].eqstatb, Items.allitems[orig].eqsvala, Items.allitems[orig].eqsvalb)
                                         slotlist.append(Items.allitems[str(newiid)].iid)
+                                        allitemslist.append(Items.allitems[str(newiid)].iid)
                         slotsfilled = int(0)-int(len(slotlist))
                         totalslots = int(8)+int(slotsfilled)
                         fillslots = 1
@@ -730,7 +919,7 @@ def LoginCommand():
                             iteminlist = str(int(slotsfilled)+int(len(slotlist))+int(1))
                             print(iteminlist)
                             if len(slotlist) != int(iteminlist)-int(1):
-                                print("yay i filled in a slot your majesty")
+                                print("yay i filled slot"+iteminlist+" your majesty")
                                 players[id]["inventoryslot"]["slot"+iteminlist] = slotlist[int(int(iteminlist)-int(1))]
                             if len(slotlist) == int(iteminlist)-int(1):
                                 while totalslots != 0:
@@ -741,14 +930,9 @@ def LoginCommand():
                                 print("you win!!!")
                                 fillslots = 0
                             slotsfilled += 1
+                        players[id]["inventoryused"] = len(slotlist)
+            #            players[id]["inventoryspace"] = int(8)-int(players[id]["inventoryused"])
 
-                        #        players[id]["inventoryslot"]["slot2"] = checkinv[2]
-                        #        players[id]["inventoryslot"]["slot3"] = checkinv[3]
-                        #        players[id]["inventoryslot"]["slot4"] = checkinv[4]
-                        #        players[id]["inventoryslot"]["slot5"] = checkinv[5]
-                        #        players[id]["inventoryslot"]["slot6"] = checkinv[6]
-                        #        players[id]["inventoryslot"]["slot7"] = checkinv[7]
-                        #        players[id]["inventoryslot"]["slot8"] = checkinv[8]
                         login[id]["process"] = "done"
                 if check[0] != login[id]["name"]:
                     login[id]["name"] = None
@@ -895,34 +1079,87 @@ def NewCommand():
         #mud.send_message(id, "Type 'look' to get your bearings in this new world")
         LookCommand()
 
+def KickCommand():
+    #### test command
+    items = ItemsCheckRoom(players[id]["room"])
+    creatures = CreatureCheckRoom(players[id]["room"])
+    for i in items:
+        if params.lower() == Items.allitems[i].name:
+            mud.send_message(id, "you kicked a "+Items.allitems[i].name+"   :  "+Items.allitems[i].iid)
+        else:
+            for c in creatures:
+                if params.lower() == Creatures.creatures[c].name:
+                    mud.send_message(id, "you kicked a "+Creatures.creatures[c].name+"  :  "+Creatures.creatures[c].cid)
+
 def GoCommand():
+
     # store the player's current room
     ex = params.lower()
     rm = rooms[players[id]["room"]]
+    #store object Status
+    blockx = ""
+
+    for ob in rm["exits"]:
+        if ob == "":
+            block = rm["exits"][""]
+            if block["status"] == "open":
+                blockx = block["exits"]
+            if ex == block["object"]:
+                mud.send_message(id, "Idiot... you ran into a {}?".format(block["object"]))
+                playerprocess[id]["process"] = "ding"
+                players[id]["hp"] -= 3
     # if the specified exit is found in the room's exits list
-    if ex in rm["exits"]:
+            if ex in block["exits"]:
+                playerprocess[id]["process"] = "ding"
+                if block["status"] == "closed":
+                    mud.send_message(id, "{} is blocking your path.".format(block["object"]))
+                if block["status"] == "open":
+                # go through all the players in the game
+                    for pid, pl in players.items():
+                    # if player is in the same room and isn't the player
+                    # sending the command
+                        if players[pid]["room"] == players[id]["room"] and pid != id:
+                         # send them a message telling them that the player
+                         # left the room
+                            mud.send_message(pid, "{} left via the {}.".format(players[id]["name"], block["object"]))
+                                    # update the player's current room to the one the exit leads to
+                    players[id]["room"] = blockx[ex]
+                                    # possible place for description after moving
+                    LookCommand()
+                            # go through all the players in the game
+                    for pid, pl in players.items():
+                            # if player is in the same (new) room and isn't the player sending the command
+                        if players[pid]["room"] == players[id]["room"] and pid != id:
+                            # send them a message telling them that the player entered the room
+                            mud.send_message(pid,"{} arrived via the {}.".format(players[id]["name"], block["object"]))
+    if ex != "":
+        if ex in rm["exits"]:
+
         # go through all the players in the game
-        for pid, pl in players.items():
+            for pid, pl in players.items():
         # if player is in the same room and isn't the player
         # sending the command
-            if players[pid]["room"] == players[id]["room"] and pid != id:
+                if players[pid]["room"] == players[id]["room"] and pid != id:
                # send them a message telling them that the player
                # left the room
-                mud.send_message(pid, "{} left via exit '{}'".format(players[id]["name"], ex))
+                    mud.send_message(pid, "{} left via the {}.".format(players[id]["name"], ex))
                 # update the player's current room to the one the exit leads to
-        players[id]["room"] = rm["exits"][ex]
+            players[id]["room"] = rm["exits"][ex]
                 # possible place for description after moving
-        LookCommand()
+            LookCommand()
         # go through all the players in the game
-        for pid, pl in players.items():
+            for pid, pl in players.items():
         # if player is in the same (new) room and isn't the player sending the command
-            if players[pid]["room"] == players[id]["room"] and pid != id:
+                if players[pid]["room"] == players[id]["room"] and pid != id:
         # send them a message telling them that the player entered the room
-                mud.send_message(pid,"{} arrived via exit '{}'".format(players[id]["name"], ex))
-            # the specified exit wasn't found in the current room
-    else:
+                    mud.send_message(pid,"{} arrived via the {}.".format(players[id]["name"], ex))
+        else:
     # send back an 'unknown exit' message
-        mud.send_message(id, "Unknown exit '{}'".format(ex))
+            if playerprocess[id]["process"] != "ding":
+                mud.send_message(id, "Unknown exit '{}'".format(ex))
+                playerprocess[id] == None
+    else:
+            mud.send_message(id, "Unknown exit '{}'".format(ex))
 
 def LookCommand():
     # send the player back the description of their current room
@@ -934,7 +1171,22 @@ def LookCommand():
     mud.send_message(id, "*"*62)
     mud.send_message(id, "**** HP: {} **** MP: {} **** NEXT: {} **** PVP: {} ****".format(players[id]["hp"],players[id]["mp"],players[id]["next"],players[id]["pvp"]))
     mud.send_message(id, "*"*62)
-    mud.send_message(id, "Exits are: {}".format(", ".join(rm["exits"])))
+
+## add bit to append exits if door opens
+## the exit should have 2 values not just
+## an exit.  if closed so retrun back ""
+## if open "w" or "e" "or w/e"
+## go command must be adjusted to not allow blanks
+## as parameters.
+    blockx = ""
+    for ex in rm["exits"]:
+        if ex == "":
+            block = rm["exits"][""]
+            if block["status"] == "open":
+                blockx = block["exits"]
+            if block["status"] == "closed":
+                blockx = block["object"]
+    mud.send_message(id, "Exits are: {} {}".format(" ".join(rm["exits"]),"".join(blockx)))
     mud.send_message(id, "*"*62)
     # list of players in room
     playershere = []
@@ -1161,15 +1413,28 @@ while True:
 
         elif command == "grab":
             GrabCommand()
+        elif command == "give":
+            GiveCommand()
 
         # 'look' command
         elif command == "look":
             LookCommand()
 
+        elif command == "kick":
+            KickCommand()
+
         elif command == "exam":
             ExamCommand()
         elif command == "fight":
             FightCommand()
+
+        elif command == "eq":
+            EquipmentCommand()
+
+        elif command == "equip":
+            EquipCommand()
+        elif command == "unequip":
+            UnequipCommand()
 
         # 'go' command
         elif command == "go":

@@ -5,7 +5,7 @@
             "name": "Dungeon Cubby",
 
             "description": "Well how the hell did you get here?  The air is stale, it\nsmells awful, did you wake up here or wander here?  if the\nlater...why would you do that?...and what's with that bucket\nin the corner?!",
-            
+
             "objects": {
                 "bucket": "You really do not want to know what you think you found in here\njust walk away and never find out.  It's better this way."
             },
@@ -25,13 +25,19 @@
             "description": "Thank goodness this place seems abandoned.  There are strange\ncontraptions that most certainly where made to dismember\npeople scattered around the room.  You smell a faint but foul\nsmell coming from nearby.\nHow long has this place been abandoned?",
 
             "objects":{
-                "contraptions": "well despite the rotting remains of dismembered body parts...\nThere are somewhat fascinating." 
+                "contraptions": "well despite the rotting remains of dismembered body parts...\nThere are somewhat fascinating."
             },
 
             "exits": {
 
                 "north": "Dungeon1",
-                "south": "Dungeon3"
+                "": {
+                  "object": "door",
+                  "status": "open",
+                  "exits":{
+                    "south": "Dungeon3"
+                  }
+                }
 
             }
 
@@ -43,8 +49,13 @@
             "description": "There are three glowing portals in this room. A white one with\nan image of a town, a grey one that resembles a swamp\nand a bright and windy one that seems to smell like a desert.\nSure...there are other exits..  but come on... portals.",
 
             "exits": {
-
-                "north": "Dungeon2",
+              "": {
+                "object": "door",
+                "status": "closed",
+                "exits":{
+                  "north": "Dungeon2"
+                  }
+                },
                 "west": "Dungeon4",
                 "white": "HousePath",
                 "grey": "Swamp1",
@@ -283,4 +294,3 @@
         }
 
 }
-
