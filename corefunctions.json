@@ -4,11 +4,45 @@
             "items": {
                 "equipment": {
 
+                         "hemp_shirt":{
+                           "iid": "hesh",
+                           "name": "hemp_shirt",
+                           "invdesc": "you might not wanna smoke this.",
+                           "desc": "A fiberous hemp_shirt lay here.",
+                           "room": "Dungeon2",
+                           "type": "eq",
+                           "eqtype": "body",
+                           "bp": "no",
+                           "bpsize": "nil",
+                           "eqstata": "vit",
+                           "eqstatb": "dex",
+                           "eqsvala": 2,
+                           "eqsvalb": 2,
+                           "dtmr": 1800,
+                           "stmr": 600
+                                  },
+                        "hemp_pants": {
+                         "iid": "hepa",
+                         "name": "hemp_pants",
+                         "invdesc": "soil em? hell they basically are soil.",
+                         "desc": "A old pair of hemp_pants lay here.",
+                         "room": "Dungeon2",
+                         "type": "eq",
+                         "eqtype": "legs",
+                         "bp": "no",
+                         "bpsize": "nil",
+                         "eqstata": "vit",
+                         "eqstatb": "dex",
+                         "eqsvala": 1,
+                         "eqsvalb": 1,
+                         "dtmr": 1800,
+                         "stmr": 600
+                                  },
                          "candycane":{
                            "iid": "caca",
                            "name": "candycane",
                            "invdesc": "Ultimate Elvish wand",
-                           "desc": "Ultimate Elvish Pepperminty power!!",
+                           "desc": "a candycane sits on the ground.",
                            "room": "Dungeon1",
                            "type": "eq",
                            "eqtype": "weapon",
@@ -39,8 +73,8 @@
                            "stmr": 600
                                     }
 
-                            }
-                },
+                             }
+                    },
             "objects":{
 
                   "Door": {
@@ -51,6 +85,7 @@
                       "exit": "y",
                       "closed": "You walk into a door.  Are you drunk?"
                     }
+
                   },
 
 
@@ -230,5 +265,5 @@
                 }
 
          }
-       }
+      }
 }

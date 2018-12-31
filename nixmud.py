@@ -778,15 +778,15 @@ def EquipCommand():
     iequipped = 0
     item = ItemsCheckRoom(players[id]["name"])
     for i in item:
-        for x in players[id]["inventoryslot"]:
-            for s in [players[id]["inventoryslot"][x]]:
+        for x in players[id]["inventoryslot"]:  ## its starting the loop over and equipping first inv slot
+            for s in [players[id]["inventoryslot"][x]]: ## fix with an if statement to match
                     if s == Items.allitems[i].iid and iequipped == 0:
+                        ### probabbly here
                         mud.send_message(id, "You equipped up the "+str(Items.allitems[i].name))
                         players[id][str(Items.allitems[i].eqtype)] = Items.allitems[i].iid
                         players[id]["inventoryslot"][x] = "Empty"
-
-#add eq stats here
-
+                        players[id][str(Items.allitems[i].eqstata)] = int(players[id][str(Items.allitems[i].eqstata)]) + int(Items.allitems[i].eqsvala)
+                        players[id][str(Items.allitems[i].eqstatb)] = int(players[id][str(Items.allitems[i].eqstatb)]) + int(Items.allitems[i].eqsvalb)
                         iequipped = 1
             if iequipped == 0:
                 mud.send_message(id, "You have equipment in that slot.")
@@ -809,13 +809,15 @@ def UnequipCommand():
                                 players[id][d] = "Empty"
                                 iequipped = 0
                                 mud.send_message(id, "I just pulled out!")
+                                players[id][str(Items.allitems[i].eqstata)] = int(players[id][str(Items.allitems[i].eqstata)]) - int(Items.allitems[i].eqsvala)
+                                players[id][str(Items.allitems[i].eqstatb)] = int(players[id][str(Items.allitems[i].eqstatb)]) - int(Items.allitems[i].eqsvalb)
                             else:
                                 emptyslots -= 1
                                 if emptyslots == 0:
                                     mud.send_message(id, "Nono emptys")####
             elif d != params.lower() and iequipped == 1 and i != "Empty":
                 print(i)
-                mud.send_message(id, "Nothing like that to unequip jackass.")
+                mud.send_message(id, "Nothing like that to unequip jackass.") 
             elif d == params.lower() and iequipped == 1 and i == "Empty":
                 mud.send_message(id, "you have nothing to unequip, Lost your meds?")
 
