@@ -15,25 +15,23 @@ def connect():
 
 # Initiate the database or create one
 # if it does not exist.
-
 def init_db(db):
     cursor = db.cursor()
-    cursor.execute('CREATE TABLE IF NOT EXISTS player(name, slota, slotb, slotc, slotd, slote, slotf, slotg, sloth)')
+    cursor.execute('CREATE TABLE IF NOT EXISTS player(name, slota, slotb, slotc, slotd, slote, slotf, slotg, sloth, head, body, hands, legs, feet, weapon, offhand, ears, neck, waist, ringl, ringr, back, bp)')
 
 # Execute 'save' command
 
-def save_name(db, name, slota, slotb, slotc, slotd, slote, slotf, slotg, sloth):
+def save_name(db, name, slota, slotb, slotc, slotd, slote, slotf, slotg, sloth, head, body, hands, legs, feet, weapon, offhand, ears, neck, waist, ringl, ringr, back, bp):
     cursor = db.cursor()
-    cursor.execute('INSERT INTO player(name, slota, slotb, slotc, slotd, slote, slotf, slotg, sloth) VALUES(?,?,?,?,?,?,?,?,?)',
-            (name, slota, slotb, slotc, slotd, slote, slotf, slotg, sloth))
+    cursor.execute('INSERT INTO player(name, slota, slotb, slotc, slotd, slote, slotf, slotg, sloth, head, body, hands, legs, feet, weapon, offhand, ears, neck, waist, ringl, ringr, back, bp) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',(name, slota, slotb, slotc, slotd, slote, slotf, slotg, sloth, head, body, hands, legs, feet, weapon, offhand, ears, neck, waist, ringl, ringr, back, bp))
     db.commit()
     return
 
 # Not sure how to add the other features yet
 
-def update_name(db, name, slota, slotb, slotc, slotd, slote, slotf, slotg, sloth):
+def update_name(db, name, slota, slotb, slotc, slotd, slote, slotf, slotg, sloth, head, body, hands, legs, feet, weapon, offhand, ears, neck, waist, ringl, ringr, back, bp):
     cursor = db.cursor()
-    cursor.execute("UPDATE player SET slota = ?, slotb = ?, slotc = ?, slotd = ?, slote = ?, slotf = ?, slotg = ?, sloth = ? WHERE name = ?",(slota, slotb, slotc, slotd, slote, slotf, slotg, sloth, name))
+    cursor.execute("UPDATE player SET slota = ?, slotb = ?, slotc = ?, slotd = ?, slote = ?, slotf = ?, slotg = ?, sloth = ?, head = ?, body = ?, hands = ?, legs = ?, feet = ?, weapon = ?, offhand = ?, ears = ?, neck = ?, waist = ?, ringl = ?, ringr = ?, back = ?, bp = ? WHERE name = ?",(slota, slotb, slotc, slotd, slote, slotf, slotg, sloth, head, body, hands, legs, feet, weapon, offhand, ears, neck, waist, ringl, ringr, back, bp, name))
     db.commit()
     return
 
@@ -50,7 +48,7 @@ def delete_name(db, name):
 def get_name(db, name):
     '''Returns a list of rows representing "player"'''
     cursor = db.cursor()
-    rows = cursor.execute('SELECT name, slota, slotb, slotc, slotd, slote, slotf, slotg, sloth FROM player').fetchall()
+    rows = cursor.execute('SELECT * FROM player').fetchall()
     player = [row for row in rows if name in row[0]]
 #    delete_player(db, name)
     return player

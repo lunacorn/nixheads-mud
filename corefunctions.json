@@ -20,7 +20,24 @@
                            "eqsvalb": 0,
                            "dtmr": 1800,
                            "stmr": 600
-                                    }
+                         },
+                         "candycane":{
+                            "iid": "caca",
+                            "name": "candycane",
+                            "invdesc": "Ultimate Elvish wand",
+                            "desc": "Ultimate Elvish Pepperminty power!!",
+                            "room": "Dungeon1",
+                            "type": "eq",
+                            "eqtype": "weapon",
+                            "bp": "no",
+                            "bpsize": "nil",
+                            "eqstata": "str",
+                            "eqstatb": "dex",
+                            "eqsvala": 2,
+                            "eqsvalb": 0,
+                            "dtmr": 1800,
+                            "stmr": 600
+                                     }
 
                             }
                 },
