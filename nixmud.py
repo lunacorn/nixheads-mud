@@ -128,7 +128,6 @@ import invdb as invendb
 ##used random for item numbers
 import random
 # import the MUD server class
-
 from mudserver import MudServer
 
 ### create a class to map all the creatures into
@@ -369,35 +368,6 @@ for yy in defaultsitemslist:
     allitemslist.append(yy)
 
 ######function to assign blank ids for new players
-def AssignNewPlayersIDsP():
-    # customizable player process per id
-    playerprocess[id] = {
-        "process": None,
-        "selection": None
-        }
-
-    login[id] = {
-        "process": None,
-        "name": None,
-        "password": None
-        }
-
-        # The attributes of setups and players.  Notice the differences
-        # between them.  See 'new' command for better understanding of
-        # setups.
-    setups[id] = {
-        "setup": None,
-        "confirm": None,
-        "match": None,
-        "name": None,
-        "pickrace" : None,
-        "race": None,
-        "job": None,
-        "pickjob": None,
-        "user" : None,
-        "email": None,
-        "password": None,
-        }
 def AssignNewPlayersIDs():
     players[id] = {
         "name": None,
@@ -457,6 +427,37 @@ def AssignNewPlayersIDs():
         "bag": "Empty",
         "coin": 0
     }
+
+def AssignNewPlayersIDsP():
+    # customizable player process per id
+    playerprocess[id] = {
+        "process": None,
+        "selection": None
+        }
+
+    login[id] = {
+        "process": None,
+        "name": None,
+        "password": None
+        }
+
+        # The attributes of setups and players.  Notice the differences
+        # between them.  See 'new' command for better understanding of
+        # setups.
+    setups[id] = {
+        "setup": None,
+        "confirm": None,
+        "match": None,
+        "name": None,
+        "pickrace" : None,
+        "race": None,
+        "job": None,
+        "pickjob": None,
+        "user" : None,
+        "email": None,
+        "password": None,
+        }
+
 #### functions for commands
 
 # change job function
@@ -778,17 +779,7 @@ def EquipCommand():
     iequipped = 0
     item = ItemsCheckRoom(players[id]["name"])
     for i in item:
-<<<<<<< HEAD
-        for x in players[id]["inventoryslot"]:
-            for s in [players[id]["inventoryslot"][x]]:
-                    if s == Items.allitems[i].iid and iequipped == 0:
-                        mud.send_message(id, "You equipped up the "+str(Items.allitems[i].name))
-                        players[id][str(Items.allitems[i].eqtype)] = Items.allitems[i].iid
-                        players[id]["inventoryslot"][x] = "Empty"
-
 #add eq stats here
-
-=======
         for x in players[id]["inventoryslot"]:  ## its starting the loop over and equipping first inv slot
             for s in [players[id]["inventoryslot"][x]]: ## fix with an if statement to match
                     if s == Items.allitems[i].iid and iequipped == 0:
@@ -798,7 +789,6 @@ def EquipCommand():
                         players[id]["inventoryslot"][x] = "Empty"
                         players[id][str(Items.allitems[i].eqstata)] = int(players[id][str(Items.allitems[i].eqstata)]) + int(Items.allitems[i].eqsvala)
                         players[id][str(Items.allitems[i].eqstatb)] = int(players[id][str(Items.allitems[i].eqstatb)]) + int(Items.allitems[i].eqsvalb)
->>>>>>> 57f89a87ba951f4c6341057ff9fb42ce3cc77b3d
                         iequipped = 1
             if iequipped == 0:
                 mud.send_message(id, "You have equipment in that slot.")
@@ -821,22 +811,15 @@ def UnequipCommand():
                                 players[id][d] = "Empty"
                                 iequipped = 0
                                 mud.send_message(id, "I just pulled out!")
-<<<<<<< HEAD
-=======
                                 players[id][str(Items.allitems[i].eqstata)] = int(players[id][str(Items.allitems[i].eqstata)]) - int(Items.allitems[i].eqsvala)
                                 players[id][str(Items.allitems[i].eqstatb)] = int(players[id][str(Items.allitems[i].eqstatb)]) - int(Items.allitems[i].eqsvalb)
->>>>>>> 57f89a87ba951f4c6341057ff9fb42ce3cc77b3d
                             else:
                                 emptyslots -= 1
                                 if emptyslots == 0:
                                     mud.send_message(id, "Nono emptys")####
             elif d != params.lower() and iequipped == 1 and i != "Empty":
                 print(i)
-<<<<<<< HEAD
                 mud.send_message(id, "Nothing like that to unequip jackass.")
-=======
-                mud.send_message(id, "Nothing like that to unequip jackass.") 
->>>>>>> 57f89a87ba951f4c6341057ff9fb42ce3cc77b3d
             elif d == params.lower() and iequipped == 1 and i == "Empty":
                 mud.send_message(id, "you have nothing to unequip, Lost your meds?")
 
@@ -932,16 +915,11 @@ def LoginCommand():
                                         while newiid in allitemslist:
                                             newiid = str(orig)+str(random.randint(100,10000000000))
                                         Items(newiid ,Items.allitems[orig].name, Items.allitems[orig].desc, players[id]["name"], Items.allitems[orig].type, Items.allitems[orig].eqtype, Items.allitems[orig].invdesc, Items.allitems[orig].bp, Items.allitems[orig].bpsize, Items.allitems[orig].eqstata, Items.allitems[orig].eqstatb, Items.allitems[orig].eqsvala, Items.allitems[orig].eqsvalb)
-<<<<<<< HEAD
                                         allitemslist.append(Items.allitems[str(newiid)].iid)
                                         if invitems >= 0:
                                             slotlist.append(Items.allitems[str(newiid)].iid)
                                         else:
                                             equiplist.append(Items.allitems[str(newiid)].iid)
-=======
-                                        slotlist.append(Items.allitems[str(newiid)].iid)
-                                        allitemslist.append(Items.allitems[str(newiid)].iid)
->>>>>>> 57f89a87ba951f4c6341057ff9fb42ce3cc77b3d
                         slotsfilled = int(0)-int(len(slotlist))
                         totalslots = int(8)+int(slotsfilled)
                         fillslots = 1
@@ -962,13 +940,8 @@ def LoginCommand():
                                 fillslots = 0
                             slotsfilled += 1
                         players[id]["inventoryused"] = len(slotlist)
-<<<<<<< HEAD
                         for equipitem in equiplist:
                             players[id][str(Items.allitems[str(equipitem)].type)] = equipitem
-
-=======
-            #            players[id]["inventoryspace"] = int(8)-int(players[id]["inventoryused"])
->>>>>>> 57f89a87ba951f4c6341057ff9fb42ce3cc77b3d
 
                         login[id]["process"] = "done"
                 if check[0] != login[id]["name"]:
