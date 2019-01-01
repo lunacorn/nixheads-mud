@@ -779,21 +779,24 @@ def EquipCommand():
     iequipped = 0
     item = ItemsCheckRoom(players[id]["name"])
     for i in item:
-#add eq stats here
-        for x in players[id]["inventoryslot"]:  ## its starting the loop over and equipping first inv slot
-            for s in [players[id]["inventoryslot"][x]]: ## fix with an if statement to match
-                    if s == Items.allitems[i].iid and iequipped == 0:
-                        ### probabbly here
-                        mud.send_message(id, "You equipped up the "+str(Items.allitems[i].name))
-                        players[id][str(Items.allitems[i].eqtype)] = Items.allitems[i].iid
-                        players[id]["inventoryslot"][x] = "Empty"
-                        players[id][str(Items.allitems[i].eqstata)] = int(players[id][str(Items.allitems[i].eqstata)]) + int(Items.allitems[i].eqsvala)
-                        players[id][str(Items.allitems[i].eqstatb)] = int(players[id][str(Items.allitems[i].eqstatb)]) + int(Items.allitems[i].eqsvalb)
-                        iequipped = 1
-            if iequipped == 0:
-                mud.send_message(id, "You have equipment in that slot.")
-                iequipped = 1
-    if iequipped == 0:
+#add eq stats here ### why here ?
+        if i == Items.allitems[i].iid and params.lower() == Items.allitems[i].name and iequipped == 0: ## i wanna check if what you typed is actually a player item
+            for x in players[id]["inventoryslot"]:
+                for s in [players[id]["inventoryslot"][x]]: ## now we should only get only one item coming through
+                        if s == Items.allitems[i].iid and iequipped == 0 and params.lower() == Items.allitems[i].name: ## double check it
+                            ### we need to check if eq slot is full otherwise it over writes it (player loses eq item)
+                            if players[id][str(Items.allitems[i].eqtype)] == "Empty":
+                                mud.send_message(id, "You equipped up the "+str(Items.allitems[i].name))
+                                players[id][str(Items.allitems[i].eqtype)] = Items.allitems[i].iid
+                                players[id]["inventoryslot"][x] = "Empty"
+                                players[id][str(Items.allitems[i].eqstata)] = int(players[id][str(Items.allitems[i].eqstata)]) + int(Items.allitems[i].eqsvala)
+                                players[id][str(Items.allitems[i].eqstatb)] = int(players[id][str(Items.allitems[i].eqstatb)]) + int(Items.allitems[i].eqsvalb)
+                                iequipped = 1
+                            elif iequipped == 0: ## this needs to be on this level to work
+                                mud.send_message(id, "You have equipment in that slot.")
+                                iequipped = 1
+                                mud.send_message(id, "you need to unequip "+str(Items.allitems[i].eqtype)+" to equip "+params.lower())
+    if iequipped == 0 and params.lower() != Items.allitems[i].name:
         mud.send_message(id, "what are you trying to equip you fool!!")
 
 def UnequipCommand():
