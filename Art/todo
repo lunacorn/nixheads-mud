@@ -27,7 +27,7 @@
 
 -- add an id option to character shee so other players can exam you and see it
 
--- do not let you send tells to yourself.
+-- do not let you send tells to yourself.  [done]
 
 --update db.py with new player info when finished. [done]
 
@@ -42,6 +42,12 @@
 --try to get ujobs working against corefunctions.json
 
 --add races to corefunctions.json [done]
+
+first inv slot can never be empty for equip to working
+
+if equip command has a lot of bugs and unable to tell what cause is at this time. can only seem to be carrying 1 eq type for it to not say we have equipment in that slot
+
+unequip bug not entirely clear so need to fix equip first... seems to be similar
 
 upon update the system expects a room and a name for a character.  need to be able to always start wit those in hand.
 
