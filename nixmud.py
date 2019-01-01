@@ -550,40 +550,50 @@ def GiveCommand():
         reciever = text[0] ## players name is the 1st param
         gift = text[1] ### item given is the 2nd param
         gaveitem = 0
-        items = ItemsCheckRoom(players[id]["room"]) ## all items in inventory should be in room / player
-        for item in items:
-            if gaveitem == 0 and text[1] == Items.allitems[item].name: ## if what you typed is the name of the item
-                for x in players[id]["inventoryslot"]:
-                        for s in [players[id]["inventoryslot"][x]]:
-                            if s != "Empty" and s == Items.allitems[item].iid: # inv slot need to not be empty and need to be the names iid
-                                for pid, pl in players.items():
-                                    if players[id]["name"] != text[0] and players[pid]["name"] == text[0] and players[pid]["inventoryspace"] > 0:
-                                            for y in players[pid]["inventoryslot"]:  ## we need check the inventory of the other player
-                                                    for z in [players[pid]["inventoryslot"][y]]: #to see if they have empty slot
-                                                        if z == "Empty": ## we only want to give if slot is empty
-                                                            players[id]["inventoryslot"][x] = "Empty"### remove it from inv
-                                                            orig = str(Items.allitems[item].iid)[:4]
-                                                            newiid = orig+str(random.randint(100,10000000000)) ## change the iid
-                                                            allitemslist.remove(Items.allitems[item].iid)                        ## remove it from active list
-                                                            while newiid in allitemslist:
-                                                                newiid = orig+str(random.randint(100,10000000000))
-                                                            Items(newiid ,Items.allitems[orig].name, Items.allitems[orig].desc, players[pid]["name"], Items.allitems[orig].type, Items.allitems[orig].eqtype, Items.allitems[orig].invdesc, Items.allitems[orig].bp, Items.allitems[orig].bpsize, Items.allitems[orig].eqstata, Items.allitems[orig].eqstatb, Items.allitems[orig].eqsvala, Items.allitems[orig].eqsvalb)
-                                                            allitemslist.append(Items.allitems[str(newiid)].iid)                        ## set the new iid
-                                                            del(Items.allitems[str(Items.allitems[item].iid)])## del from class
-                                                            players[pid]["inventoryslot"][z] = newiid ## give new version to player
-                                                            gaveitem = 1
-                                    if gaveitem == 0 and players[pid]["inventoryspace"] == 0 and players[pid]["name"] == text[0]: ## if you didnt give the item yet and the space is 0
-                                        mud.send_message(id, "that player has no free inventory space")
-                                        mud.send_message(pid, players[id]["name"]+" tried to give you "+text[1]+" but you have no inventory space")
-                                    if gaveitem == 0 and players[pid]["name"] != text[0]:
-                                        mud.send_message(id, "Its weird to watch someone try to give something to an imaginary friend")
-        if gaveitem == 0 and text[1] != Items.allitems[item].name:
-            if players[id]["coin"] == 0: ##you could change messages based on situations
-                mud.send_message(id, "You are trying to give away the contents of your wallet .... fuck all ")
-            else:
-                mud.send_message(id, "Its better to give than recieve, except in this case, you gave... disappointment")
+        items = ItemsCheckRoom(players[id]["name"]) ## all items in inventory should be in room / player
+        for pid, pl in players.items():
+            if players[pid]["room"] != players[id]["room"]: #and players[pid]["name"] == reciever:
+                if players[pid]["name"] == reciever:
+                    mud.send_message(id, "They are not in your room... we are letting them know you cant read 'look'")
+                    mud.send_message(pid, players[id]["name"]+" tried to send you an item, but postal service is on strike")
+                    gaveitem = 1
+                    break
+            if players[pid]["room"] == players[id]["room"] and players[pid]["name"] == reciever:
+                for item in items:
+                    if gift == Items.allitems[item].name:
+                        for x in players[id]["inventoryslot"]:
+                            for s in [players[id]["inventoryslot"][x]]:
+                                if s != "Empty" and s == item:
+                                    if players[pid]["inventoryspace"] > 0:
+                                        for y in players[pid]["inventoryslot"]:
+                                            for z in [players[pid]["inventoryslot"][y]]:
+                                                if z == "Empty" and gaveitem == 0:
+                                                    players[id]["inventoryslot"][x] = "Empty"
+                                                    players[pid]["inventoryspace"] -= 1
+                                                    players[id]["inventoryspace"] += 1
+                                                    orig = item[:4]
+                                                    print("orig: "+orig)
+                                                    newiid = orig+str(random.randint(100,10000000000))
+                                                    while newiid in allitemslist:
+                                                        newiid = orig+str(random.randint(100,10000000000))
+                                                    print("newiid: "+newiid)
+                                                    allitemslist.append(newiid)
+                                                    allitemslist.remove(item)
+                                                    Items(newiid ,Items.allitems[orig].name, Items.allitems[orig].desc, players[pid]["name"], Items.allitems[orig].type, Items.allitems[orig].eqtype, Items.allitems[orig].invdesc, Items.allitems[orig].bp, Items.allitems[orig].bpsize, Items.allitems[orig].eqstata, Items.allitems[orig].eqstatb, Items.allitems[orig].eqsvala, Items.allitems[orig].eqsvalb)
+                                                    players[pid]["inventoryslot"][y] = newiid
+                                                    del(Items.allitems[item])
+                                                    gaveitem = 1
+                                                    if reciever == players[id]["name"]:
+                                                        mud.send_message(id, "wow you found the secret command to sort inventory items")
+                                                    else:
+                                                        mud.send_message(id, "sent: "+ gift)
+                                                        mud.send_message(pid, players[id]["name"]+" sent you: "+gift)
+        if gaveitem == 0:
+            mud.send_message(id, "you two both might wanna check inventory space and or know what you're sending.")
+            mud.send_message(id, "ya know, commands only work if you actually use them right... just sayin.")
     except IndexError:
         mud.send_message(id, "Give <person> <item> ... okay back to the basics")
+
 
 #def GetCommand():
     # same as grab but an extra param for the container
@@ -936,7 +946,7 @@ def LoginCommand():
                                             newiid = str(orig)+str(random.randint(100,10000000000))
                                         Items(newiid ,Items.allitems[orig].name, Items.allitems[orig].desc, players[id]["name"], Items.allitems[orig].type, Items.allitems[orig].eqtype, Items.allitems[orig].invdesc, Items.allitems[orig].bp, Items.allitems[orig].bpsize, Items.allitems[orig].eqstata, Items.allitems[orig].eqstatb, Items.allitems[orig].eqsvala, Items.allitems[orig].eqsvalb)
                                         allitemslist.append(Items.allitems[str(newiid)].iid)
-                                        if invitems >= 0:
+                                        if invitems > 0:
                                             slotlist.append(Items.allitems[str(newiid)].iid)
                                         else:
                                             equiplist.append(Items.allitems[str(newiid)].iid)
@@ -961,7 +971,7 @@ def LoginCommand():
                             slotsfilled += 1
                         players[id]["inventoryused"] = len(slotlist)
                         for equipitem in equiplist:
-                            players[id][str(Items.allitems[str(equipitem)].type)] = equipitem
+                            players[id][str(Items.allitems[str(equipitem)].eqtype)] = equipitem
 
                         login[id]["process"] = "done"
                 if check[0] != login[id]["name"]:
