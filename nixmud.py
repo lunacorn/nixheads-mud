@@ -212,8 +212,6 @@ todo       = open("Art/todo")
 with open("Help/help1.json") as helpfile:
     helpfiles = json.load(helpfile)
 
-# move this next comment down and comment for class
-
 # initilize dictionaries
 
 playerprocess = {}
@@ -458,8 +456,6 @@ def AssignNewPlayersIDsP():
         "password": None,
         }
 
-#### functions for commands
-
 # change job function
 def ChangeJob(pr, pj):
 
@@ -549,24 +545,45 @@ def ItemsCheckRoom(pr):
 
 
 def GiveCommand():
-    gaveitem = 0
-    for x in players[id]["inventoryslot"]:
-        for s in [players[id]["inventoryslot"][x]]:
-            if s != "Empty":
-                print(Items.allitems[s].name)
-                if params.lower() == Items.allitems[s].name and gaveitem == 0:
-                    mud.send_message(id, "go fuck yourself")
-################## DONT REMOVE THESE COMMENTS  \/\/\/\/\/
-#                    players[id]["inventoryslot"][x] = "Empty"
-#                    newiid = str(Items.allitems[s].iid)+str(random.randint(100,10000000000))
-#                    Items(newiid ,Items.allitems[s].name, Items.allitems[s].desc, players[id]["room"], Items.allitems[s].type, Items.allitems[s].eqtype, Items.allitems[s].invdesc, Items.allitems[s].bp, Items.allitems[s].bpsize, Items.allitems[s].eqstata, Items.allitems[s].eqstatb, Items.allitems[s].eqsvala, Items.allitems[s].eqsvalb)
-#                    allitemslist.append(Items.allitems[str(newiid)].iid)
-#                    allitemslist.remove(s)
-#                    droppeditem = 1
-#                    players[id]["inventoryused"] -= 1
-#                    mud.send_message(id, "You drop: "+str(Items.allitems[s].name))
-#                    del(Items.allitems[s])
-################## DONT REMOVE THESE COMMENTS  ^^^
+    text = str(params.lower()).split(' ')  ## we need to seperate the input
+    try:
+        reciever = text[0] ## players name is the 1st param
+        gift = text[1] ### item given is the 2nd param
+        gaveitem = 0
+        items = ItemsCheckRoom(players[id]["room"]) ## all items in inventory should be in room / player
+        for item in items:
+            if gaveitem == 0 and text[1] == Items.allitems[item].name: ## if what you typed is the name of the item
+                for x in players[id]["inventoryslot"]:
+                        for s in [players[id]["inventoryslot"][x]]:
+                            if s != "Empty" and s == Items.allitems[item].iid: # inv slot need to not be empty and need to be the names iid
+                                for pid, pl in players.items():
+                                    if players[id]["name"] != text[0] and players[pid]["name"] == text[0] and players[pid]["inventoryspace"] > 0:
+                                            for y in players[pid]["inventoryslot"]:  ## we need check the inventory of the other player
+                                                    for z in [players[pid]["inventoryslot"][y]]: #to see if they have empty slot
+                                                        if z == "Empty": ## we only want to give if slot is empty
+                                                            players[id]["inventoryslot"][x] = "Empty"### remove it from inv
+                                                            orig = str(Items.allitems[item].iid)[:4]
+                                                            newiid = orig+str(random.randint(100,10000000000)) ## change the iid
+                                                            allitemslist.remove(Items.allitems[item].iid)                        ## remove it from active list
+                                                            while newiid in allitemslist:
+                                                                newiid = orig+str(random.randint(100,10000000000))
+                                                            Items(newiid ,Items.allitems[orig].name, Items.allitems[orig].desc, players[pid]["name"], Items.allitems[orig].type, Items.allitems[orig].eqtype, Items.allitems[orig].invdesc, Items.allitems[orig].bp, Items.allitems[orig].bpsize, Items.allitems[orig].eqstata, Items.allitems[orig].eqstatb, Items.allitems[orig].eqsvala, Items.allitems[orig].eqsvalb)
+                                                            allitemslist.append(Items.allitems[str(newiid)].iid)                        ## set the new iid
+                                                            del(Items.allitems[str(Items.allitems[item].iid)])## del from class
+                                                            players[pid]["inventoryslot"][z] = newiid ## give new version to player
+                                                            gaveitem = 1
+                                    if gaveitem == 0 and players[pid]["inventoryspace"] == 0 and players[pid]["name"] == text[0]: ## if you didnt give the item yet and the space is 0
+                                        mud.send_message(id, "that player has no free inventory space")
+                                        mud.send_message(pid, players[id]["name"]+" tried to give you "+text[1]+" but you have no inventory space")
+                                    if gaveitem == 0 and players[pid]["name"] != text[0]:
+                                        mud.send_message(id, "Its weird to watch someone try to give something to an imaginary friend")
+        if gaveitem == 0 and text[1] != Items.allitems[item].name:
+            if players[id]["coin"] == 0: ##you could change messages based on situations
+                mud.send_message(id, "You are trying to give away the contents of your wallet .... fuck all ")
+            else:
+                mud.send_message(id, "Its better to give than recieve, except in this case, you gave... disappointment")
+    except IndexError:
+        mud.send_message(id, "Give <person> <item> ... okay back to the basics")
 
 #def GetCommand():
     # same as grab but an extra param for the container
