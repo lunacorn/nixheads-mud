@@ -1,14 +1,13 @@
 {
 
         "HousePath": {
-            
+
             "name": "Front of a House",
 
             "description": "You find your self in front of the house\n\n The sun is shining brightly. To your east is a cobble path",
 
             "exits": {
 
-                "open": "###",
                 "east": "TownCenter"
 
             }
@@ -16,7 +15,7 @@
         },
 
         "TownCenter": {
-            
+
             "name": "Cross Road",
 
             "description": "You are at a cross road\n\n There is a tree with a strange aura and a statue that towers above you\n At the base of the statue is a gold plaque",
@@ -39,7 +38,7 @@
 
 
         "Bridge": {
-            
+
             "name": "Near the Town Bridge",
 
             "description": "You come to a bridge that stretches across a river with a strong current",
@@ -54,14 +53,13 @@
         },
 
         "OnBridge": {
-            
+
             "name": "Standing on the Bridge",
 
             "description": "You are in the middle of the bridge. \nYou look down, the river is far below.\n as the wind blows harder you can feel grains of sand in the air",
 
             "exits": {
 
-                "north": "###",
                 "south": "TownCenter",
                 "jump": "River"
 
@@ -70,20 +68,20 @@
         },
 
         "River": {
-            
+
             "name": "Down by the River",
 
             "description": "you jumped off the bridge and landed into the river below\n The current is too strong and it carries you away",
 
             "exits": {
 
-                "###": "###"
+                "jump": "OnBridge"
             }
 
         },
 
         "LakePath": {
-            
+
             "name": "A path to the Lake",
 
             "description": "You come to a fork in the path",
@@ -99,7 +97,7 @@
         },
 
         "Lake": {
-            
+
             "name": "The Lake in Town",
 
             "description": "You have reached a lake\n the sun glimers across the still surface of the water\n to your left you notice that someone has carelessly discarded a fishing rod",
@@ -117,7 +115,7 @@
         },
 
         "ForestPath": {
-            
+
             "name": "A Forested Path",
 
             "description": "You are at a fork in the path\n You can see the edge of a forest to the west and there is foot prints made from water coming from the path to the south",
@@ -133,7 +131,7 @@
         },
 
         "SwampPath": {
-            
+
             "name": "A Path to the Swamp",
 
             "description": "You feel its wise to stop here\n the path ahead has broken away and been overtaken by what seems to be swamp land.  This path could be dangerous",
@@ -148,7 +146,7 @@
         },
 
         "Swamp": {
-            
+
             "name": "Far Side of Swamp",
 
             "description": "You jump into the swamp, fearing nothing you stomp your feet in the shallow water.  You see it goes on for miles to the east.",
@@ -164,22 +162,21 @@
         },
 
         "SeaSide": {
-            
+
             "name": "Sea Shore",
 
             "description": "You are now at the edge of the swamp and the sea\n the only way to cross the sea would be to aquire a raft.... boats are for the rich",
 
             "exits": {
 
-                "east": "Swamp",
-                "sail": "###"
+                "east": "Swamp"
 
             }
 
         },
 
         "FoodStorePath": {
-            
+
             "name": "Foodshop Storefront",
 
             "description": "Outside the Shops\n This shop sells edible items.... yummy",
@@ -242,4 +239,3 @@
         }
 
 }
-

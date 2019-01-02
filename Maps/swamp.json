@@ -6,9 +6,7 @@
             "description": "You find yourself in the garden, haha you are stuck till\nI finish this map... just kidding.  But seriously, go back through\nthe grey portal.",
 
             "exits": {
-                "grey": "Dungeon3",
-                "trap": "##",
-                "door": "##"
+                "grey": "Dungeon3"
 
 
             }
@@ -16,4 +14,3 @@
         }
 
 }
-

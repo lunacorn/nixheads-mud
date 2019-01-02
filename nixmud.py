@@ -125,12 +125,17 @@ import time
 import db as database
 import json
 import invdb as invendb
+import sys
+import inspect
 ##used random for item numbers
 import random
 # import the MUD server class
 
 from mudserver import MudServer
 
+
+
+#sys.setrecursionlimit()
 ### create a class to map all the creatures into
 ### saving space and effort adding in all creatures
 ### automatically adding in new creatures added to json
@@ -186,6 +191,21 @@ class Doors(object):
         self.exits = exits
         self.mapto = mapto
         Doors.doors[did] = self
+
+class Containers(object):
+    containers = {}
+    def __init__(self, cnid, cnname, cnstatus, cnlock, cnt, cngotopened, cnslotmax, cnmap, cnlockname, cnslots):
+        self.cnid = cnid
+        self.name = cnname
+        self.status = cnstatus
+        self.lock = cnlock
+        self.timer = cnt
+        self.gotopened = cngotopened
+        self.slotmax = cnslotmax
+        self.map = cnmap
+        self.lockname = cnlockname
+        self.slots = cnslots
+        Container.container[cnid] = self
 
 # import core values
 with open("corefunctions.json") as funcs:
@@ -415,6 +435,27 @@ for room in rooms:
                         Doors(did, ename, estatus, elock, dt, omap, exits, mapto, gotopened)
                         doorslist.append(did)
 
+#for container in fun["corevalues"]["containers"]:
+#    for info in fun["corevalues"]["containers"][container]:
+#        cnvalue = str(json.dumps(fun["corevalues"]["containers"])).replace('"', '')
+#        if cnvalue == "room":
+#            cnmap = cnvalue
+#        if cnvalue == "name":
+#            cnname = cnvalue
+#        if cnvalue == "status":
+#            cnstatus = cnvalue
+#        if cnvalue == "locked":
+#            cnlock = cnvalue
+#        if cnvalue == "timer":
+#            cnt = cnvalue
+#        if cnvalue == "maxslots":
+#            cnslotmax = cnvalue
+#        if cnvalue == "lockname":
+#            cnlockname = cnvalue
+#    cnid = "cntr"+str(random.randint(100,10000000000))
+#    Containers(cnid, cnname, cnstatus, cnmap, cnlock, cnt, cnslotmax, cnlockname)
+#    containerslist.append(cnid)
+
 
 for xx in allitemslist:
     print(xx+" : "+Items.allitems[xx].room)
@@ -482,6 +523,14 @@ def AssignNewPlayersIDs():
         "race": None,
         "job": None,
         "ujob": None,
+        "fightstarted": 0,
+        "target": '',
+        "outcome": '',
+        "firstround": '',
+        "goesfirst": '',
+        "monster": '',
+        "timer": 0,
+        "fighttimer": 30,
         "pvp": None,
         "inventoryspace": 8,
         "inventoryused": 0,
@@ -715,20 +764,6 @@ def DropCommand():  ## find item, assign new iid and room, delete old iid
     if droppeditem == 0:
         mud.send_message(id, "Only thing dropping is your IQ.")
 
-def FightCommand():
-    # store the target
-    #ck = params.lower()
-    # store the player's current room
-    #rm = rooms[players[id]["room"]]
-    # check if target is the target in room
-    mud.send_message(id, "not setup yet")
-    #if ck in rm["creaturecheck"]:
-    # insert combat code here and remove the test
-    #mud.send_message(id, "You squish the " + rm["creaturecheck"][ck])
-    # set a timer to make the spider disapeer
-    # Call the player stupid
-    #else:
-    # mud.send_message(id, "There is nothing like that to fight.")
 
 def ExamCommand():
     # store the object name
@@ -765,7 +800,7 @@ def SheetCommand():
     mud.send_message(id, ":"*62)
     mud.send_message(id, "::Spells"+":"*54)
     mud.send_message(id, ":"*62)
-    mud.send_message(id, "::{}".format([fun["corevalues"]["jobs"][players[id]["job"]]["spells"][str(players[id]["level"]).replace("'spell'"," ")]]))
+    #mud.send_message(id, "::{}".format([fun["corevalues"]["jobs"][players[id]["job"]]["spells"][str(players[id]["level"]).replace("'spell'"," ")]]))
     mud.send_message(id, "::"+" "*58+"::")
     mud.send_message(id, "::"+" "*58+"::")
     mud.send_message(id, "::"+" "*58+"::")
@@ -775,7 +810,7 @@ def SheetCommand():
     mud.send_message(id, ":"*62)
     mud.send_message(id, "::Skills"+":"*54)
     mud.send_message(id, ":"*62)
-    mud.send_message(id, "::{}".format([fun["corevalues"]["jobs"][players[id]["job"]]["skills"][str(players[id]["level"]).replace("'spell'"," ")]]))
+    #mud.send_message(id, "::{}".format([fun["corevalues"]["jobs"][players[id]["job"]]["skills"][str(players[id]["level"]).replace("'spell'"," ")]]))
     mud.send_message(id, "::"+" "*58+"::")
     mud.send_message(id, "::"+" "*58+"::")
     mud.send_message(id, "::"+" "*58+"::")
@@ -972,6 +1007,14 @@ def LoginCommand():
                         players[id]["hp"] = players[id]["maxhp"]
                         players[id]["mp"] = players[id]["maxmp"]
                         players[id]["pvp"] = "no"
+                        players[id]["fightstarted"] = 0
+                        players[id]["timer"] = 0
+                        players[id]["fighttimer"] = 10
+                        players[id]["target"] = ''
+                        players[id]["outcome"] = ''
+                        players[id]["firstround"] = ''
+                        players[id]["goesfirst"] = ''
+                        players[id]["monster"] = ''
                         players[id]["tp"] = 0
                         players[id]["exp"] = 0
                         players[id]["level"] = 0
@@ -1057,7 +1100,7 @@ def SetjobCommand():
     if playerprocess[id]["selection"] == "job":
         mud.send_message(id, "What job you gonna go with?")
 
-def StartTimers():
+def StartDoorTimers():
     for door in doorslist:
         if Doors.doors[door].dtimer <= Doors.doors[door].gotopened:
             if Doors.doors[door].status == "open":
@@ -1156,6 +1199,14 @@ def NewCommand():
         print(players[id]["name"])
         players[id]["hp"] = players[id]["maxhp"]
         players[id]["mp"] = players[id]["maxmp"]
+        players[id]["fightstarted"] = 0
+        players[id]["fighttimer"] = 10
+        players[id]["timer"] = 0
+        players[id]["target"] = ''
+        players[id]["outcome"] = ''
+        players[id]["firstround"] = ''
+        players[id]["goesfirst"] = ''
+        players[id]["monster"] = ''
         players[id]["pvp"] = "no"
         players[id]["tp"] = 0
         players[id]["exp"] = 0
@@ -1379,9 +1430,180 @@ def CreatureCheckRoom(pr):
                creatures.append(items)
     return creatures
 
+def GetDammage(attacker, prey):
+    if attacker == players[id]["name"]:
+        defence = int(players[id]["dex"]) + int(players[id]["vit"])
+        attack = int(players[id]["dex"]) + int(players[id]["str"])
+        miss = str(random.randint(int(players[id]["level"]), int(int(players[id]["level"])+attack)))
+        damage = int(players[id]["str"])/2-int(Creatures.creatures[prey].cdef)/4
+        if damage <= 0:
+            return 0
+        else:
+            if int(miss) >= int(Creatures.creatures[prey].cdef):
+                return damage
+            else:
+                return "miss"
+    else:
+        defence = int(Creatures.creatures[attacker].cdef)
+        attack = int(Creatures.creatures[attacker].cstr)
+        miss = str(random.randint(int(Creatures.creatures[attacker].clvl), int(int(Creatures.creatures[attacker].clvl)+attack)))
+        damage = int(attack)/2 - int(defence)/4
+        playerdef = int(players[id]["dex"]) + int(players[id]["vit"])
+        if damage <= 0:
+            return 0
+        else:
+            if int(miss) >= int(playerdef):
+                return damage
+            else:
+                return "miss"
 
+def IsDead(character):
+    if character == players[id]["name"]:
+        if players[id]["hp"] <= 0:
+            return 1
+    else:
+        if int(Creatures.creatures[character].life) <= 0:
+            return 1
+
+def StartFightTimer():
+    if players[id]["fighttimer"] <= players[id]["timer"]:
+        players[id]["timer"] = 0
+        FightCommand()
+    if players[id]["fighttimer"] >= players[id]["timer"]:
+        players[id]["timer"] += 1
+
+
+movepool = []
+def FightCommand():
+    if players[id]["fightstarted"] == 0:
+        creatures = CreatureCheckRoom(players[id]["room"])
+        for creature in creatures:
+            if Creatures.creatures[creature].name == str(params.lower()):
+                players[id]["monster"] = creature
+                break
+        if players[id]["monster"] == '':
+            mud.send_message(id, "there is no creature here called "+params.lower())
+        else:
+            mud.send_message(id, "You try starting a fight with "+params.lower())
+            if int(Creatures.creatures[players[id]["monster"]].clvl) >= int(players[id]["level"])+15:
+                mud.send_message(id, Creatures.creatures[players[id]["monster"]].name+" flicks you away like a bug, you sore through the air and land as a bloody mess on the floor")
+                players[id]["hp"] = players[id]["hp"] - players[id]["hp"]
+            else:
+                if int(Creatures.creatures[players[id]["monster"]].cdef) >= int(players[id]["dex"]):
+                    players[id]["goesfirst"] = players[id]["monster"]
+                if int(Creatures.creatures[players[id]["monster"]].cdef) < int(players[id]["dex"]):
+                    players[id]["goesfirst"] = players[id]["name"]
+                players[id]["fightstarted"] = 1
+                players[id]["outcome"] = kung_fu_fighting(players[id]["monster"])
+    if players[id]["fightstarted"] == 1:
+        if players[id]["outcome"] == players[id]["name"]:
+            players[id]["hp"] = 1
+            mud.send_message(id, "you died")
+            return
+            ## Dead()
+        elif players[id]["outcome"] == players[id]["monster"]:
+            return
+        elif players[id]["outcome"] == 0:
+            players[id]["outcome"] = kung_fu_fighting(players[id]["monster"])
+
+
+def kung_fu_fighting(monster):
+    if monster != players[id]["target"] and players[id]["firstround"] == 1:
+        mud.send_message(id, "you are now fighting "+Creatures.creatures[monster].name)
+        players[id]["target"] = monster
+        players[id]["firstround"] = 1
+    else:
+        players[id]["target"] = monster
+    if players[id]["firstround"] == 1:
+        movepool = []
+        basemoveamount = 5 ## might add this to the creature so its a dynamic percentage
+        count = 0
+        if Creatures.creatures[monster].basemove != "no":
+            while basemoveamount >= count:
+                movepool.append(Creatures.creatures[monster].basemove)
+                count += 1
+        if Creatures.creatures[monster].csnm != "no":
+            movepool.append(Creatures.creatures[monster].csnm)
+        players[id]["firstround"] = 0
+    if players[id]["goesfirst"] == monster:
+        movetouse = movepool[int(str(random.randint(1, len(movepool))))]
+        if movetouse == Creatures.creatures[monster].csnm:
+            pass #CastCommand(monster, movetouse)
+        else:
+            dmg = GetDammage(monster, players[id]["name"])
+            if dmg == 0:
+                dmg = 1
+                mud.send_message(id, str(Creatures.creatures[monster].name)+" is powerless against you, dealing "+str(dmg)+" damage")
+            elif dmg == "miss":
+                dmg = 0
+                mud.send_message(id, str(Creatures.creatures[monster].name)+" has pathetic aim and misses you")
+            else:
+                mud.send_message(id, str(Creatures.creatures[monster].name)+" attacks you, dealing "+str(dmg)+" damage")
+            players[id]["hp"] = int(players[id]["hp"]) - int(dmg)
+
+        players[id]["goesfirst"] = ''
+    else:
+        dead = IsDead(players[id]["name"])
+        if dead == 1:
+            return players[id]["name"]
+        dead = IsDead(monster)
+        if dead == 1:
+            return monster
+        ####
+        dmg = GetDammage(players[id]["name"], monster)
+        if dmg == 0:
+            dmg = 1
+            mud.send_message(id, "You are powerless against "+str(Creatures.creatures[monster].name)+", dealing "+str(dmg)+" damage")
+        elif dmg == "miss":
+            dmg = 0
+            mud.send_message(id, "You suck, you need to train more, you missed the "+str(Creatures.creatures[monster].name))
+        else:
+            mud.send_message(id, "You hit the "+str(monster)+", dealing "+str(dmg)+" damage")
+        Creatures.creatures[monster].life = int(Creatures.creatures[monster].life) - int(dmg)
+
+        dmg = GetDammage(monster, players[id]["name"])
+        if dmg == 0:
+            dmg = 1
+            mud.send_message(id, str(Creatures.creatures[monster].name)+" is powerless against you, dealing "+str(dmg)+" damage")
+        elif dmg == "miss":
+            dmg = 0
+            mud.send_message(id, str(Creatures.creatures[monster].name)+" has pathetic aim and misses you")
+        else:
+            mud.send_message(id, str(Creatures.creatures[monster].name)+" attacks you, dealing "+str(dmg)+" damage")
+        players[id]["hp"] = players[id]["hp"] - dmg
+        mud.send_message(id, "**** HP: {} **** MP: {} **** NEXT: {} **** PVP: {} ****".format(players[id]["hp"],players[id]["mp"],players[id]["next"],players[id]["pvp"]))
+        return 0
+
+#cid name room desc clvl cstr
+#cdmg cdef clfe life moves
+#drops cspc csnm ctmr corp turn
+
+def CheckCommand():
+    creatures = CreatureCheckRoom(players[id]["room"])
+    for creature in creatures:
+        if Creatures.creatures[creature].name == str(params.lower()):
+            if int(Creatures.creatures[creature].clvl) >= int(players[id]["level"])+15:
+                mud.send_message(id, "Do you want your grave dug now or later?")
+                break
+            if int(Creatures.creatures[creature].clvl) >= int(players[id]["level"])+7:
+                mud.send_message(id, "You're gonna need a lot of help...")
+                break
+            if int(Creatures.creatures[creature].clvl) >= int(players[id]["level"])+4:
+                mud.send_message(id, "This won't be easy...")
+                break
+            if int(Creatures.creatures[creature].clvl) >= int(players[id]["level"]):
+                mud.send_message(id, "This could be doable...")
+                break
+            if int(Creatures.creatures[creature].clvl) >= int(players[id]["level"])-4:
+                mud.send_message(id, "I'll be dissapointed if you die.")
+                break
+            if int(Creatures.creatures[creature].clvl) >= int(players[id]["level"])-10:
+                mud.send_message(id, "It's just a baby... why would you kill this?")
+                break
+    else:
+        mud.send_message(id, "Exactly what are you trying to check here?")
 ## get date
-timeatstart = datetime.datetime.now()
+#timeatstart = datetime.datetime.now()
 # main game loop. We loop forever (i.e. until the program is terminated)
 while True:
     # pause for 1/5 of a second on each loop, so that we don't constantly
@@ -1421,10 +1643,27 @@ while True:
 
     # go through any new commands sent from players
     commandflag = 0
-    StartTimers()
+    try:
+        if players[id]["fightstarted"] == 1:
+            StartFightTimer()
+            if players[id]["outcome"] == players[id]["monster"]:
+                mud.send_message(id, "you killed "+Creatures.creatures[players[id]["monster"]].name)
+                #change this to a corpse container
+                Creatures.creatures[players[id]["monster"]].corp = "yes"
+                Creatures.creatures[players[id]["monster"]].name = "dead "+Creatures.creatures[players[id]["monster"]].name
+                Creatures.creatures[players[id]["monster"]].desc = "The corpse of a "+Creatures.creatures[players[id]["monster"]].name+" is laying here"
+                Creatures.creatures[players[id]["monster"]].moves = "no"
+                players[id]["fightstarted"] = 0
+                players[id]["outcome"] = ''
+                players[id]["monster"] = ''
+                players[id]["goesfirst"] = ''
+                players[id]["target"] = ''
+                players[id]["firstround"] = ''
+    except:
+        pass
+    StartDoorTimers()
     for id, command, params in mud.get_commands():
-
-        # move this next set of comment down to where i wrote does this work
+        # move this next set of comment down to wheFightTimerre i wrote does this work
 
         # if for any reason the player isn't in the player map, skip them and
         # move on to the next one
@@ -1551,9 +1790,17 @@ while True:
         # Make GM command
         # outputs a message to all users in game
         # useful during server maintenace to warn players to save.
-        elif command == "system":
+        elif command == "gm":
+            mud.send_message(id, "Your user is set to GM mode")
+            players[id]["user"] = "GM"
+
+        elif command == "global":
             for pid, pl in players.items():
-                mud.send_message(pid, "{}: SYSTEM MESSAGE!!: {}".format(players[id]["name"], params))
+                mud.send_message(pid, "{}: Global Chat: {}".format(players[id]["name"], params))
+
+        elif players[id]["user"] == "GM" and command == "system":
+            for pid, pl in players.items():
+                mud.send_message(pid, "SYSTEM MESSAGE!!: {}".format(params))
 
         elif command == "tell":
             online = "offline"
@@ -1579,7 +1826,7 @@ while True:
         # saves character data to database and prints
         # serverside for each character saved
         # make this a gm command later
-        elif command == "shutdown":
+        elif players[id]["user"] == "GM" and command == "shutdown":
             ShutdownCommand()
 
         elif command == "drop":
@@ -1599,8 +1846,14 @@ while True:
 
         elif command == "exam":
             ExamCommand()
+        elif command == "check":
+            CheckCommand()
+
         elif command == "fight":
-            FightCommand()
+            if players[id]["fightstarted"] != 1:
+                FightCommand()
+            else:
+                mud.send_message(id, "You are already fighting...")
 
         elif command == "eq":
             EquipmentCommand()
