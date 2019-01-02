@@ -175,12 +175,13 @@ class Items(object):
 
 class Doors(object):
     doors = {}
-    def __init__(self, did, ename, estatus, elock, dt, map, exits, mapto):
+    def __init__(self, did, ename, estatus, elock, dt, map, exits, mapto, gotopened):
         self.did = did
         self.name = ename
         self.status = estatus
         self.elock = elock
         self.dtimer = dt
+        self.gotopened = gotopened
         self.map = map
         self.exits = exits
         self.mapto = mapto
@@ -395,6 +396,8 @@ for room in rooms:
                 for y in rooms[room][x]:
                     if y == '':
                         for z in rooms[room][x][y]:
+                            dt = 60
+                            gotopened = 0
                             if z == "object":
                                 ename = rooms[room][x][y][z]
                             if z == "otimer":
@@ -409,11 +412,8 @@ for room in rooms:
                             if z == "mapto":
                                 mapto = rooms[room][x][y][z]
                         did = "door"+str(random.randint(100,10000000000))
-                        print(did+' '+ename+' '+estatus+' '+elock+' '+dt+' '+omap+' '+exits+' '+mapto)
-                        Doors(did, ename, estatus, elock, dt, omap, exits, mapto)
+                        Doors(did, ename, estatus, elock, dt, omap, exits, mapto, gotopened)
                         doorslist.append(did)
-print("DOORS LIST BELOW ME")
-print(doorslist)
 
 
 for xx in allitemslist:
@@ -597,23 +597,9 @@ def ItemsCheckRoom(pr):
 def DoorsCheckRoom(pr):
     mydoors = []
     for doors in doorslist:
-        print("did i get a door "+doors)
         if doors == Doors.doors[doors].did:
-            print("did i get a door2 "+doors)
-
-
-            print(Doors.doors[doors].did)
-            print(Doors.doors[doors].name)
-            print(Doors.doors[doors].status)
-            print(Doors.doors[doors].elock)
-            print(Doors.doors[doors].dtimer)
-            print(Doors.doors[doors].map)
-            print(Doors.doors[doors].exits)
-            print(Doors.doors[doors].mapto)
             if pr == Doors.doors[doors].map:
-                print("did i get a door3 "+doors)
                 mydoors.append(doors)
-    print("dd   "+str(mydoors))
     return mydoors
 #def OpenCommand():
 
@@ -1071,6 +1057,15 @@ def SetjobCommand():
     if playerprocess[id]["selection"] == "job":
         mud.send_message(id, "What job you gonna go with?")
 
+def StartTimers():
+    for door in doorslist:
+        if Doors.doors[door].dtimer <= Doors.doors[door].gotopened:
+            if Doors.doors[door].status == "open":
+                Doors.doors[door].status = "closed"
+                for pid, pl in players.items():
+                    if players[pid]["room"] == Doors.doors[door].map:
+                        mud.send_message(pid, "A clown pokes his head into the room , then slams the door")
+        Doors.doors[door].gotopened += 1
 
 def NewCommand():
     #   The 'new' command gets input for a new player from the user
@@ -1205,6 +1200,56 @@ def KickCommand():
                 if params.lower() == Creatures.creatures[c].name:
                     mud.send_message(id, "you kicked a "+Creatures.creatures[c].name+"  :  "+Creatures.creatures[c].cid)
 
+def OpenCommand():
+    ex = params.lower()
+    rm = rooms[players[id]["room"]]
+    opened = 0
+    doors = DoorsCheckRoom(players[id]["room"])
+    block = ''
+    blockx = ""
+    for ob in rm["exits"]:
+        if ob == "":
+            for thedoor in doors:
+                block = thedoor
+                if Doors.doors[block].status == "closed":
+                    if ex in Doors.doors[block].exits or ex == Doors.doors[block].name:
+                        if Doors.doors[block].elock == "yes":
+                            mud.send_message(id, "Locked doors don't open... they need keys.")
+                        if Doors.doors[block].elock == "no":
+                            Doors.doors[block].status = "open"
+                            mud.send_message(id, "You opened the door... congrats.")
+                            Doors.doors[block].gotopened = 0
+                            for pid, pl in players.items():
+                                if players[pid]["room"] == players[id]["room"]:
+                                    mud.send_message(pid, "A door was opened.")
+                                    opened = 1
+    if opened == 0:
+        mud.send_message(id, "Exactly what are you trying to open?....")
+
+def CloseCommand():
+    ex = params.lower()
+    rm = rooms[players[id]["room"]]
+    closed = 0
+    doors = DoorsCheckRoom(players[id]["room"])
+    block = ''
+    blockx = ""
+    for ob in rm["exits"]:
+        if ob == "":
+            for thedoor in doors:
+                block = thedoor
+                if Doors.doors[block].status == "open":
+                    if ex in Doors.doors[block].exits or ex == Doors.doors[block].name:
+                        Doors.doors[block].status = "closed"
+                        mud.send_message(id, "You closed the door... congrats.")
+                        for pid, pl in players.items():
+                            if players[id]["room"] == players[pid]["room"]:
+                                mud.send_message(pid, "A door was closed.")
+                                closed = 1
+    if closed == 0:
+        mud.send_message(id, "Exactly what are you trying to close?....")
+
+
+
 def GoCommand():
 
     # store the player's current room
@@ -1294,7 +1339,6 @@ def LookCommand():
 ## go command must be adjusted to not allow blanks
 ## as parameters.
     doors = DoorsCheckRoom(players[id]["room"])
-    print(doors)
     blockx = ""
     for ex in rm["exits"]:
         if ex == "":
@@ -1348,10 +1392,10 @@ while True:
     mud.update()
 
     ## check timers
-    currenttime = datetime.datetime.now()
-    uptime = currenttime - timeatstart
-    uptime = int(''.join(str(divmod(uptime.total_seconds(), 1)).replace('(', '').split('.')[:1]))
-
+#    currenttime = datetime.datetime.now()
+#    uptime = currenttime - timeatstart
+#    uptime = int(''.join(str(divmod(uptime.total_seconds(), 1)).replace('(', '').split('.')[:1]))
+    #print(uptime)
 
     # go through any newly connected players
     for id in mud.get_new_players():
@@ -1377,6 +1421,7 @@ while True:
 
     # go through any new commands sent from players
     commandflag = 0
+    StartTimers()
     for id, command, params in mud.get_commands():
 
         # move this next set of comment down to where i wrote does this work
@@ -1566,8 +1611,12 @@ while True:
             UnequipCommand()
 
         elif command == "uptime":
-            mud.send_message(id, uptime)
+            mud.send_message(id, str(uptime))
+        elif command == "open":
+            OpenCommand()
 
+        elif command == "close":
+            CloseCommand()
         # 'go' command
         elif command == "go":
             GoCommand()
