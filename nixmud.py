@@ -120,7 +120,7 @@ Team: Dragonkeeper, Lunacorn  Dec 26th, 2018
 # basic files to import
 # including the json
 # library
-
+import datetime
 import time
 import db as database
 import json
@@ -171,8 +171,20 @@ class Items(object):
         self.eqstatb = eqstatb
         self.eqsvala = eqsvala
         self.eqsvalb = eqsvalb
-        #self.eqstatus = eqstatus
         Items.allitems[iid] = self
+
+class Doors(object):
+    doors = {}
+    def __init__(self, did, ename, estatus, elock, dt, map, exits, mapto):
+        self.did = did
+        self.name = ename
+        self.status = estatus
+        self.elock = elock
+        self.dtimer = dt
+        self.map = map
+        self.exits = exits
+        self.mapto = mapto
+        Doors.doors[did] = self
 
 # import core values
 with open("corefunctions.json") as funcs:
@@ -237,6 +249,7 @@ defaultsitemslist = []
 creaturelist = []
 room = []
 myroom = []
+doorslist = []
 monstercount = 0
 ########### this grabs from the json for creatures
 for cid in credb.keys():
@@ -366,6 +379,43 @@ for item in fun["corevalues"]["items"]["equipment"]:
         if not str(iid) in defaultsitemslist:
             Items(iid ,name, desc, room, type, eqtype, invdesc, bp, bpsize, eqstata, eqstatb, eqsvala, eqsvalb) #, eqstatus)
             defaultsitemslist.append(Items.allitems[str(iid)].iid)
+
+
+for room in rooms:
+    ename = ''
+    estatus = ''
+    elock = ''
+    dt = ''
+    omap = ''
+    exits = ''
+    mapto = ''
+    for a in [rooms[room]]:
+        print(a)
+        if a == "exits":
+            for y in roomdetails[x]:
+                if y == '':
+                    for z in roomdetails[x][y]:
+                        if z == "object":
+                            ename = roomdetails[x][y][z]
+                        if z == "otimer":
+                            dt = roomdetails[x][y][z]
+                        if z == "status":
+                            estatus = roomdetails[x][y][z]
+                        if z == "locked":
+                            elock = roomdetails[x][y][z]
+                        if z == "map":
+                            omap = roomdetails[x][y][z]
+                        if z == "exits":
+                            exits = roomdetails[x][y][z]
+                        if z == "mapto":
+                            mapto = roomdetails[x][y][z]
+                        did = "door"+str(random.randint(100,10000000000))
+                        print(did+' '+ename+' '+estatus+' '+elock+' '+dt+' '+omap+' '+exits+' '+mapto)
+                        Doors(did, ename, estatus, elock, dt, omap, exits, mapto)
+                        doorslist.append(did)
+print("DOORS LIST BELOW ME")
+print(doorslist)
+
 
 for xx in allitemslist:
     print(xx+" : "+Items.allitems[xx].room)
@@ -544,6 +594,28 @@ def ItemsCheckRoom(pr):
                items.append(itemsx)
     return items
 
+
+def DoorsCheckRoom(pr):
+    mydoors = []
+    for doors in doorslist:
+        print("did i get a door "+doors)
+        if doors == Doors.doors[doors].did:
+            print("did i get a door2 "+doors)
+
+
+            print(Doors.doors[doors].did)
+            print(Doors.doors[doors].name)
+            print(Doors.doors[doors].status)
+            print(Doors.doors[doors].elock)
+            print(Doors.doors[doors].dtimer)
+            print(Doors.doors[doors].map)
+            print(Doors.doors[doors].exits)
+            print(Doors.doors[doors].mapto)
+            if pr == Doors.doors[doors].map:
+                print("did i get a door3 "+doors)
+                mydoors.append(doors)
+    print("dd   "+str(mydoors))
+    return mydoors
 #def OpenCommand():
 
     #opens objects like doors or closed status
@@ -930,14 +1002,13 @@ def LoginCommand():
                         mud.send_message(id, "A lot changes here and interdimensional travel")
                         mud.send_message(id, "is always a pain in the ass.")
                         LookCommand()
-                       # begin testing
-                       ###   This makes your unique iid work on login
-                       ###
-                       ###   WHAT THE ACTUAL FUCK!!!??? I KNOW IT WORKS BUT WTF
-                       ### if you fork our code never change this
-                       ###  you will never recover (6:44AM Dec 29 2018)
-                       ###      ........    seriously   ....  dont do it
-                       ###
+                        ###   This makes your unique iid work on login
+                        ###
+                        ###   WHAT THE ACTUAL FUCK!!!??? I KNOW IT WORKS BUT WTF
+                        ### if you fork our code never change this
+                        ###  you will never recover (6:44AM Dec 29 2018)
+                        ###      ........    seriously   ....  dont do it
+                        ###
                         invlist = invendb.get_name(invdata, login[id]["name"])
                         slotlist = []
                         invitems = 8
@@ -977,7 +1048,6 @@ def LoginCommand():
                         players[id]["inventoryused"] = len(slotlist)
                         for equipitem in equiplist:
                             players[id][str(Items.allitems[str(equipitem)].eqtype)] = equipitem
-
                         login[id]["process"] = "done"
                 if check[0] != login[id]["name"]:
                     login[id]["name"] = None
@@ -989,7 +1059,7 @@ def LoginCommand():
                     login[id]["name"] = None
                     login[id]["password"] = None
                     login[id]["process"] = None
-
+                    ### end of dont touch this section
 def SetjobCommand():
 #prints available jobs
     #change to ujobs
@@ -1142,23 +1212,26 @@ def GoCommand():
     ex = params.lower()
     rm = rooms[players[id]["room"]]
     #store object Status
+    doors = DoorsCheckRoom(players[id]["room"])
+    block = ''
     blockx = ""
-
-    for ob in rm["exits"]:
+    for ob in rm["exits"]: # door43536457474
         if ob == "":
-            block = rm["exits"][""]
-            if block["status"] == "open":
-                blockx = block["exits"]
-            if ex == block["object"]:
-                mud.send_message(id, "Idiot... you ran into a {}?".format(block["object"]))
+            for thedoor in doors:
+                block = thedoor
+                #block = rm["exits"][""] ## block = Doors.doors[].status
+            if Doors.doors[block].status == "open": # Doors.doors.
+                blockx = Doors.doors[block].exits
+            if ex == Doors.doors[block].object:
+                mud.send_message(id, "Idiot... you ran into a {}?".format(Doors.doors[block].object))
                 playerprocess[id]["process"] = "ding"
                 players[id]["hp"] -= 3
     # if the specified exit is found in the room's exits list
-            if ex in block["exits"]:
+            if ex in Doors.doors[block].exits:
                 playerprocess[id]["process"] = "ding"
-                if block["status"] == "closed":
-                    mud.send_message(id, "{} is blocking your path.".format(block["object"]))
-                if block["status"] == "open":
+                if Doors.doors[block].status == "closed":
+                    mud.send_message(id, "{} is blocking your path.".format(Doors.doors[block].object))
+                if Doors.doors[block].status == "open":
                 # go through all the players in the game
                     for pid, pl in players.items():
                     # if player is in the same room and isn't the player
@@ -1166,9 +1239,9 @@ def GoCommand():
                         if players[pid]["room"] == players[id]["room"] and pid != id:
                          # send them a message telling them that the player
                          # left the room
-                            mud.send_message(pid, "{} left via the {}.".format(players[id]["name"], block["object"]))
+                            mud.send_message(pid, "{} left via the {}.".format(players[id]["name"], Doors.doors[block].object))
                                     # update the player's current room to the one the exit leads to
-                    players[id]["room"] = blockx[ex]
+                    players[id]["room"] = Doors.doors[block].mapto
                                     # possible place for description after moving
                     LookCommand()
                             # go through all the players in the game
@@ -1176,14 +1249,12 @@ def GoCommand():
                             # if player is in the same (new) room and isn't the player sending the command
                         if players[pid]["room"] == players[id]["room"] and pid != id:
                             # send them a message telling them that the player entered the room
-                            mud.send_message(pid,"{} arrived via the {}.".format(players[id]["name"], block["object"]))
+                            mud.send_message(pid,"{} arrived via the {}.".format(players[id]["name"], Doors.doors[block].object))
     if ex != "":
         if ex in rm["exits"]:
-
         # go through all the players in the game
             for pid, pl in players.items():
         # if player is in the same room and isn't the player
-        # sending the command
                 if players[pid]["room"] == players[id]["room"] and pid != id:
                # send them a message telling them that the player
                # left the room
@@ -1223,15 +1294,20 @@ def LookCommand():
 ## if open "w" or "e" "or w/e"
 ## go command must be adjusted to not allow blanks
 ## as parameters.
+    doors = DoorsCheckRoom(players[id]["room"])
+    print(doors)
     blockx = ""
     for ex in rm["exits"]:
         if ex == "":
-            block = rm["exits"][""]
-            if block["status"] == "open":
-                blockx = block["exits"]
-            if block["status"] == "closed":
-                blockx = block["object"]
+            for thedoor in doors:
+                block = thedoor
+                print("block")
+                if Doors.doors[block].status == "open":
+                    blockx = Doors.doors[block].exits
+                if Doors.doors[block].status == "closed":
+                    blockx = Doors.doors[block].object
     mud.send_message(id, "Exits are: {} {}".format(" ".join(rm["exits"]),"".join(blockx)))
+    print(blockx)
     mud.send_message(id, "*"*62)
     # list of players in room
     playershere = []
@@ -1260,6 +1336,9 @@ def CreatureCheckRoom(pr):
                creatures.append(items)
     return creatures
 
+
+## get date
+timeatstart = datetime.datetime.now()
 # main game loop. We loop forever (i.e. until the program is terminated)
 while True:
     # pause for 1/5 of a second on each loop, so that we don't constantly
@@ -1268,6 +1347,12 @@ while True:
     # 'update' must be called in the loop to keep the game running and give
     # us up-to-date information
     mud.update()
+
+    ## check timers
+    currenttime = datetime.datetime.now()
+    uptime = currenttime - timeatstart
+    uptime = int(''.join(str(divmod(uptime.total_seconds(), 1)).replace('(', '').split('.')[:1]))
+
 
     # go through any newly connected players
     for id in mud.get_new_players():
@@ -1480,6 +1565,9 @@ while True:
             EquipCommand()
         elif command == "unequip":
             UnequipCommand()
+
+        elif command == "uptime":
+            mud.send_message(id, uptime)
 
         # 'go' command
         elif command == "go":
