@@ -34,9 +34,9 @@
                 "": {
                   "object": "door",
                   "status": "open",
-                  "exits":{
-                    "south": "Dungeon3"
-                  }
+                  "exits": "south",
+                  "locked": "no",
+                  "mapto": "Dungeon3"
                 }
 
             }
@@ -52,9 +52,9 @@
               "": {
                 "object": "door",
                 "status": "closed",
-                "exits":{
-                  "north": "Dungeon2"
-                  }
+                "exits":  "north",
+                "locked": "no",
+                "mapto": "Dungeon2"
                 },
                 "west": "Dungeon4",
                 "white": "HousePath",

@@ -390,25 +390,24 @@ for room in rooms:
     exits = ''
     mapto = ''
     for a in [rooms[room]]:
-        print(a)
-        if a == "exits":
-            for y in roomdetails[x]:
-                if y == '':
-                    for z in roomdetails[x][y]:
-                        if z == "object":
-                            ename = roomdetails[x][y][z]
-                        if z == "otimer":
-                            dt = roomdetails[x][y][z]
-                        if z == "status":
-                            estatus = roomdetails[x][y][z]
-                        if z == "locked":
-                            elock = roomdetails[x][y][z]
-                        if z == "map":
-                            omap = roomdetails[x][y][z]
-                        if z == "exits":
-                            exits = roomdetails[x][y][z]
-                        if z == "mapto":
-                            mapto = roomdetails[x][y][z]
+        for x in a:
+            if x == "exits":
+                for y in rooms[room][x]:
+                    if y == '':
+                        for z in rooms[room][x][y]:
+                            if z == "object":
+                                ename = rooms[room][x][y][z]
+                            if z == "otimer":
+                                dt = rooms[room][x][y][z]
+                            if z == "status":
+                                estatus = rooms[room][x][y][z]
+                            if z == "locked":
+                                elock = rooms[room][x][y][z]
+                            omap = room
+                            if z == "exits":
+                                exits = rooms[room][x][y][z]
+                            if z == "mapto":
+                                mapto = rooms[room][x][y][z]
                         did = "door"+str(random.randint(100,10000000000))
                         print(did+' '+ename+' '+estatus+' '+elock+' '+dt+' '+omap+' '+exits+' '+mapto)
                         Doors(did, ename, estatus, elock, dt, omap, exits, mapto)
@@ -1222,15 +1221,15 @@ def GoCommand():
                 #block = rm["exits"][""] ## block = Doors.doors[].status
             if Doors.doors[block].status == "open": # Doors.doors.
                 blockx = Doors.doors[block].exits
-            if ex == Doors.doors[block].object:
-                mud.send_message(id, "Idiot... you ran into a {}?".format(Doors.doors[block].object))
+            if ex == Doors.doors[block].name:
+                mud.send_message(id, "Idiot... you ran into a {}?".format(Doors.doors[block].name))
                 playerprocess[id]["process"] = "ding"
                 players[id]["hp"] -= 3
     # if the specified exit is found in the room's exits list
             if ex in Doors.doors[block].exits:
                 playerprocess[id]["process"] = "ding"
                 if Doors.doors[block].status == "closed":
-                    mud.send_message(id, "{} is blocking your path.".format(Doors.doors[block].object))
+                    mud.send_message(id, "{} is blocking your path.".format(Doors.doors[block].name))
                 if Doors.doors[block].status == "open":
                 # go through all the players in the game
                     for pid, pl in players.items():
@@ -1239,7 +1238,7 @@ def GoCommand():
                         if players[pid]["room"] == players[id]["room"] and pid != id:
                          # send them a message telling them that the player
                          # left the room
-                            mud.send_message(pid, "{} left via the {}.".format(players[id]["name"], Doors.doors[block].object))
+                            mud.send_message(pid, "{} left via the {}.".format(players[id]["name"], Doors.doors[block].name))
                                     # update the player's current room to the one the exit leads to
                     players[id]["room"] = Doors.doors[block].mapto
                                     # possible place for description after moving
@@ -1249,7 +1248,7 @@ def GoCommand():
                             # if player is in the same (new) room and isn't the player sending the command
                         if players[pid]["room"] == players[id]["room"] and pid != id:
                             # send them a message telling them that the player entered the room
-                            mud.send_message(pid,"{} arrived via the {}.".format(players[id]["name"], Doors.doors[block].object))
+                            mud.send_message(pid,"{} arrived via the {}.".format(players[id]["name"], Doors.doors[block].name))
     if ex != "":
         if ex in rm["exits"]:
         # go through all the players in the game
@@ -1305,7 +1304,7 @@ def LookCommand():
                 if Doors.doors[block].status == "open":
                     blockx = Doors.doors[block].exits
                 if Doors.doors[block].status == "closed":
-                    blockx = Doors.doors[block].object
+                    blockx = Doors.doors[block].name
     mud.send_message(id, "Exits are: {} {}".format(" ".join(rm["exits"]),"".join(blockx)))
     print(blockx)
     mud.send_message(id, "*"*62)
