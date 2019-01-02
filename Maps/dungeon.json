@@ -12,7 +12,6 @@
 
             "exits": {
 
-                "east": "####",
                 "south": "Dungeon2"
 
             }
@@ -56,7 +55,6 @@
                 "locked": "no",
                 "mapto": "Dungeon2"
                 },
-                "west": "Dungeon4",
                 "white": "HousePath",
                 "grey": "Swamp1",
                 "bright": "Desert1"

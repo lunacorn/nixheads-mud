@@ -1,98 +1,82 @@
 {
     "corevalues": {
-
             "items": {
                 "equipment": {
-
-                         "hemp_shirt":{
-                           "iid": "hesh",
-                           "name": "hemp_shirt",
-                           "invdesc": "you might not wanna smoke this.",
-                           "desc": "A fiberous hemp_shirt lay here.",
-                           "room": "Dungeon2",
-                           "type": "eq",
-                           "eqtype": "body",
-                           "bp": "no",
-                           "bpsize": "nil",
-                           "eqstata": "vit",
-                           "eqstatb": "dex",
-                           "eqsvala": 2,
-                           "eqsvalb": 2,
-                           "dtmr": 1800,
-                           "stmr": 600,
-                           "eqstatus": "no"
+                        "hemp_shirt":{
+                          "iid": "hesh",
+                          "name": "hemp_shirt",
+                          "invdesc": "you might not wanna smoke this.",
+                          "desc": "A fiberous hemp_shirt lay here.",
+                          "room": "Dungeon2",
+                          "type": "eq",
+                          "eqtype": "body",
+                          "bp": "no",
+                          "bpsize": "nil",
+                          "eqstata": "vit",
+                          "eqstatb": "dex",
+                          "eqsvala": 2,
+                          "eqsvalb": 2,
+                          "dtmr": 1800,
+                          "stmr": 600,
+                          "eqstatus": "no"
                                   },
                         "hemp_pants": {
-                         "iid": "hepa",
-                         "name": "hemp_pants",
-                         "invdesc": "soil em? hell they basically are soil.",
-                         "desc": "A old pair of hemp_pants lay here.",
-                         "room": "Dungeon2",
-                         "type": "eq",
-                         "eqtype": "legs",
-                         "bp": "no",
-                         "bpsize": "nil",
-                         "eqstata": "vit",
-                         "eqstatb": "dex",
-                         "eqsvala": 1,
-                         "eqsvalb": 1,
-                         "dtmr": 1800,
-                         "stmr": 600,
-                         "eqstatus": "no"
+                          "iid": "hepa",
+                          "name": "hemp_pants",
+                          "invdesc": "soil em? hell they basically are soil.",
+                          "desc": "A old pair of hemp_pants lay here.",
+                          "room": "Dungeon2",
+                          "type": "eq",
+                          "eqtype": "legs",
+                          "bp": "no",
+                          "bpsize": "nil",
+                          "eqstata": "vit",
+                          "eqstatb": "dex",
+                          "eqsvala": 1,
+                          "eqsvalb": 1,
+                          "dtmr": 1800,
+                          "stmr": 600,
+                          "eqstatus": "no"
                                   },
-                         "candycane":{
-                           "iid": "caca",
-                           "name": "candycane",
-                           "invdesc": "Ultimate Elvish wand",
-                           "desc": "a candycane sits on the ground.",
-                           "room": "Dungeon1",
-                           "type": "eq",
-                           "eqtype": "weapon",
-                           "bp": "no",
-                           "bpsize": "nil",
-                           "eqstata": "str",
-                           "eqstatb": "dex",
-                           "eqsvala": 2,
-                           "eqsvalb": 0,
-                           "dtmr": 1800,
-                           "stmr": 600,
-                           "eqstatus": "no"
-                                    },
+                        "candycane":{
+                          "iid": "caca",
+                          "name": "candycane",
+                          "invdesc": "Ultimate Elvish wand",
+                          "desc": "a candycane sits on the ground.",
+                          "room": "Dungeon1",
+                          "type": "eq",
+                          "eqtype": "weapon",
+                          "bp": "no",
+                          "bpsize": "nil",
+                          "eqstata": "str",
+                          "eqstatb": "dex",
+                          "eqsvala": 2,
+                          "eqsvalb": 0,
+                          "dtmr": 1800,
+                          "stmr": 600,
+                          "eqstatus": "no"
+                                  },
                         "wooden_sword":{
-                           "iid": "wosw",
-                           "name": "wooden_sword",
-                           "invdesc": "Activating denting paper ability!!",
-                           "desc": "The best sword in the world... lies here.",
-                           "room": "Dungeon1",
-                           "type": "eq",
-                           "eqtype": "weapon",
-                           "bp": "no",
-                           "bpsize": "nil",
-                           "eqstata": "str",
-                           "eqstatb": "dex",
-                           "eqsvala": 2,
-                           "eqsvalb": 0,
-                           "dtmr": 1800,
-                           "stmr": 600,
-                           "eqstatus": "no"
-                                    }
-
-                             }
-                    },
+                          "iid": "wosw",
+                          "name": "wooden_sword",
+                          "invdesc": "Activating denting paper ability!!",
+                          "desc": "The best sword in the world... lies here.",
+                          "room": "Dungeon1",
+                          "type": "eq",
+                          "eqtype": "weapon",
+                          "bp": "no",
+                          "bpsize": "nil",
+                          "eqstata": "str",
+                          "eqstatb": "dex",
+                          "eqsvala": 2,
+                          "eqsvalb": 0,
+                          "dtmr": 1800,
+                          "stmr": 600,
+                          "eqstatus": "no"
+                                  }
+                                }
+                              },
             "objects":{
-
-                  "Door": {
-                    "command": "open",
-                    "values": {
-                      "shut:": "You shut the door.",
-                      "ajar": "You open the door.",
-                      "exit": "y",
-                      "closed": "You walk into a door.  Are you drunk?"
-                    }
-
-                  },
-
-
                   "tree": "heal",
                   "barrel": "closed",
                   "fountain": "drink",
@@ -104,11 +88,21 @@
                   "fruit": "eat",
                   "note": "papercut",
                   "sword": "kick"
-                },
+                       },
+            "containers": {
+                "bucket1":{
+                      "name": "bucket",
+                      "room": "Dungeon1",
+                      "status": "open",
+                      "locked": "no",
+                      "timer": 0,
+                      "lockname": "none",
+                      "maxslots": 9
+                        }
+                      },
                 "stats":{
                 },
             "jobs": {
-
                 "warrior": {
                     "name": "warrior",
                     "description": "Tank Job? If you want. You can provoke enemies or just pulverize 'em.'",
@@ -122,18 +116,13 @@
                     "cha": -3,
                     "crit": 1,
                     "Spells": {
-                        "0": "none"
-                    },
+                              },
                     "Skills": {
-                        "0": {
-                            "bash": 6,
-                            "shout": 1
-                        }
-                    }
-                },
-
+                          "bash": 0,
+                          "shout": 0
+                              }
+                            },
                 "blackmage": {
-
                     "name": "blackmage",
                     "description": "Boomcannon! Nuke your enemies quick u squishie!!",
                     "maxhp": 2,
@@ -146,19 +135,13 @@
                     "cha": 0,
                     "crit": 1,
                     "spells": {
-                        "0":{
-                            "fire":"spell",
-                            "sleep":"spell"
-                        }
-                    },
+                            "fire": 0,
+                            "sleep": 1
+                              },
                     "skills": {
-                        "0": "none"
-                        }
-                },
-
-
+                              }
+                            },
                 "whitemage": {
-
                     "name": "whitemage",
                     "description": "A strong healer, hard job to learn but neccessary for groups",
                     "maxhp": -2,
@@ -171,18 +154,12 @@
                     "cha": 2,
                     "crit": 0,
                     "spells": {
-                        "0":{
-                            "cure": 5
-                        }
-                    },
+                            "cure": 0
+                              },
                     "skills": {
-                        "0":{
                             "persist": 6
-                        }
-                    }
-                },
-
-
+                              }
+                            },
                 "thief": {
                     "name": "thief",
                     "description": "Pickpocket and rogue. a great first job for new players",
@@ -196,22 +173,15 @@
                     "cha": 4,
                     "crit": 2,
                     "spells": {
-                        "0": "none"
-                        },
+                              },
                     "skills": {
-                        "0":{
-                            "steal": 6,
-                            "sneak": 10
+                            "steal": 0,
+                            "sneak": 0
+                              }
                             }
-                        }
-
-                    }
-                },
-
+                          },
             "races": {
-
                 "elvari": {
-
                     "description": "Good with magic, but super squish. Heal and nuke, but be gentle.",
                     "maxhp": 17,
                     "maxmp": 15,
@@ -222,10 +192,8 @@
                     "mnd": 17,
                     "cha": 15,
                     "crit": 1
-                },
-
+                          },
                 "humani": {
-
                     "description": "Fairly balanced stats... why? cause humanlike beings are just average.",
                     "maxhp": 20,
                     "maxmp": 7,
@@ -236,11 +204,8 @@
                     "mnd": 9,
                     "cha": 7,
                     "crit": 1
-                },
-
-
+                          },
                 "dragani": {
-
                     "description": "Dragonkin peeps so hell yea fandom, minus magical ability you might expect.",
                     "maxhp": 26,
                     "maxmp": 10,
@@ -251,11 +216,8 @@
                     "mnd": 5,
                     "cha": 9,
                     "crit": 1
-                },
-
-
+                          },
                 "krei": {
-
                     "description": "Agile and quick like a cat race should be. However, you are kinda dumb.",
                     "maxhp": 15,
                     "maxmp": 6,
@@ -266,8 +228,7 @@
                     "mnd": 14,
                     "cha": 11,
                     "crit": 2
-                }
-
-         }
-      }
-}
+                          }
+                        }
+                      }
+                    }
