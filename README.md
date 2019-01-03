@@ -6,20 +6,6 @@
 
 Thank you for visiting https://nixheads.co.uk
 
------------------------------------------------------------
-
-This Mud runs the nixheads-mud codebase.  
-
-A heavily modified version of its former
-
-simplemud.  Written with python and json
-
-this overhauled codebase aims to be a api
-
-for a very open ended and customizable mud
-
-codebase.
-
 --------------------------------------------------------------------
 
 =^..^=   =^..^=   =^..^=    =^..^=    =^..^=    =^..^=    =^.^=
