@@ -616,6 +616,7 @@ def AssignNewPlayersIDs():
         "race": None,
         "job": None,
         "ujob": None,
+        "status": None,
         "fightstarted": 0,
         "target": '',
         "outcome": '',
@@ -898,6 +899,7 @@ def SheetCommand():
     mud.send_message(id, ":"*62)
     mud.send_message(id, "::Spells"+":"*54)
     mud.send_message(id, ":"*62)
+
     #mud.send_message(id, "::{}".format([fun["corevalues"]["jobs"][players[id]["job"]]["spells"][str(players[id]["level"]).replace("'spell'"," ")]]))
     mud.send_message(id, "::"+" "*58+"::")
     mud.send_message(id, "::"+" "*58+"::")
@@ -1109,6 +1111,7 @@ def LoginCommand():
                         players[id]["hp"] = players[id]["maxhp"]
                         players[id]["mp"] = players[id]["maxmp"]
                         players[id]["pvp"] = "no"
+                        players[id]["status"] = None,
                         players[id]["fightstarted"] = 0
                         players[id]["timer"] = 0
                         players[id]["fighttimer"] = 10
@@ -1308,6 +1311,7 @@ def NewCommand():
         players[id]["fightstarted"] = 0
         players[id]["fighttimer"] = 10
         players[id]["timer"] = 0
+        players[id]["status"] = None,
         players[id]["target"] = ''
         players[id]["outcome"] = ''
         players[id]["firstround"] = ''
@@ -1426,7 +1430,7 @@ def GoCommand():
                 mud.send_message(id, "Idiot... you ran into a {}?".format(Doors.doors[block].name))
                 playerprocess[id]["process"] = "ding"
                 players[id]["hp"] -= 3
-    # if the specified exit is found in the room's exits list
+            # if the specified exit is found in the room's exits list
             if ex in Doors.doors[block].exits:
                 playerprocess[id]["process"] = "ding"
                 if Doors.doors[block].status == "closed":
@@ -1470,7 +1474,7 @@ def GoCommand():
         # send them a message telling them that the player entered the room
                     mud.send_message(pid,"{} arrived via the {}.".format(players[id]["name"], ex))
         else:
-    # send back an 'unknown exit' message
+            # send back an 'unknown exit' message
             if playerprocess[id]["process"] != "ding":
                 mud.send_message(id, "Unknown exit '{}'".format(ex))
                 playerprocess[id] == None
@@ -1571,6 +1575,67 @@ def IsDead(character):
         if int(Creatures.creatures[character].life) <= 0:
             return 1
 
+def CheckCast(sc):
+    spellinfo=[]
+    for spell in fun["corevalues"]["spells"]:
+        if spell == sc:
+            for stat in fun["corevalues"]["spells"][spell]:
+                statie= str(json.dumps(fun["corevalues"]["spells"][spell][stat])).replace('"', '')
+                spellinfo.append(statie)
+
+    return spellinfo
+
+
+def CastCommand():
+    text = str(params).split(' ')
+    cast = CheckCast(text[0])
+    didcast = 0
+    if not cast:
+        mud.send_message(id, "Cast wtf now?")
+        didcast =1
+    if cast:
+        if didcast == 0:
+            if players[id]["job"] != cast[4]:
+                mud.send_message(id, "Oh you think you're a {} do you?".format(cast[4]))
+                didcast = 1
+            elif players[id]["mp"] < int(cast[3]):
+                mud.send_message(id, "You are not made of mp ya know...")
+                didcast = 1
+            elif players[id]["level"] < int(cast[0]):
+                mud.send_message(id, "Only the big kids get this spell...")
+                didcast =1
+            elif players[id]["level"] >= int(cast[0]):
+                if cast[2] == "damage":
+                    creatures = CreatureCheckRoom(players[id]["room"])
+                    for creature in creatures:
+                        if Creatures.creatures[creature].name == text[1]:
+                            mud.send_message(id, "You cast {} on {}".format(text[0],text[1]))
+                            players[id]["mp"] -= int(cast[3])
+                            dmgval = random.randint(int(cast[1])-3, int(cast[1])+3)
+                            mud.send_message(id, "You did: {} damage!".format(dmgval))
+                            players[id]["monster"] = creature
+                            Creatures.creatures[creature].life = int(Creatures.creatures[creature].life) - int(dmgval)
+                            FightCommand()
+                            didcast = 1
+                            break
+
+                if cast[2] == "heal":
+                    for pid, pl in players.items():
+                        if players[pid]["name"] == text[1]:
+                            if players[pid]["room"] == players[id]["room"]:
+                                mud.send_message(id, "You cast: {} on {}".format(text[0],text[1]))
+                                players[id]["mp"] -= int(cast[3])
+                                healval = random.randint(int(cast[1])-3, int(cast[1])+3)
+                                mud.send_message(id, "Healed for: {}".format(healval))
+                                if players[pid]["name"] != players[id]["name"]:
+                                    mud.send_message(pid, "{} healed you for: {}.".format(players[id]["name"],healval))
+                                players[pid]["hp"] = players[pid]["hp"]+healval
+                                if players[pid]["hp"] > players[pid]["maxhp"]:
+                                    players[pid]["hp"] = players[pid]["maxhp"]
+                                didcast = 1
+    if didcast == 0:
+        mud.send_message(id, "Did you put the right name in or just casting for lulz?")
+
 def StartFightTimer():
     if players[id]["fighttimer"] <= players[id]["timer"]:
         players[id]["timer"] = 0
@@ -1666,8 +1731,6 @@ def kung_fu_fighting(monster):
         else:
             mud.send_message(id, "You hit the "+str(monster)+", dealing "+str(dmg)+" damage")
             players[id]["exp"] += 3*int(Creatures.creatures[monster].life)
-            #if players[id]["exp"] >= players[id]["next"]:
-            #    Levelup()
         Creatures.creatures[monster].life = int(Creatures.creatures[monster].life) - int(dmg)
 
         dmg = GetDammage(monster, players[id]["name"])
@@ -1981,10 +2044,13 @@ while True:
         elif command == "eq":
             EquipmentCommand()
 
+        elif command == "cast":
+            CastCommand()
+
         elif command == "equip":
             EquipCommand()
-        elif command == "unequip":
-            UnequipCommand()
+        #elif command == "unequip":
+         #   UnequipCommand()
 
         elif command == "uptime":
             mud.send_message(id, str(uptime))
