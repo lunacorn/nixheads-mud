@@ -5,7 +5,9 @@
             "name": "Front of a House",
 
             "description": "You find your self in front of the house\n\n The sun is shining brightly. To your east is a cobble path",
-
+            "objects": {
+                
+            },
             "exits": {
 
                 "east": "TownCenter"
@@ -42,7 +44,9 @@
             "name": "Near the Town Bridge",
 
             "description": "You come to a bridge that stretches across a river with a strong current",
-
+            "objects": {
+                
+            },
             "exits": {
 
                 "north": "OnBridge",
@@ -57,7 +61,9 @@
             "name": "Standing on the Bridge",
 
             "description": "You are in the middle of the bridge. \nYou look down, the river is far below.\n as the wind blows harder you can feel grains of sand in the air",
-
+            "objects": {
+                
+            },
             "exits": {
 
                 "south": "TownCenter",
@@ -72,7 +78,9 @@
             "name": "Down by the River",
 
             "description": "you jumped off the bridge and landed into the river below\n The current is too strong and it carries you away",
-
+            "objects": {
+                
+            },
             "exits": {
 
                 "jump": "OnBridge"
@@ -85,7 +93,9 @@
             "name": "A path to the Lake",
 
             "description": "You come to a fork in the path",
-
+            "objects": {
+                
+            },
             "exits": {
 
                 "north": "TownCenter",
@@ -99,9 +109,9 @@
         "Lake": {
 
             "name": "The Lake in Town",
-
+        
             "description": "You have reached a lake\n the sun glimers across the still surface of the water\n to your left you notice that someone has carelessly discarded a fishing rod",
-
+            
             "objects": {
                 "rod": "This rod is old but after a good clean, its ready to furfil its purpose again"
             },
@@ -119,7 +129,9 @@
             "name": "A Forested Path",
 
             "description": "You are at a fork in the path\n You can see the edge of a forest to the west and there is foot prints made from water coming from the path to the south",
-
+            "objects": {
+                
+            },
             "exits": {
 
                 "north": "LakePath",
@@ -133,9 +145,11 @@
         "SwampPath": {
 
             "name": "A Path to the Swamp",
-
+        
             "description": "You feel its wise to stop here\n the path ahead has broken away and been overtaken by what seems to be swamp land.  This path could be dangerous",
-
+            "objects": {
+                
+            },
             "exits": {
 
                 "north": "ForestPath",
@@ -150,7 +164,9 @@
             "name": "Far Side of Swamp",
 
             "description": "You jump into the swamp, fearing nothing you stomp your feet in the shallow water.  You see it goes on for miles to the east.",
-
+            "objects": {
+                
+            },
             "exits": {
 
                 "east": "Swamp1",
@@ -166,7 +182,9 @@
             "name": "Sea Shore",
 
             "description": "You are now at the edge of the swamp and the sea\n the only way to cross the sea would be to aquire a raft.... boats are for the rich",
-
+            "objects": {
+                
+            },
             "exits": {
 
                 "east": "Swamp"
@@ -180,10 +198,17 @@
             "name": "Foodshop Storefront",
 
             "description": "Outside the Shops\n This shop sells edible items.... yummy",
-
+            "objects": {
+                
+            },
             "exits": {
-
-                "open": "FoodStore",
+                "": {
+                  "object": "door",
+                  "status": "open",
+                  "exits": "north",
+                  "locked": "no",
+                  "mapto": "FoodStore"
+                },
                 "east": "WeaponStorePath",
                 "west": "TownCenter"
 
@@ -196,12 +221,20 @@
             "name": "Weaponshop Storefront",
 
             "description": "Outside the Shops\n This shop sells weapons sharp enough to dent paper",
-
+            "objects": {
+                
+            },
             "exits": {
 
-                "open": "WeaponStore",
                 "east": "PotionStorePath",
-                "west": "FoodStorePath"
+                "west": "FoodStorePath",
+                "": {
+                  "object": "door",
+                  "status": "open",
+                  "exits": "north",
+                  "locked": "no",
+                  "mapto": "WeaponStore"
+                }
 
             }
 
@@ -212,10 +245,18 @@
             "name": "Potionshop Storefront",
 
             "description": "Outside the Shops\n This shop sells drinks. magical or not, these beverages will quench your thirst",
-
+            "objects": {
+                
+            },
             "exits": {
 
-                "open": "PotionStore",
+                "": {
+                  "object": "door",
+                  "status": "open",
+                  "exits": "north",
+                  "locked": "no",
+                  "mapto": "PotionStore"
+                },
                 "east": "ArmorStorePath",
                 "west": "WeaponStorePath"
 
@@ -228,12 +269,19 @@
             "name": "Armorshop Storefront",
 
             "description": "Outside the Shops\n This shop sells armor. its not going to be dwarven forged but it will sure keep the bugs from biting",
-
+            "objects": {
+                
+            },
             "exits": {
 
-                "open": "ArmorStore",
-                "west": "PotionStorePath"
-
+                "west": "PotionStorePath",
+                "": {
+                  "object": "door",
+                  "status": "open",
+                  "exits": "north",
+                  "locked": "no",
+                  "mapto": "ArmorStore"
+                }
             }
 
         }
