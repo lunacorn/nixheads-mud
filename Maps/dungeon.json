@@ -46,7 +46,9 @@
 
             "name": "Teleportation Center",
             "description": "There are three glowing portals in this room. A white one with\nan image of a town, a grey one that resembles a swamp\nand a bright and windy one that seems to smell like a desert.\nSure...there are other exits..  but come on... portals.",
-
+            "objects": {
+                
+            },
             "exits": {
               "": {
                 "object": "door",

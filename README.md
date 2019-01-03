@@ -6,25 +6,103 @@
 
 Thank you for visiting https://nixheads.co.uk
 
------------------------------------------------------------
-
-This Mud runs the nixheads-mud codebase.  
-
-A heavily modified version of its former
-
-simplemud.  Written with python and json
-
-this overhauled codebase aims to be a api
-
-for a very open ended and customizable mud
-
-codebase.
-
 --------------------------------------------------------------------
 
 =^..^=   =^..^=   =^..^=    =^..^=    =^..^=    =^..^=    =^.^=
 
+--------------------------------------------------------------------
 
+Nix-mud 0.2.3                           https://nixheads.co.uk
+
+--------------------------------------------------------------------
+
+This version implements the following features
+
+--------------------------------------------------------------------
+
+-- full implementation of classes
+
+--------------------------------------------------------------------
+
+    At this point all json data is loaded from corefunctions or maps
+
+    files, into classes to allow status changes or the ability for
+
+    creatures to move.  This has been a large shift and we are
+
+    excited for the possibilities this creates leading us from static
+
+    files.  The creature database and object overhaul is finished.
+
+---------------------------------------------------------------------
+
+-- GM commands
+
+---------------------------------------------------------------------
+
+    Though not finished there are now gm specific commands like
+
+    system message and shutdown of server which is neccessary as
+
+    you obviously dont want players having this access.  The way to
+
+    acquire gm is still undecided currently.
+
+---------------------------------------------------------------------
+
+-- Stabilization of Maps
+
+---------------------------------------------------------------------
+
+    Unfinished maps are now isolated and objects and names added to
+
+    map files allowing for a crash free experience while exploring
+
+    available areas.
+
+---------------------------------------------------------------------
+
+-- Fight Command
+
+---------------------------------------------------------------------
+
+    Fights are now possible though not finished.  You can soon
+
+    expect the experience point system to be implemented and the
+
+    ability to level up.  As well as skills and spells the fight
+
+    command is a current focus of the project.
+
+----------------------------------------------------------------------
+
+-- Objects and Containers
+
+----------------------------------------------------------------------
+
+    Another current project focus is objects and containers.  soon
+
+    You will see a new database allowing storage of items and a full
+
+    implementation of commands allowing you to put and get items from
+
+    containers like buckets or a backpack etc.
+
+----------------------------------------------------------------------
+
+-- Grab, Give, Drop
+
+----------------------------------------------------------------------
+
+    Among other commands these are highlights of this release
+
+    including the ability to equip items and a new equipment sheet and
+
+    fully functional inventory.
+
+----------------------------------------------------------------------
+
+Team: Dragonkeeper, Lunacorn  Jan 2nd, 2019
 --------------------------------------------------------------------
 
 Nix-mud 0.1.3                           https://nixheads.co.uk
@@ -152,9 +230,9 @@ This version implements the following features
 
     Objects are allowed to be examined, or attacked.  This will go
 
-through heavy overhaul in the version to come as a combat system is
+    through heavy overhaul in the version to come as a combat system is
 
-implemnented.  For now they are very loose fitings.
+    implemnented.  For now they are very loose fitings.
 
 ---------------------------------------------------------------------
 
@@ -164,7 +242,7 @@ implemnented.  For now they are very loose fitings.
 
     A command 'system' allows your to speak to whole of server as a
 
-channel.  Similar to say, though it works beyond a single room.
+    channel.  Similar to say, though it works beyond a single room.
 
 ---------------------------------------------------------------------
 
