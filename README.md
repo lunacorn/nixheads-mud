@@ -244,9 +244,9 @@ This version implements the following features
 
     Objects are allowed to be examined, or attacked.  This will go
 
-through heavy overhaul in the version to come as a combat system is
+    through heavy overhaul in the version to come as a combat system is
 
-implemnented.  For now they are very loose fitings.
+    implemnented.  For now they are very loose fitings.
 
 ---------------------------------------------------------------------
 
@@ -256,7 +256,7 @@ implemnented.  For now they are very loose fitings.
 
     A command 'system' allows your to speak to whole of server as a
 
-channel.  Similar to say, though it works beyond a single room.
+    channel.  Similar to say, though it works beyond a single room.
 
 ---------------------------------------------------------------------
 
