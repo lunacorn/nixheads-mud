@@ -890,6 +890,10 @@ def SheetCommand():
     mud.send_message(id, ":"*62)
     mud.send_message(id, "{}STR:{} {}DEX:{} {}VIT:{} {}INT:{} {}MND:{} {}CHA:{} {}".format(":"*2,players[id]["str"],":"*2,players[id]["dex"],":"*2,players[id]["vit"],":"*2,players[id]["int"],":"*4,players[id]["mnd"],":"*2,players[id]["cha"],":"*6))
     mud.send_message(id, ":"*62)
+    #if players[id]["next"] - players[id]["exp"] > 100:
+    #    bob = players[id]["next"]-players[id]["exp"]
+    #    mud.send_message(id, "{}Crit. Chance{} {}% {}Coin{} {} {}TNL{} {} {}".format(":"*2,":"*3,players[id]["crit"],":"*3,":"*3,players[id]["coin"],":"*5,":"*3,str(bob)[3:]+"K",":"*6))
+    #else:
     mud.send_message(id, "{}Crit. Chance{} {}% {}Coin{} {} {}TNL{} {} {}".format(":"*2,":"*3,players[id]["crit"],":"*3,":"*3,players[id]["coin"],":"*5,":"*3,players[id]["next"]-players[id]["exp"],":"*6))
     mud.send_message(id, ":"*62)
     mud.send_message(id, "::Spells"+":"*54)
@@ -1546,7 +1550,7 @@ def GetDammage(attacker, prey):
     else:
         defence = int(Creatures.creatures[attacker].cdef)
         attack = int(Creatures.creatures[attacker].cstr)
-        miss = str(random.randint(int(Creatures.creatures[attacker].clvl), int(int(Creatures.creatures[attacker].clvl)+attack)))
+        miss = str(random.randint(int(Creatures.creatures[attacker].clvl), int(int(Creatures.creatures[attacker].clvl)+attack)*2))
         damage = int(attack)/2 - int(defence)/4
         playerdef = int(players[id]["dex"]) + int(players[id]["vit"])
         if damage <= 0:
