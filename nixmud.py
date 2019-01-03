@@ -421,6 +421,42 @@ for cid in credb.keys():
                     Creatures(str(ncid+str(monstercount)), name, myroom[0], desc, clvl, cstr, cdmg, cdef, clfe, life, moves, drops, cspc, csnm, ctmr, corp)
                     creaturelist.append(Creatures.creatures[str(ncid+str(monstercount))].cid)
 
+#### we need to load the items into the class
+for item in fun["corevalues"]["items"]["equipment"]:
+        for stat in fun["corevalues"]["items"]["equipment"][item]:
+                value = str(json.dumps(fun["corevalues"]["items"]["equipment"][item][stat])).replace('"', '')
+                if stat == "iid":
+                    iid = value
+                if stat == "name":
+                    name = value
+                if stat == "desc":
+                    desc = value
+                if stat == "room":
+                    room = value
+                if stat == "type":
+                    type = value
+                if stat == "eqtype":
+                    eqtype = value
+                if stat == "invdesc":
+                    invdesc = value
+                if stat == "bp":
+                    bp = value
+                if stat == "bpsize":
+                    bpsize = value
+                if stat == "eqstata":
+                    eqstata = value
+                if stat == "eqstatb":
+                    eqstatb = value
+                if stat == "eqsvala":
+                    eqsvala = value
+                if stat == "eqsvalb":
+                    eqsvalb = value
+                #if stat == "eqstatus":
+                #    eqstatus = value
+        newiid = str(iid)+str(random.randint(100,10000000000))
+        if not str(newiid) in allitemslist:
+            Items(newiid ,name, desc, room, type, eqtype, invdesc, bp, bpsize, eqstata, eqstatb, eqsvala, eqsvalb) #, eqstatus)
+            allitemslist.append(Items.allitems[str(newiid)].iid)
 
 #### we need to load the items into the class defaultly
 for item in fun["corevalues"]["items"]["equipment"]:
@@ -749,7 +785,7 @@ def GrabCommand():
                     gotitem = 1
             elif gotitem == 1:
                 mud.send_message(id, "You think you're grabbing something?\n I think your VR broke.  welcome back to reality.")
-    if params.lower() != Items.allitems[i].name and gotitem == 0:
+    if gotitem == 0:
         mud.send_message(id, "You think you're grabbing something?\n I think your VR broke.  welcome back to reality.")
 
 def GiveCommand():
@@ -1516,7 +1552,7 @@ def GetDammage(attacker, prey):
         if damage <= 0:
             return 0
         else:
-            if int(miss) >= int(playerdef):
+            if int(miss) >= int(playerdef)-attack:
                 return damage
             else:
                 return "miss"
@@ -1626,6 +1662,8 @@ def kung_fu_fighting(monster):
         else:
             mud.send_message(id, "You hit the "+str(monster)+", dealing "+str(dmg)+" damage")
             players[id]["exp"] += 3*int(Creatures.creatures[monster].life)
+            #if players[id]["exp"] >= players[id]["next"]:
+            #    Levelup()
         Creatures.creatures[monster].life = int(Creatures.creatures[monster].life) - int(dmg)
 
         dmg = GetDammage(monster, players[id]["name"])
@@ -1646,8 +1684,9 @@ def kung_fu_fighting(monster):
 #drops cspc csnm ctmr corp turn
 
 def Levelup():
-    players[id]["level"] += 1
+    players[id]["level"] = players[id]["level"] + 1
     players[id]["next"] =  players[id]["level"] * 3000
+    players[id]["exp"] = 0
     players[id]["maxmp"] = players[id]["maxmp"]+((players[id]["maxmp"]*.5)*players[id]["level"])
     players[id]["maxhp"] = players[id]["maxhp"]+((players[id]["maxhp"]*.5)*players[id]["level"])
     players[id]["mp"] = players[id]["maxmp"]
@@ -1740,13 +1779,12 @@ while True:
         pass
     StartDoorTimers()
     for id, command, params in mud.get_commands():
-        # move this next set of comment down to wheFightTimerre i wrote does this work
-        if players[id]["exp"] >= players[id]["next"] and players[id]["fightstarted"] != 1:
+        if players[id]["exp"] >= players[id]["next"]:
             Levelup()
+        # move this next set of comment down to wheFightTimerre i wrote does this work
         # if for any reason the player isn't in the player map, skip them and
         # move on to the next one
         # move the above comments down
-
         # Job change command process
         if playerprocess[id]["process"] == "jobchange":
             command = "setjob"
