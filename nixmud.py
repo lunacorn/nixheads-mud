@@ -115,6 +115,81 @@ This version implements the following features
 
 Team: Dragonkeeper, Lunacorn  Dec 26th, 2018
 
+--------------------------------------------------------------------
+
+Nix-mud 0.2.3                           https://nixheads.co.uk
+
+--------------------------------------------------------------------
+
+This version implements the following features
+
+--------------------------------------------------------------------
+
+-- full implementation of classes
+
+--------------------------------------------------------------------
+
+    At this point all json data is loaded from corefunctions or maps
+    files, into classes to allow status changes or the ability for
+    creatures to move.  This has been a large shift and we are
+    excited for the possibilities this creates leading us from static
+    files.  The creature database and object overhaul is finished.
+
+---------------------------------------------------------------------
+
+-- GM commands
+
+---------------------------------------------------------------------
+
+    Though not finished there are now gm specific commands like
+    system message and shutdown of server which is neccessary as
+    you obviously dont want players having this access.  The way to
+    acquire gm is still undecided currently.
+
+---------------------------------------------------------------------
+
+-- Stabilization of Maps
+
+---------------------------------------------------------------------
+
+    Unfinished maps are now isolated and objects and names added to
+    map files allowing for a crash free experience while exploring
+    available areas.
+---------------------------------------------------------------------
+
+-- Fight Command
+
+---------------------------------------------------------------------
+
+    Fights are now possible though not finished.  You can soon
+    expect the experience point system to be implemented and the
+    ability to level up.  As well as skills and spells the fight
+    command is a current focus of the project.
+
+----------------------------------------------------------------------
+
+-- Objects and Containers
+
+----------------------------------------------------------------------
+
+    Another current project focus is objects and containers.  soon
+    You will see a new database allowing storage of items and a full
+    implementation of commands allowing you to put and get items from
+    containers like buckets or a backpack etc.
+
+----------------------------------------------------------------------
+
+-- Grab, Give, Drop
+
+----------------------------------------------------------------------
+
+    Among other commands these are highlights of this release
+    including the ability to equip items and a new equipment sheet and
+    fully functional inventory.
+
+----------------------------------------------------------------------
+Team: Dragonkeeper, Lunacorn  Jan 2nd, 2019
+
 """""""""""
 
 # basic files to import
@@ -160,6 +235,27 @@ class Creatures(object):
         self.corp = corp
         Creatures.creatures[cid] = self
 
+class Npcs(object):
+    npcs = {}
+    def __init__(self, nid, name, room, desc, nsay, ngive ,ndmg ,ndef ,nlfe ,life ,moves ,drops ,nspc ,nsnm , ntmr, corp):
+        self.cid = nid
+        self.name = name
+        self.room = room
+        self.desc = desc
+        self.nsay = nsay
+        self.ngive = ngive
+        self.ndmg = ndmg
+        self.ndef = ndef
+        self.nlfe = nlfe
+        self.life = life
+        self.moves = moves
+        self.drops = drops
+        self.nspc = nspc
+        self.nsnm = nsnm
+        self.ntmr = ntmr
+        self.corp = corp
+        Npcs.npcs[nid] = self
+
 class Items(object):
     allitems = {}
     def __init__(self, iid, name, desc, room, type, eqtype, invdesc, bp, bpsize, eqstata, eqstatb, eqsvala, eqsvalb):#, eqstatus):
@@ -194,18 +290,16 @@ class Doors(object):
 
 class Containers(object):
     containers = {}
-    def __init__(self, cnid, cnname, cnstatus, cnlock, cnt, cngotopened, cnslotmax, cnmap, cnlockname, cnslots):
+    def __init__(self, cnid, cnname, cnstatus, cnlock, cnt, cnslotmax, cnmap, cnlockname):
         self.cnid = cnid
         self.name = cnname
         self.status = cnstatus
         self.lock = cnlock
         self.timer = cnt
-        self.gotopened = cngotopened
         self.slotmax = cnslotmax
         self.map = cnmap
         self.lockname = cnlockname
-        self.slots = cnslots
-        Container.container[cnid] = self
+        Containers.containers[cnid] = self
 
 # import core values
 with open("corefunctions.json") as funcs:
@@ -271,6 +365,7 @@ creaturelist = []
 room = []
 myroom = []
 doorslist = []
+containerslist = []
 monstercount = 0
 ########### this grabs from the json for creatures
 for cid in credb.keys():
@@ -326,44 +421,6 @@ for cid in credb.keys():
                     Creatures(str(ncid+str(monstercount)), name, myroom[0], desc, clvl, cstr, cdmg, cdef, clfe, life, moves, drops, cspc, csnm, ctmr, corp)
                     creaturelist.append(Creatures.creatures[str(ncid+str(monstercount))].cid)
 
-
-
-#### we need to load the items into the class
-for item in fun["corevalues"]["items"]["equipment"]:
-        for stat in fun["corevalues"]["items"]["equipment"][item]:
-                value = str(json.dumps(fun["corevalues"]["items"]["equipment"][item][stat])).replace('"', '')
-                if stat == "iid":
-                    iid = value
-                if stat == "name":
-                    name = value
-                if stat == "desc":
-                    desc = value
-                if stat == "room":
-                    room = value
-                if stat == "type":
-                    type = value
-                if stat == "eqtype":
-                    eqtype = value
-                if stat == "invdesc":
-                    invdesc = value
-                if stat == "bp":
-                    bp = value
-                if stat == "bpsize":
-                    bpsize = value
-                if stat == "eqstata":
-                    eqstata = value
-                if stat == "eqstatb":
-                    eqstatb = value
-                if stat == "eqsvala":
-                    eqsvala = value
-                if stat == "eqsvalb":
-                    eqsvalb = value
-                #if stat == "eqstatus":
-                #    eqstatus = value
-        newiid = str(iid)+str(random.randint(100,10000000000))
-        if not str(newiid) in allitemslist:
-            Items(newiid ,name, desc, room, type, eqtype, invdesc, bp, bpsize, eqstata, eqstatb, eqsvala, eqsvalb) #, eqstatus)
-            allitemslist.append(Items.allitems[str(newiid)].iid)
 
 #### we need to load the items into the class defaultly
 for item in fun["corevalues"]["items"]["equipment"]:
@@ -435,26 +492,26 @@ for room in rooms:
                         Doors(did, ename, estatus, elock, dt, omap, exits, mapto, gotopened)
                         doorslist.append(did)
 
-#for container in fun["corevalues"]["containers"]:
-#    for info in fun["corevalues"]["containers"][container]:
-#        cnvalue = str(json.dumps(fun["corevalues"]["containers"])).replace('"', '')
-#        if cnvalue == "room":
-#            cnmap = cnvalue
-#        if cnvalue == "name":
-#            cnname = cnvalue
-#        if cnvalue == "status":
-#            cnstatus = cnvalue
-#        if cnvalue == "locked":
-#            cnlock = cnvalue
-#        if cnvalue == "timer":
-#            cnt = cnvalue
-#        if cnvalue == "maxslots":
-#            cnslotmax = cnvalue
-#        if cnvalue == "lockname":
-#            cnlockname = cnvalue
-#    cnid = "cntr"+str(random.randint(100,10000000000))
-#    Containers(cnid, cnname, cnstatus, cnmap, cnlock, cnt, cnslotmax, cnlockname)
-#    containerslist.append(cnid)
+for container in fun["corevalues"]["containers"]:
+    for cnvalue in fun["corevalues"]["containers"][container]:
+        if cnvalue == "name":
+            cnname = fun["corevalues"]["containers"][container][cnvalue]
+        if cnvalue == "room":
+            cnmap = fun["corevalues"]["containers"][container][cnvalue]
+        if cnvalue == "status":
+            cnstatus = fun["corevalues"]["containers"][container][cnvalue]
+        if cnvalue == "locked":
+            cnlock = fun["corevalues"]["containers"][container][cnvalue]
+        if cnvalue == "timer":
+            cnt = fun["corevalues"]["containers"][container][cnvalue]
+        if cnvalue == "lockname":
+            cnlockname = fun["corevalues"]["containers"][container][cnvalue]
+        if cnvalue == "maxslots":
+            cnslotmax = fun["corevalues"]["containers"][container][cnvalue]
+
+    cnid = "cntr"+str(random.randint(100,10000000000))
+    Containers(cnid, cnname, cnmap, cnstatus, cnlock, cnt, cnlockname, cnslotmax)
+    containerslist.append(cnid)
 
 
 for xx in allitemslist:
@@ -499,8 +556,8 @@ def AssignNewPlayersIDs():
         "email": None,
         "password": None,
         "level":None,
-        "exp": None,
-        "next": None,
+        "exp": 0,
+        "next": 3000,
         "hp": None,
         "maxhp": None,
         "mp": None,
@@ -576,6 +633,7 @@ def ChangeJob(pr, pj):
 
 
 def Login():
+    AssignNewPlayersIDs()
     mud.send_message(id, "Are you a 'new' player or would you like to 'login'?")
 
 ## summon inventory list
@@ -622,12 +680,12 @@ def SaveCommand():
     if not userlist:
         # function for when a userlist does not exists
         mud.send_message(id, "Creating new save")
-        database.save_name(userdata, players[id]["name"], players[id]["room"], players[id]["password"], players[id]["email"], players[id]["user"], players[id]["race"], players[id]["job"], players[id]["coin"], json.dumps(players[id]["ujob"]))
+        database.save_name(userdata, players[id]["name"], players[id]["room"], players[id]["password"], players[id]["email"], players[id]["user"], players[id]["race"], players[id]["job"], players[id]["coin"], json.dumps(players[id]["ujob"]), players[id]["exp"])
         invendb.save_name(invdata, players[id]["name"], players[id]["inventoryslot"]["slot1"], players[id]["inventoryslot"]["slot2"], players[id]["inventoryslot"]["slot3"], players[id]["inventoryslot"]["slot4"],  players[id]["inventoryslot"]["slot5"], players[id]["inventoryslot"]["slot6"], players[id]["inventoryslot"]["slot7"], players[id]["inventoryslot"]["slot8"], players[id]["head"], players[id]["body"], players[id]["hands"], players[id]["legs"], players[id]["feet"], players[id]["weapon"], players[id]["offhand"], players[id]["ear"], players[id]["neck"], players[id]["waist"], players[id]["ringl"], players[id]["ringr"], players[id]["back"], players[id]["bag"])
         print("Created a new save file for: "+players[id]["name"])
     else:
         # updates save file
-        database.update_name(userdata, players[id]["name"], players[id]["room"], players[id]["password"], players[id]["email"], players[id]["user"], players[id]["race"], players[id]["job"], players[id]["coin"],json.dumps(players[id]["ujob"]))
+        database.update_name(userdata, players[id]["name"], players[id]["room"], players[id]["password"], players[id]["email"], players[id]["user"], players[id]["race"], players[id]["job"], players[id]["coin"],json.dumps(players[id]["ujob"]), players[id]["exp"])
         invendb.update_name(invdata, players[id]["name"], players[id]["inventoryslot"]["slot1"], players[id]["inventoryslot"]["slot2"], players[id]["inventoryslot"]["slot3"], players[id]["inventoryslot"]["slot4"],  players[id]["inventoryslot"]["slot5"], players[id]["inventoryslot"]["slot6"], players[id]["inventoryslot"]["slot7"], players[id]["inventoryslot"]["slot8"], players[id]["head"], players[id]["body"], players[id]["hands"], players[id]["legs"], players[id]["feet"], players[id]["weapon"], players[id]["offhand"], players[id]["ear"], players[id]["neck"], players[id]["waist"], players[id]["ringl"], players[id]["ringr"], players[id]["back"], players[id]["bag"])
         mud.send_message(id, "Updated your file.")
         print("Updated save file for: "+players[id]["name"])
@@ -796,7 +854,7 @@ def SheetCommand():
     mud.send_message(id, ":"*62)
     mud.send_message(id, "{}STR:{} {}DEX:{} {}VIT:{} {}INT:{} {}MND:{} {}CHA:{} {}".format(":"*2,players[id]["str"],":"*2,players[id]["dex"],":"*2,players[id]["vit"],":"*2,players[id]["int"],":"*4,players[id]["mnd"],":"*2,players[id]["cha"],":"*6))
     mud.send_message(id, ":"*62)
-    mud.send_message(id, "{}Crit. Chance{} {}% {}Coin{} {} {}TNL{} {} {}".format(":"*2,":"*3,players[id]["crit"],":"*3,":"*3,players[id]["coin"],":"*5,":"*3,players[id]["next"],":"*5,players[id]["exp"],":"))
+    mud.send_message(id, "{}Crit. Chance{} {}% {}Coin{} {} {}TNL{} {} {}".format(":"*2,":"*3,players[id]["crit"],":"*3,":"*3,players[id]["coin"],":"*5,":"*3,players[id]["next"]-players[id]["exp"],":"*6))
     mud.send_message(id, ":"*62)
     mud.send_message(id, "::Spells"+":"*54)
     mud.send_message(id, ":"*62)
@@ -1002,8 +1060,12 @@ def LoginCommand():
                         players[id]["job"]         = check[6]
                         players[id]["coin"]        = check[7]
                         players[id]["ujob"]        = json.loads(check[8])
+                        players[id]["exp"]         = check[9]
                       # populate players with race and class info
                         ChangeJob(players[id]["race"], players[id]["job"])
+                        players[id]["level"] = 0
+                        players[id]["maxhp"] = players[id]["maxhp"]+((players[id]["maxhp"]*.5)*players[id]["level"])
+                        players[id]["maxmp"] = players[id]["maxmp"]+((players[id]["maxmp"]*.5)*players[id]["level"])
                         players[id]["hp"] = players[id]["maxhp"]
                         players[id]["mp"] = players[id]["maxmp"]
                         players[id]["pvp"] = "no"
@@ -1016,9 +1078,10 @@ def LoginCommand():
                         players[id]["goesfirst"] = ''
                         players[id]["monster"] = ''
                         players[id]["tp"] = 0
-                        players[id]["exp"] = 0
                         players[id]["level"] = 0
-                        players[id]["next"] = 3000
+                        players[id]["next"] = 3000*players[id]["level"]
+                        if players[id]["next"] == 0:
+                            players[id]["next"] = 3000
                         mud.send_message(id, "Successfully loaded: {}.\n".format(players[id]["name"]))
                         # print serverside a player logged in
                         print("New login")
@@ -1197,6 +1260,9 @@ def NewCommand():
         ChangeJob(players[id]["race"], players[id]["job"])
         print("new player id for")
         print(players[id]["name"])
+        players[id]["level"] = 0
+        players[id]["maxhp"] = players[id]["maxhp"]+((players[id]["maxhp"]*.5)*players[id]["level"])
+        players[id]["maxmp"] = players[id]["maxmp"]+((players[id]["maxmp"]*.5)*players[id]["level"])
         players[id]["hp"] = players[id]["maxhp"]
         players[id]["mp"] = players[id]["maxmp"]
         players[id]["fightstarted"] = 0
@@ -1210,7 +1276,6 @@ def NewCommand():
         players[id]["pvp"] = "no"
         players[id]["tp"] = 0
         players[id]["exp"] = 0
-        players[id]["level"] = 0
         players[id]["next"] = 3000
 
         players[id]["ujob"] = {
@@ -1380,9 +1445,8 @@ def LookCommand():
     mud.send_message(id, "*"*62)
     mud.send_message(id, rm["description"])
     mud.send_message(id, "*"*62)
-    mud.send_message(id, "**** HP: {} **** MP: {} **** NEXT: {} **** PVP: {} ****".format(players[id]["hp"],players[id]["mp"],players[id]["next"],players[id]["pvp"]))
+    mud.send_message(id, "**** HP: {} **** MP: {} **** NEXT: {} **** PVP: {} ****".format(players[id]["hp"],players[id]["mp"],players[id]["next"]-players[id]["exp"],players[id]["pvp"]))
     mud.send_message(id, "*"*62)
-
 ## add bit to append exits if door opens
 ## the exit should have 2 values not just
 ## an exit.  if closed so retrun back ""
@@ -1456,7 +1520,9 @@ def GetDammage(attacker, prey):
                 return damage
             else:
                 return "miss"
-
+def RestCommand():
+    players[id]["hp"] = players[id]["maxhp"]
+    players[id]["mp"] = players[id]["maxmp"]
 def IsDead(character):
     if character == players[id]["name"]:
         if players[id]["hp"] <= 0:
@@ -1559,6 +1625,7 @@ def kung_fu_fighting(monster):
             mud.send_message(id, "You suck, you need to train more, you missed the "+str(Creatures.creatures[monster].name))
         else:
             mud.send_message(id, "You hit the "+str(monster)+", dealing "+str(dmg)+" damage")
+            players[id]["exp"] += 3*int(Creatures.creatures[monster].life)
         Creatures.creatures[monster].life = int(Creatures.creatures[monster].life) - int(dmg)
 
         dmg = GetDammage(monster, players[id]["name"])
@@ -1571,12 +1638,22 @@ def kung_fu_fighting(monster):
         else:
             mud.send_message(id, str(Creatures.creatures[monster].name)+" attacks you, dealing "+str(dmg)+" damage")
         players[id]["hp"] = players[id]["hp"] - dmg
-        mud.send_message(id, "**** HP: {} **** MP: {} **** NEXT: {} **** PVP: {} ****".format(players[id]["hp"],players[id]["mp"],players[id]["next"],players[id]["pvp"]))
+        mud.send_message(id, "**** HP: {} **** MP: {} **** NEXT: {} **** PVP: {} ****".format(players[id]["hp"],players[id]["mp"],players[id]["next"]-players[id]["exp"],players[id]["pvp"]))
         return 0
 
 #cid name room desc clvl cstr
 #cdmg cdef clfe life moves
 #drops cspc csnm ctmr corp turn
+
+def Levelup():
+    players[id]["level"] += 1
+    players[id]["next"] =  players[id]["level"] * 3000
+    players[id]["maxmp"] = players[id]["maxmp"]+((players[id]["maxmp"]*.5)*players[id]["level"])
+    players[id]["maxhp"] = players[id]["maxhp"]+((players[id]["maxhp"]*.5)*players[id]["level"])
+    players[id]["mp"] = players[id]["maxmp"]
+    players[id]["hp"] = players[id]["maxhp"]
+    mud.send_message(id, "You have leveled up!!!")
+    mud.send_message(id, "You get some bonuses")
 
 def CheckCommand():
     creatures = CreatureCheckRoom(players[id]["room"])
@@ -1664,7 +1741,8 @@ while True:
     StartDoorTimers()
     for id, command, params in mud.get_commands():
         # move this next set of comment down to wheFightTimerre i wrote does this work
-
+        if players[id]["exp"] >= players[id]["next"] and players[id]["fightstarted"] != 1:
+            Levelup()
         # if for any reason the player isn't in the player map, skip them and
         # move on to the next one
         # move the above comments down
@@ -1759,6 +1837,9 @@ while True:
         # it becomes refined
         elif command == "login":
             LoginCommand()
+
+        elif command == "rest":
+            RestCommand()
 
         elif command == "new":
             NewCommand()
