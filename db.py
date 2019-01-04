@@ -18,22 +18,22 @@ def connect():
 
 def init_db(db):
     cursor = db.cursor()
-    cursor.execute('CREATE TABLE IF NOT EXISTS player(name, room, password, email, user, race, job, coin, ujob, exp)')
+    cursor.execute('CREATE TABLE IF NOT EXISTS player(name, room, password, email, user, race, job, coin, ujob, exp, ujoblevel, status)')
 
 # Execute 'save' command
 
-def save_name(db, name, room, password, email, user, race, job, coin, ujob, exp):
+def save_name(db, name, room, password, email, user, race, job, coin, ujob, exp, ujoblevel, status):
     cursor = db.cursor()
-    cursor.execute('INSERT INTO player(name, room, password, email, user, race, job, coin, ujob, exp) VALUES(?,?,?,?,?,?,?,?,?,?)',
-            (name, room, password, email, user, race, job, coin, ujob, exp))
+    cursor.execute('INSERT INTO player(name, room, password, email, user, race, job, coin, ujob, exp, ujoblevel, status) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)',
+            (name, room, password, email, user, race, job, coin, ujob, exp, ujoblevel, status))
     db.commit()
     return
 
 # Not sure how to add the other features yet
 
-def update_name(db, name, room, password, email, user, race, job, coin, ujob, exp):
+def update_name(db, name, room, password, email, user, race, job, coin, ujob, exp, ujoblevel, status):
     cursor = db.cursor()
-    cursor.execute("UPDATE player SET room = ?, password = ?, email = ?, user = ?, race = ?, job = ?, coin = ?, ujob = ?, exp = ? WHERE name = ?",(room, password, email, user, race, job, coin, ujob, exp, name))
+    cursor.execute("UPDATE player SET room = ?, password = ?, email = ?, user = ?, race = ?, job = ?, coin = ?, ujob = ?, exp = ?, ujoblevel = ?, status = ? WHERE name = ?",(room, password, email, user, race, job, coin, ujob, exp, ujoblevel,status, name))
     db.commit()
     return
 
@@ -50,10 +50,7 @@ def delete_name(db, name):
 def get_name(db, name):
     '''Returns a list of rows representing "player"'''
     cursor = db.cursor()
-    rows = cursor.execute('SELECT name, room, password, email, user, race, job, coin, ujob, exp FROM player').fetchall()
+    rows = cursor.execute('SELECT name, room, password, email, user, race, job, coin, ujob, exp, ujoblevel, status FROM player').fetchall()
     player = [row for row in rows if name in row[0]]
 #    delete_player(db, name)
     return player
-
-
-

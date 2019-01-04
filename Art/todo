@@ -1,54 +1,35 @@
-* make objects in room work
------------------------------
 
---give creatures a database and adjust code in [almost done]
-**map.json files
 **nixmud.py in look command and fight command
+
+-- 2d interface
 
 --Ncurses Interface to:  for id, command, params in mud.get_commands():
 **Line 145 : simplemud.py
 
 -- fix spelling of they from there in check contraptions
 
--- add exit through portal in town to dungeon [ill do this]
-
 -- fix spelling of elvari in race choice within new section
 
 --Write character sheet [progress]
-
---Save players [done]
-
---add to newcharacter section [done for now]
-
---set up system messages [done]
--- examine system message to help fix tells.  system message allows spaces
 
 -- do not allow same player to login twice at same time
 
 -- add an id option to character shee so other players can exam you and see it
 
--- do not let you send tells to yourself.  [done]
+--set up a way to become GM [needs work]
 
---update db.py with new player info when finished. [done]
+--set up a job change system [need to store lvls independently]
 
---set up a way to become GM
+--add status n threat table to combat
 
---set up a job change system [needs to check against ujobs]
+--add aggro to monsters.  sight sound etc.
 
---login bad username causes a one command loop.  [done]
+--luna needs help with sheet command.  spacing, listing of spells n skills according to job and lvl
 
---populate stats upon job change. [want function in process to do this thus reduce code]
+--add slots function to containers
 
---try to get ujobs working against corefunctions.json
+--add put and get command for containers
 
---add races to corefunctions.json [done]
+--round hp to whole numbers
 
-first inv slot can never be empty for equip to working
-
-if equip command has a lot of bugs and unable to tell what cause is at this time. can only seem to be carrying 1 eq type for it to not say we have equipment in that slot
-
-unequip bug not entirely clear so need to fix equip first... seems to be similar
-
-upon update the system expects a room and a name for a character.  need to be able to always start wit those in hand.
-
-try and make choices using json files
+--add shopkeeper npcs n buy, list commands

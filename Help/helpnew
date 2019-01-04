@@ -1,0 +1,33 @@
+*************************************************************
+Basic Help      Also check out 'help2'
+*************************************************************
+
+go <Direction>         - moves to another room.
+
+look                   - gives a basic description of room. 
+                        You will also see creatures and 
+                        objects, as well as other exits and 
+                        players here.
+
+exam <object>          - takes a closer look at an object.
+
+grab <item>            - picks up an item off the floor.
+
+drop <item>            - drops an item from inventory onto
+                         the floor.
+
+equip <item>           - puts on new gear.
+
+unequip <item>         - takes it off.
+
+open <object>          - opens something in room such as
+                         a door.
+
+cast <spell> <target>  - casts a spell on target
+
+skill <skill> <target> - uses a skill on given target.
+
+sheet, eq, inv         - each opens its own info window.
+
+setjob <job>           - changes your job.  Your level is 
+                         saved but exp resets to 0
