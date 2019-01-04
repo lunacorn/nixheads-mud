@@ -1,0 +1,27 @@
+*************************************************************
+Basic Help II
+*************************************************************
+
+fight <target>    - Fights a given creature
+
+rest              - Slowly restores HP and MP
+
+save              - Saves your file.  it will autosave at 
+                    times.  But definitely save often.
+
+tell <name> <msg> - Sends a private message
+
+global/say <msg>  - Uses serverwide chat or just your 
+                    current room.
+
+reset             - Logs you out and returns you to main
+                    menu.
+
+Explore have fun and go kill someshit.  Listen around town,
+find quests and new areas.  Unlock jobs and most of all...
+
+Don't die.  You will lose experience, be sent to a town,
+and all your gear will be left where you died.  It's 
+anyones who comes across it.
+
+<3

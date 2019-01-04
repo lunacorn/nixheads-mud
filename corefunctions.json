@@ -90,14 +90,32 @@
                   "sword": "kick"
                        },
             "containers": {
+                "corpse": {
+                      "name": "corpse",
+                      "room": "None",
+                      "status": "open",
+                      "locked": "no",
+                      "lockname": "none",
+                      "slota": "Empty",
+                      "slotb": "Empty",
+                      "slotc": "Empty",
+                      "slotd": "Empty",
+                      "slote": "Empty",
+                      "slotf": "Empty"
+                },
                 "bucket1":{
                       "name": "bucket",
                       "room": "Dungeon1",
                       "status": "open",
                       "locked": "no",
-                      "timer": 0,
                       "lockname": "none",
-                      "maxslots": 9
+                      "slota": "Empty",
+                      "slotb": "Empty",
+                      "slotc": "Empty",
+                      "slotd": "Empty",
+                      "slote": "Empty",
+                      "slotf": "Empty"
+
                         }
                       },
                 "stats":{
@@ -157,7 +175,7 @@
                             "cure": 0
                               },
                     "skills": {
-                            "persist": 6
+                            
                               }
                             },
                 "thief": {
@@ -179,6 +197,67 @@
                             "sneak": 0
                               }
                             }
+                          },
+            "skills":{
+                "bash":{
+                    "unlock": 0,
+                    "value": 1,
+                    "staus": "stun",
+                    "cost": 3,
+                    "job": "warrior"
+                        },
+                "shout":{
+                    "unlock": 0,
+                    "value": 1,
+                    "status": "aggro",
+                    "cost": 4,
+                    "job": "warrior"
+                        },
+                "sneak":{
+                    "unlock":0,
+                    "value": 1,
+                    "status": "quiet",
+                    "cost": 0,
+                    "job": "thief"
+                        },
+                "steal":{
+                    "unlock": 0,
+                    "value": 20,
+                    "status": "take",
+                    "cost": 10,
+                    "job": "thief"
+                        }
+                    },
+            "spells":{
+                "cure":{
+                    "unlock": 0,
+                    "value": 5,
+                    "status": "heal",
+                    "cost": 3,
+                    "job": "whitemage"
+                    
+                             },
+                "fire":{
+                    "unlock": 0,
+                    "value": 6,
+                    "status": "damage",
+                    "cost": 5,
+                    "job": "blackmage"
+                             },
+                "bind":{
+                    "unlock": 3,
+                    "value": 6,
+                    "status": "move",
+                    "cost": 5,
+                    "job": "blackmage"
+                             },
+                "sleep":{
+                    "unlock": 0,
+                    "value": 5,
+                    "status": "sleep",
+                    "cost": 4,
+                    "job": "blackmage"
+                             }
                           },
             "races": {
                 "elvari": {
