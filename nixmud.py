@@ -290,15 +290,19 @@ class Doors(object):
 
 class Containers(object):
     containers = {}
-    def __init__(self, cnid, cnname, cnstatus, cnlock, cnt, cnslotmax, cnmap, cnlockname):
+    def __init__(self, cnid, cnname, cnmap, cnstatus, cnlock, slota, slotb, slotc, slotd, slote, slotf, lockname):
         self.cnid = cnid
         self.name = cnname
+        self.map  = cnmap
         self.status = cnstatus
         self.lock = cnlock
-        self.timer = cnt
-        self.slotmax = cnslotmax
-        self.map = cnmap
-        self.lockname = cnlockname
+        self.slota = slota
+        self.slotb = slotb
+        self.slotc = slotc
+        self.slotd = slotd
+        self.slote = slote
+        self.slotf = slotf
+        self.lockname = lockname
         Containers.containers[cnid] = self
 
 # import core values
@@ -540,15 +544,22 @@ for container in fun["corevalues"]["containers"]:
             cnstatus = fun["corevalues"]["containers"][container][cnvalue]
         if cnvalue == "locked":
             cnlock = fun["corevalues"]["containers"][container][cnvalue]
-        if cnvalue == "timer":
-            cnt = fun["corevalues"]["containers"][container][cnvalue]
         if cnvalue == "lockname":
-            cnlockname = fun["corevalues"]["containers"][container][cnvalue]
-        if cnvalue == "maxslots":
-            cnslotmax = fun["corevalues"]["containers"][container][cnvalue]
-
+            lockname = fun["corevalues"]["containers"][container][cnvalue]
+        if cnvalue == "slota":
+            slota = fun["corevalues"]["containers"][container][cnvalue]
+        if cnvalue == "slotb":
+            slotb = fun["corevalues"]["containers"][container][cnvalue]
+        if cnvalue == "slotc":
+            slotc = fun["corevalues"]["containers"][container][cnvalue]
+        if cnvalue == "slotd":
+            slotd = fun["corevalues"]["containers"][container][cnvalue]
+        if cnvalue == "slote":
+            slote = fun["corevalues"]["containers"][container][cnvalue]
+        if cnvalue == "slotf":
+            slotf = fun["corevalues"]["containers"][container][cnvalue]
     cnid = "cntr"+str(random.randint(100,10000000000))
-    Containers(cnid, cnname, cnmap, cnstatus, cnlock, cnt, cnlockname, cnslotmax)
+    Containers(cnid, cnname, cnmap, cnstatus, cnlock, slota, slotb, slotc, slotd, slote, slotf, lockname)
     containerslist.append(cnid)
 
 
@@ -1794,6 +1805,13 @@ def FightCommand():
         if players[id]["outcome"] == players[id]["name"]:
             players[id]["hp"] = 1
             mud.send_message(id, "you died")
+            players[id]["exp"] = players[id]["exp"]-(players[id]["exp"] * .6)
+            if players[id]["exp"] < 0:
+                Leveldown()
+                ## add here if drop all items
+            players[id]["room"] = "Town Center"
+            players[id]["fightstarted"] = 0
+            LookCommand()
             return
             ## Dead()
         elif players[id]["outcome"] == players[id]["monster"]:
@@ -1885,6 +1903,16 @@ def Levelup():
     mud.send_message(id, "You have leveled up!!!")
     mud.send_message(id, "You get some bonuses")
 
+def Leveldown():
+    players[id]["level"] = players[id]["level"] - 1
+    players[id]["next"] = players[id]["level"] *3000
+    players[id]["maxhp"] = players[id]["maxhp"]+ ((players[id]["maxhp"]*.5)*players[id]["level"])
+    players[id]["maxmp"] = players[id]["maxmp"]+ ((players[id]["maxmp"]*.5)*players[id]["level"])
+    players[id]["hp"] = 1
+    players[id]["mp"] = 0
+    mud.send_message(id, "You leveled down...")
+    mud.send_message(id, "You just got nerfed.  Not my problem.")
+
 def CheckCommand():
     creatures = CreatureCheckRoom(players[id]["room"])
     for creature in creatures:
@@ -1956,6 +1984,12 @@ while True:
             if players[id]["outcome"] == players[id]["monster"]:
                 mud.send_message(id, "you killed "+Creatures.creatures[players[id]["monster"]].name)
                 #change this to a corpse container
+                #newiid = str("corp")+str(random.randint(100,10000000000))
+                #while newiid in Creatures:
+                #print("stuck here")
+                    #newiid = str+corp+str(random.randint(100,10000000000))
+                #containerslist.append(newiid ,Creatures.creatures[players[id]["monster"]].name, players[id]["room"], "no", "open", Creatures.creatures[players][id]["monster"].drops, "Empty", "Empty", "Empty", "Empty", "Empty", "none")
+                #print("gothere")
                 Creatures.creatures[players[id]["monster"]].corp = "yes"
                 Creatures.creatures[players[id]["monster"]].name = "dead "+Creatures.creatures[players[id]["monster"]].name
                 Creatures.creatures[players[id]["monster"]].desc = "The corpse of a "+Creatures.creatures[players[id]["monster"]].name+" is laying here"
@@ -1966,6 +2000,7 @@ while True:
                 players[id]["goesfirst"] = ''
                 players[id]["target"] = ''
                 players[id]["firstround"] = ''
+                pass
     except:
         pass
     StartDoorTimers()
@@ -1973,7 +2008,6 @@ while True:
         if players[id]["exp"] >= players[id]["next"]:
             Levelup()
 
-# move this next set of comment down to wheFightTimerre i wrote does this work
 # if for any reason the player isn't in the player map, skip them and
 # move on to the next one
 # move the above comments down
