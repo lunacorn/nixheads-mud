@@ -1,6 +1,26 @@
 {
     "corevalues": {
             "items": {
+                "loot": {
+                        "rat_tail":{
+                          "iid": "rttl",
+                          "name": "rat_tail",
+                          "invdesc": "A bloody rait tail",
+                          "desc": "The tail of a murdered rat",
+                          "room": "Dungeon1",
+                          "type": "loot",
+                          "eqtype": "not",
+                          "bp": "no",
+                          "bpsize": "nil",
+                          "eqstata": "nil",
+                          "eqstatb": "nil",
+                          "eqsvala": 0,
+                          "eqsvalb": 0,
+                          "dtmr": 1800,
+                          "stmr": 600,
+                          "sellval": 2
+                        }
+                },
                 "equipment": {
                         "hemp_shirt":{
                           "iid": "hesh",
@@ -18,7 +38,7 @@
                           "eqsvalb": 2,
                           "dtmr": 1800,
                           "stmr": 600,
-                          "eqstatus": "no"
+                          "sellval": 4
                                   },
                         "hemp_pants": {
                           "iid": "hepa",
@@ -36,7 +56,7 @@
                           "eqsvalb": 1,
                           "dtmr": 1800,
                           "stmr": 600,
-                          "eqstatus": "no"
+                          "sellval": 6
                                   },
                         "candycane":{
                           "iid": "caca",
@@ -54,7 +74,7 @@
                           "eqsvalb": 0,
                           "dtmr": 1800,
                           "stmr": 600,
-                          "eqstatus": "no"
+                          "sellval": 2
                                   },
                         "wooden_sword":{
                           "iid": "wosw",
@@ -72,7 +92,7 @@
                           "eqsvalb": 0,
                           "dtmr": 1800,
                           "stmr": 600,
-                          "eqstatus": "no"
+                          "sellval": 5
                                   }
                                 }
                               },
@@ -90,32 +110,20 @@
                   "sword": "kick"
                        },
             "containers": {
-                "corpse": {
-                      "name": "corpse",
-                      "room": "None",
-                      "status": "open",
-                      "locked": "no",
-                      "lockname": "none",
-                      "slota": "Empty",
-                      "slotb": "Empty",
-                      "slotc": "Empty",
-                      "slotd": "Empty",
-                      "slote": "Empty",
-                      "slotf": "Empty"
-                },
                 "bucket1":{
                       "name": "bucket",
                       "room": "Dungeon1",
                       "status": "open",
                       "locked": "no",
-                      "lockname": "none",
-                      "slota": "Empty",
-                      "slotb": "Empty",
-                      "slotc": "Empty",
-                      "slotd": "Empty",
-                      "slote": "Empty",
-                      "slotf": "Empty"
-
+                      "lockname": "nobody",
+                      "slots":{
+                            "slot1": "wooden_sword",
+                            "slot2": "Empty",
+                            "slot3": "Empty",
+                            "slot4": "Empty",
+                            "slot5": "Empty",
+                            "slot6": "Empty"
+                             }   
                         }
                       },
                 "stats":{
@@ -175,7 +183,7 @@
                             "cure": 0
                               },
                     "skills": {
-                            
+
                               }
                             },
                 "thief": {
@@ -235,7 +243,7 @@
                     "status": "heal",
                     "cost": 3,
                     "job": "whitemage"
-                    
+
                              },
                 "fire":{
                     "unlock": 0,

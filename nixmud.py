@@ -237,28 +237,21 @@ class Creatures(object):
 
 class Npcs(object):
     npcs = {}
-    def __init__(self, nid, name, room, desc, nsay, ngive ,ndmg ,ndef ,nlfe ,life ,moves ,drops ,nspc ,nsnm , ntmr, corp):
+    def __init__(self, nid, name, room, desc, nsay, nsayt, ngive, reward ,buytype):
         self.cid = nid
         self.name = name
         self.room = room
         self.desc = desc
         self.nsay = nsay
+        self.nsayt = nsayt
         self.ngive = ngive
-        self.ndmg = ndmg
-        self.ndef = ndef
-        self.nlfe = nlfe
-        self.life = life
-        self.moves = moves
-        self.drops = drops
-        self.nspc = nspc
-        self.nsnm = nsnm
-        self.ntmr = ntmr
-        self.corp = corp
+        self.reward = reward
+        self.buytype = buytype
         Npcs.npcs[nid] = self
 
 class Items(object):
     allitems = {}
-    def __init__(self, iid, name, desc, room, type, eqtype, invdesc, bp, bpsize, eqstata, eqstatb, eqsvala, eqsvalb):#, eqstatus):
+    def __init__(self, iid, name, desc, room, type, eqtype, invdesc, bp, bpsize, eqstata, eqstatb, eqsvala, eqsvalb, sellval):#, eqstatus):
         self.iid = iid
         self.name = name
         self.desc = desc
@@ -272,6 +265,7 @@ class Items(object):
         self.eqstatb = eqstatb
         self.eqsvala = eqsvala
         self.eqsvalb = eqsvalb
+        self.sellval = sellval
         Items.allitems[iid] = self
 
 class Doors(object):
@@ -290,18 +284,13 @@ class Doors(object):
 
 class Containers(object):
     containers = {}
-    def __init__(self, cnid, cnname, cnmap, cnstatus, cnlock, slota, slotb, slotc, slotd, slote, slotf, lockname):
+    def __init__(self, cnid, cnname, cnmap, cnstatus, cnlock, slots, lockname):
         self.cnid = cnid
         self.name = cnname
         self.map  = cnmap
         self.status = cnstatus
         self.lock = cnlock
-        self.slota = slota
-        self.slotb = slotb
-        self.slotc = slotc
-        self.slotd = slotd
-        self.slote = slote
-        self.slotf = slotf
+        self.slots = slots
         self.lockname = lockname
         Containers.containers[cnid] = self
 
@@ -428,9 +417,10 @@ for cid in credb.keys():
                     creaturelist.append(Creatures.creatures[str(ncid+str(monstercount))].cid)
 
 #### we need to load the items into the class
-for item in fun["corevalues"]["items"]["equipment"]:
-        for stat in fun["corevalues"]["items"]["equipment"][item]:
-                value = str(json.dumps(fun["corevalues"]["items"]["equipment"][item][stat])).replace('"', '')
+for itemcat in fun ["corevalues"]["items"]:
+    for item in fun["corevalues"]["items"][itemcat]:
+        for stat in fun["corevalues"]["items"][itemcat][item]:
+                value = str(json.dumps(fun["corevalues"]["items"][itemcat][item][stat])).replace('"', '')
                 if stat == "iid":
                     iid = value
                 if stat == "name":
@@ -457,17 +447,18 @@ for item in fun["corevalues"]["items"]["equipment"]:
                     eqsvala = value
                 if stat == "eqsvalb":
                     eqsvalb = value
-                #if stat == "eqstatus":
-                #    eqstatus = value
+                if stat == "sellval":
+                    sellval = value
         newiid = str(iid)+str(random.randint(100,10000000000))
         if not str(newiid) in allitemslist:
-            Items(newiid ,name, desc, room, type, eqtype, invdesc, bp, bpsize, eqstata, eqstatb, eqsvala, eqsvalb) #, eqstatus)
+            Items(newiid ,name, desc, room, type, eqtype, invdesc, bp, bpsize, eqstata, eqstatb, eqsvala, eqsvalb, sellval) #, eqstatus)
             allitemslist.append(Items.allitems[str(newiid)].iid)
 
 #### we need to load the items into the class defaultly
-for item in fun["corevalues"]["items"]["equipment"]:
-        for stat in fun["corevalues"]["items"]["equipment"][item]:
-                value = str(json.dumps(fun["corevalues"]["items"]["equipment"][item][stat])).replace('"', '')
+for itemcat in fun ["corevalues"]["items"]:
+    for item in fun["corevalues"]["items"][itemcat]:
+        for stat in fun["corevalues"]["items"][itemcat][item]:
+                value = str(json.dumps(fun["corevalues"]["items"][itemcat][item][stat])).replace('"', '')
                 if stat == "iid":
                     iid = value
                 if stat == "name":
@@ -497,7 +488,7 @@ for item in fun["corevalues"]["items"]["equipment"]:
                 #if stat == "eqstatus":
                 #    eqstatus = value
         if not str(iid) in defaultsitemslist:
-            Items(iid ,name, desc, room, type, eqtype, invdesc, bp, bpsize, eqstata, eqstatb, eqsvala, eqsvalb) #, eqstatus)
+            Items(iid ,name, desc, room, type, eqtype, invdesc, bp, bpsize, eqstata, eqstatb, eqsvala, eqsvalb, sellval) #, eqstatus)
             defaultsitemslist.append(Items.allitems[str(iid)].iid)
 
 
@@ -536,32 +527,24 @@ for room in rooms:
 
 for container in fun["corevalues"]["containers"]:
     for cnvalue in fun["corevalues"]["containers"][container]:
+        print(cnvalue)
         if cnvalue == "name":
-            cnname = fun["corevalues"]["containers"][container][cnvalue]
+            cnname = cnvalue
         if cnvalue == "room":
-            cnmap = fun["corevalues"]["containers"][container][cnvalue]
+            cnmap = cnvalue
         if cnvalue == "status":
-            cnstatus = fun["corevalues"]["containers"][container][cnvalue]
+            cnstatus = cnvalue
         if cnvalue == "locked":
-            cnlock = fun["corevalues"]["containers"][container][cnvalue]
+            cnlock = cnvalue
         if cnvalue == "lockname":
-            lockname = fun["corevalues"]["containers"][container][cnvalue]
-        if cnvalue == "slota":
-            slota = fun["corevalues"]["containers"][container][cnvalue]
-        if cnvalue == "slotb":
-            slotb = fun["corevalues"]["containers"][container][cnvalue]
-        if cnvalue == "slotc":
-            slotc = fun["corevalues"]["containers"][container][cnvalue]
-        if cnvalue == "slotd":
-            slotd = fun["corevalues"]["containers"][container][cnvalue]
-        if cnvalue == "slote":
-            slote = fun["corevalues"]["containers"][container][cnvalue]
-        if cnvalue == "slotf":
-            slotf = fun["corevalues"]["containers"][container][cnvalue]
-    cnid = "cntr"+str(random.randint(100,10000000000))
-    Containers(cnid, cnname, cnmap, cnstatus, cnlock, slota, slotb, slotc, slotd, slote, slotf, lockname)
-    containerslist.append(cnid)
+            lockname = cnvalue
+        if cnvalue == "slots":
+            slots = cnvalue
+cnid = "cntr"+str(random.randint(100,10000000000))
+Containers(cnid, cnname, cnmap, cnstatus, cnlock, slots, lockname)
+containerslist.append(cnid)
 
+print(containerslist)
 
 for xx in allitemslist:
     print(xx+" : "+Items.allitems[xx].room)
@@ -777,7 +760,13 @@ def ItemsCheckRoom(pr):
                items.append(itemsx)
     return items
 
-
+def ContainersCheckRoom(pr):
+    myconts = []
+    for conts in containerslist:
+        if conts == Containers.containers[conts].cnid:
+            if pr == Containers.containers[conts].map:
+                myconts.append(conts)
+    return myconts
 def DoorsCheckRoom(pr):
     mydoors = []
     for doors in doorslist:
@@ -807,7 +796,47 @@ def DoorsCheckRoom(pr):
 
 def GrabCommand():
     gotitem = 0 ## needed to check if item was taken
+    text = str(params.lower()).split(' ')
     item = ItemsCheckRoom(players[id]["room"]) # takes all items in current room
+    cont = ContainersCheckRoom(players[id]["room"])
+    x = 1
+    print(cont)
+    for c in cont:
+        if gotitem == 0:
+            try:
+                if text[1] == Containers.containers[c].name:
+                    for y in Containers.containers[c].slots:
+                       for z in allitemslist:
+                            if text[0] == Items.allitems[z].name and Containers.containers[c].slots[y] == text[0]:
+                                if players[id]["inventoryspace"] > players[id]["inventoryused"]:
+                                    for x in players[id]["inventoryslot"]:
+                                        for s in [players[id]["inventoryslot"][x]]: ##extra [] for stoping s being char by char
+                                            if s == "Empty":
+                                                if gotitem == 0:
+                                                    print("pickup bucket")
+                                                    orig = z[:4]
+                                                    print(Containers.containers[c].slots[y])
+                                                    newiid = orig+str(random.randint(100,10000000000))
+                                                    while newiid in allitemslist:
+                                                        newiid = orig+str(random.randint(100,10000000000))
+                                                    allitemslist.append(newiid)
+                                                    Items(newiid ,Items.allitems[orig].name, Items.allitems[orig].desc, players[id]["name"], Items.allitems[orig].type, Items.allitems[orig].eqtype, Items.allitems[orig].invdesc,            Items.allitems[orig].bp, Items.allitems[orig].bpsize, Items.allitems[orig].eqstata, Items.allitems[orig].eqstatb, Items.allitems[orig].eqsvala, Items.allitems[orig].eqsvalb,Items.allitems[orig].sellval)
+                                                    Containers.containers[c].slots[y] = "Empty"
+                                                    print(Containers.containers[c].slots)
+                                                    mud.send_message(id, "You pick up the "+str(Items.allitems[z].name))
+                                                    players[id]["inventoryslot"][x] = str(Items.allitems[z].iid)
+                                                    players[id]["inventoryused"] += 1
+                                                    gotitem = 1
+                                                    print(gotitem)
+                                                    break
+
+                                else:
+                                    mud.send_message(id, "Your inventory is full.")
+                                    gotitem = 1
+
+            except:
+                pass
+
     for i in item:
         if gotitem == 0:
             if params.lower() == Items.allitems[i].name:
@@ -864,7 +893,7 @@ def GiveCommand():
                                                     print("newiid: "+newiid)
                                                     allitemslist.append(newiid)
                                                     allitemslist.remove(item)
-                                                    Items(newiid ,Items.allitems[orig].name, Items.allitems[orig].desc, players[pid]["name"], Items.allitems[orig].type, Items.allitems[orig].eqtype, Items.allitems[orig].invdesc, Items.allitems[orig].bp, Items.allitems[orig].bpsize, Items.allitems[orig].eqstata, Items.allitems[orig].eqstatb, Items.allitems[orig].eqsvala, Items.allitems[orig].eqsvalb)
+                                                    Items(newiid ,Items.allitems[orig].name, Items.allitems[orig].desc, players[pid]["name"], Items.allitems[orig].type, Items.allitems[orig].eqtype, Items.allitems[orig].invdesc, Items.allitems[orig].bp, Items.allitems[orig].bpsize, Items.allitems[orig].eqstata, Items.allitems[orig].eqstatb, Items.allitems[orig].eqsvala, Items.allitems[orig].eqsvalb, Items.allitems[orig].sellval)
                                                     players[pid]["inventoryslot"][y] = newiid
                                                     del(Items.allitems[item])
                                                     gaveitem = 1
@@ -901,16 +930,38 @@ def DropCommand():  ## find item, assign new iid and room, delete old iid
 
 
 def ExamCommand():
-    # store the object name
-    oj = params.lower()
+    # sets the ding
+    ding = 0
     # store the player's current room
     rm = rooms[players[id]["room"]]
+    # store the object name
+    oj = params.lower()
+    text = str(params.lower()).split(' ')
+    # checks for relevant info
+    item = ItemsCheckRoom(players[id]["room"])
+    cont = ContainersCheckRoom(players[id]["room"])
+    try:
+        for c in cont:
+            if text[1] == "list":
+                if text[0] == Containers.containers[c].name:
+                    mud.send_message(id, "You peek inside the {} and see the following:".format(Containers.containers[c].name))
+                    for y in Containers.containers[c].slots:
+                        mud.send_message(id, Containers.containers[c].slots[y])
+                        ding=1
+    except:
+        pass
     #if the object exists in room
-    if oj in rm["objects"]:
+    for i in item:
+        if ding == 0 and oj == Items.allitems[i].name:
+            mud.send_message(id, Items.allitems[i].invdesc)
+            ding = 1
+
+    if ding == 0 and oj in rm["objects"]:
         # Show object exam description
         mud.send_message(id, rm["objects"][oj])
+        ding = 1
         # Otherwise tell them they are stupid
-    else:
+    if ding == 0:
         mud.send_message(id, "Nothing like that to examine.")
 
 
@@ -1053,18 +1104,22 @@ def EquipCommand():
             for x in players[id]["inventoryslot"]:
                 for s in [players[id]["inventoryslot"][x]]: ## now we should only get only one item coming throug
                         if s == Items.allitems[i].iid and iequipped == 0 and params.lower() == Items.allitems[i].name: ## double check it
+                            if Items.allitems[i].eqtype == "not":
+                                mud.send_message(id, "That's not equipment... wtf are you thinking.")
+                                iequipped = 1
+                            if Items.allitems[i].eqtype != "not":
                             ### we need to check if eq slot is full otherwise it over writes it (player loses eq item)
-                            if players[id][str(Items.allitems[i].eqtype)] == "Empty":
-                                mud.send_message(id, "You equipped up the "+str(Items.allitems[i].name))
-                                players[id][str(Items.allitems[i].eqtype)] = Items.allitems[i].iid
-                                players[id]["inventoryslot"][x] = "Empty"
-                                players[id][str(Items.allitems[i].eqstata)] = int(players[id][str(Items.allitems[i].eqstata)]) + int(Items.allitems[i].eqsvala)
-                                players[id][str(Items.allitems[i].eqstatb)] = int(players[id][str(Items.allitems[i].eqstatb)]) + int(Items.allitems[i].eqsvalb)
-                                iequipped = 1
-                            elif iequipped == 0: ## this needs to be on this level to work
-                                mud.send_message(id, "You have equipment in that slot.")
-                                iequipped = 1
-                                mud.send_message(id, "you need to unequip "+str(Items.allitems[i].eqtype)+" to equip "+params.lower())
+                                if players[id][str(Items.allitems[i].eqtype)] == "Empty":
+                                    mud.send_message(id, "You equipped up the "+str(Items.allitems[i].name))
+                                    players[id][str(Items.allitems[i].eqtype)] = Items.allitems[i].iid
+                                    players[id]["inventoryslot"][x] = "Empty"
+                                    players[id][str(Items.allitems[i].eqstata)] = int(players[id][str(Items.allitems[i].eqstata)]) + int(Items.allitems[i].eqsvala)
+                                    players[id][str(Items.allitems[i].eqstatb)] = int(players[id][str(Items.allitems[i].eqstatb)]) + int(Items.allitems[i].eqsvalb)
+                                    iequipped = 1
+                                elif iequipped == 0: ## this needs to be on this level to work
+                                    mud.send_message(id, "You have equipment in that slot.")
+                                    iequipped = 1
+                                    mud.send_message(id, "you need to unequip "+str(Items.allitems[i].eqtype)+" to equip "+params.lower())
     if iequipped == 0 and params.lower() != Items.allitems[i].name:
         mud.send_message(id, "what are you trying to equip you fool!!")
 
@@ -1200,7 +1255,7 @@ def LoginCommand():
                                         newiid = str(orig)+str(random.randint(100,10000000000))
                                         while newiid in allitemslist:
                                             newiid = str(orig)+str(random.randint(100,10000000000))
-                                        Items(newiid ,Items.allitems[orig].name, Items.allitems[orig].desc, players[id]["name"], Items.allitems[orig].type, Items.allitems[orig].eqtype, Items.allitems[orig].invdesc, Items.allitems[orig].bp, Items.allitems[orig].bpsize, Items.allitems[orig].eqstata, Items.allitems[orig].eqstatb, Items.allitems[orig].eqsvala, Items.allitems[orig].eqsvalb)
+                                        Items(newiid ,Items.allitems[orig].name, Items.allitems[orig].desc, players[id]["name"], Items.allitems[orig].type, Items.allitems[orig].eqtype, Items.allitems[orig].invdesc, Items.allitems[orig].bp, Items.allitems[orig].bpsize, Items.allitems[orig].eqstata, Items.allitems[orig].eqstatb, Items.allitems[orig].eqsvala, Items.allitems[orig].eqsvalb, Items.allitems[orig].sellval)
                                         allitemslist.append(Items.allitems[str(newiid)].iid)
                                         if invitems >0:
                                             slotlist.append(Items.allitems[str(newiid)].iid)
@@ -1809,7 +1864,7 @@ def FightCommand():
             if players[id]["exp"] < 0:
                 Leveldown()
                 ## add here if drop all items
-            players[id]["room"] = "Town Center"
+            players[id]["room"] = "TownCenter"
             players[id]["fightstarted"] = 0
             LookCommand()
             return
@@ -1905,7 +1960,11 @@ def Levelup():
 
 def Leveldown():
     players[id]["level"] = players[id]["level"] - 1
+    if players[id]["level"] < 0:
+        players[id]["level"] = 0
     players[id]["next"] = players[id]["level"] *3000
+    if players[id]["next"] == 0:
+        players[id]["next"] = 3000
     players[id]["maxhp"] = players[id]["maxhp"]+ ((players[id]["maxhp"]*.5)*players[id]["level"])
     players[id]["maxmp"] = players[id]["maxmp"]+ ((players[id]["maxmp"]*.5)*players[id]["level"])
     players[id]["hp"] = 1
@@ -1976,20 +2035,19 @@ while True:
         # remove the player's entry in the player dictionary
         del(players[id])
 
-    # go through any new commands sent from players
     commandflag = 0
     try:
         if players[id]["fightstarted"] == 1:
             StartFightTimer()
             if players[id]["outcome"] == players[id]["monster"]:
                 mud.send_message(id, "you killed "+Creatures.creatures[players[id]["monster"]].name)
-                #change this to a corpse container
-                #newiid = str("corp")+str(random.randint(100,10000000000))
-                #while newiid in Creatures:
-                #print("stuck here")
-                    #newiid = str+corp+str(random.randint(100,10000000000))
-                #containerslist.append(newiid ,Creatures.creatures[players[id]["monster"]].name, players[id]["room"], "no", "open", Creatures.creatures[players][id]["monster"].drops, "Empty", "Empty", "Empty", "Empty", "Empty", "none")
-                #print("gothere")
+                newcnid = str("corp")+str(random.randint(100,10000000000))
+                monmon = Creatures.creatures[players[id]["monster"]].name
+                #myloot = {"x","x","x","x","x","x"}
+                loot = Creatures.creatures[players[id]["monster"]].drops
+                print(loot)
+                Containers(newcnid, monmon, players[id]["room"], "no", "open", loot , "nobody")
+                print(containerlist)
                 Creatures.creatures[players[id]["monster"]].corp = "yes"
                 Creatures.creatures[players[id]["monster"]].name = "dead "+Creatures.creatures[players[id]["monster"]].name
                 Creatures.creatures[players[id]["monster"]].desc = "The corpse of a "+Creatures.creatures[players[id]["monster"]].name+" is laying here"
@@ -2004,6 +2062,7 @@ while True:
     except:
         pass
     StartDoorTimers()
+    # go through any new commands sent from players
     for id, command, params in mud.get_commands():
         if players[id]["exp"] >= players[id]["next"]:
             Levelup()

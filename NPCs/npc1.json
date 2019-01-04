@@ -1,0 +1,13 @@
+{
+    "Larryweapons": {
+        "nid": "wssc",
+        "room": "WeaponStore",
+        "name": "Larry the Weapons Shop Store Clerk",
+        "desc": "Larry stands ready to help you out...",
+        "nsay": "Hey there, you got any old equipment you need\nto rid yourself of?",
+        "nsayt": "Man, all this work makin me hungry...",
+        "ngive": "rare_steak",
+        "reward": "Larrys_happy_hat",
+        "buytype": "weapon"
+     }
+}
