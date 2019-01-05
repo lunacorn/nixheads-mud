@@ -216,7 +216,7 @@ from mudserver import MudServer
 ### automatically adding in new creatures added to json
 class Creatures(object):
     creatures = {}
-    def __init__(self, cid, name, room, desc, clvl, cstr ,cdmg ,cdef ,clfe ,life ,moves ,drops ,cspc ,csnm , ctmr, corp):
+    def __init__(self, cid, name, room, desc, clvl, cstr ,cdmg ,cdef ,clfe ,life ,moves ,drops ,cspc ,csnm , ctmr, ccnt, cmtr, spwn, mcnt, diedin, corp):
         self.cid = cid
         self.name = name
         self.room = room
@@ -232,6 +232,11 @@ class Creatures(object):
         self.cspc = cspc
         self.csnm = csnm
         self.ctmr = ctmr
+        self.ccnt = ccnt
+        self.cmtr = cmtr
+        self.spwn = spwn
+        self.mcnt = mcnt
+        self.diedin = diedin
         self.corp = corp
         Creatures.creatures[cid] = self
 
@@ -397,6 +402,16 @@ for cid in credb.keys():
             csnm = value
         if stat == "ctmr":
             ctmr = value
+        if stat == "ccnt":
+            ccnt = value
+        if stat == "cmtr":
+            cmtr = value
+        if stat == "spwn":
+            spwn = value
+        if stat == "mcnt":
+            mcnt = value
+        if stat == "diedin":
+            diedin = value
         if stat == "corp":
             corp = value
         if stat == "room":
@@ -405,6 +420,7 @@ for cid in credb.keys():
                 value = str(json.dumps(credb[cid][stat][place])).replace('"', '')
                 room.append(place+":"+value)
 ############ loads every creature into class
+
     if room:
         for sweetpad in room:
             myroom = [x.strip() for x in sweetpad.split(':')]
@@ -413,7 +429,7 @@ for cid in credb.keys():
                 count += 1
                 monstercount += 1
                 if not str(ncid+str(monstercount)) in creaturelist:
-                    Creatures(str(ncid+str(monstercount)), name, myroom[0], desc, clvl, cstr, cdmg, cdef, clfe, life, moves, drops, cspc, csnm, ctmr, corp)
+                    Creatures(str(ncid+str(monstercount)), name, myroom[0], desc, clvl, cstr, cdmg, cdef, clfe, life, moves, drops, cspc, csnm, ctmr, ccnt, cmtr, spwn, mcnt, diedin, corp)
                     creaturelist.append(Creatures.creatures[str(ncid+str(monstercount))].cid)
 
 #### we need to load the items into the class
@@ -1355,6 +1371,65 @@ def StartDoorTimers():
                         mud.send_message(pid, "A clown pokes his head into the room , then slams the door")
         Doors.doors[door].gotopened += 1
 
+def StartCreatureTimers():
+    creaturemoved = 0
+    for creature in creaturelist:
+        if Creatures.creatures[creature].corp == "yes":
+            if int(Creatures.creatures[creature].ccnt) > int(Creatures.creatures[creature].ctmr):
+                if Creatures.creatures[creature].spwn == "0" or Creatures.creatures[creature].spwn == 0: ## just died
+                    Creatures.creatures[creature].spwn = 2 ##got despawned
+                    Creatures.creatures[creature].ccnt = 0
+                    Creatures.creatures[creature].diedin = Creatures.creatures[creature].room
+                    Creatures.creatures[creature].room = ''
+                elif Creatures.creatures[creature].spwn == 2: ## if despawned
+                    Creatures.creatures[creature].spwn = 1 ## waiting respawn
+                    Creatures.creatures[creature].ccnt = 0
+                elif Creatures.creatures[creature].spwn == 1:
+                    Creatures.creatures[creature].spwn = 0  #respawns
+                    Creatures.creatures[creature].ccnt = 0
+                    Creatures.creatures[creature].room = Creatures.creatures[creature].diedin
+                    Creatures.creatures[creature].corp = "no"
+                    for cid in credb.keys():
+                        if cid == Creatures.creatures[creature].name:
+                            for stat in credb[cid]:
+                                value = str(json.dumps(credb[cid][stat])).replace('"', '')
+                                if stat == "desc":
+                                    Creatures.creatures[creature].desc = value
+                                if stat == "life":
+                                    Creatures.creatures[creature].life = value
+                    for pid, pl in players.items():
+                        if players[pid]["room"] == Creatures.creatures[creature].room:
+                                mud.send_message(pid, "A "+Creatures.creatures[creature].name+" appears in the room")
+
+
+            Creatures.creatures[creature].ccnt = int(Creatures.creatures[creature].ccnt)+1
+
+        if Creatures.creatures[creature].moves == "yes":
+            if int(Creatures.creatures[creature].mcnt) >= int(Creatures.creatures[creature].cmtr):
+                creaturemoved = 1
+                choices = []
+                for room in rooms:
+                    if room == Creatures.creatures[creature].room:
+                        for a in [rooms[room]]:
+                            for x in a:
+                                if x == "exits":
+                                    for y in rooms[room][x]:
+                                        if y != '':
+                                            for z in [rooms[room][x][y]]:
+                                                choices.append(z)
+                if choices:
+                    Creatures.creatures[creature].room = choices[int(random.randint(0, len(choices)-1))]
+                    print(choices)
+                    print(len(choices))
+                    for pid, pl in players.items():
+                        if players[pid]["room"] == Creatures.creatures[creature].room:
+                               mud.send_message(pid, "A "+Creatures.creatures[creature].name+" wanders into the room")
+
+                Creatures.creatures[creature].mcnt = 0
+
+            Creatures.creatures[creature].mcnt = int(Creatures.creatures[creature].mcnt)+1
+
+
 def NewjobCommand():
     if playerprocess[id]["selection"] == None:
         for job in players[id]["ujob"]:
@@ -2075,6 +2150,7 @@ while True:
                 pass
     except:
         pass
+    StartCreatureTimers()
     StartDoorTimers()
     # go through any new commands sent from players
     for id, command, params in mud.get_commands():
