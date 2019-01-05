@@ -1221,110 +1221,120 @@ def LoginCommand():
                 login[id]["name"] = None
                 login[id]["password"] = None
             for check in userlist:
-                if check[0] == login[id]["name"]:
-                    if check[2] == login[id]["password"]:
-                        players[id]["name"]        = check[0]
-                        players[id]["room"]        = check[1]
-                        players[id]["password"]    = check[2]
-                        players[id]["email"]       = check[3]
-                        players[id]["user"]        = check[4]
-                        players[id]["race"]        = check[5]
-                        players[id]["job"]         = check[6]
-                        players[id]["coin"]        = check[7]
-                        players[id]["ujob"]        = json.loads(check[8])
-                        players[id]["exp"]         = check[9]
-                        players[id]["ujoblevel"]   = json.loads(check[10])
-                        players[id]["status"]      = check[11]
-                      # populate players with race and class info
-                        ChangeJob(players[id]["race"], players[id]["job"])
-                        players[id]["level"] = 0
-                        players[id]["maxhp"] = players[id]["maxhp"]+((players[id]["maxhp"]*.5)*players[id]["level"])
-                        players[id]["maxmp"] = players[id]["maxmp"]+((players[id]["maxmp"]*.5)*players[id]["level"])
-                        players[id]["hp"] = players[id]["maxhp"]
-                        players[id]["mp"] = players[id]["maxmp"]
-                        players[id]["pvp"] = "no"
-                        players[id]["statustimer"] = 0
-                        players[id]["fightstarted"] = 0
-                        players[id]["timer"] = 0
-                        players[id]["fighttimer"] = 10
-                        players[id]["target"] = ''
-                        players[id]["outcome"] = ''
-                        players[id]["firstround"] = ''
-                        players[id]["goesfirst"] = ''
-                        players[id]["monster"] = ''
-                        players[id]["tp"] = 0
-                        players[id]["level"] = 0
-                        players[id]["next"] = 3000*players[id]["level"]
-                        if players[id]["next"] == 0:
-                            players[id]["next"] = 3000
-                        mud.send_message(id, "Successfully loaded: {}.\n".format(players[id]["name"]))
-                        # print serverside a player logged in
-                        print("New login")
-                        print(players[id]["name"])
-                        mud.send_message(id, motd.read())
-                        mud.send_message(id, "You are being pulled through a dimensional gateway.")
-                        mud.send_message(id, "Welcome back to NixMud, {}.".format(players[id]["name"]))
-                        #mud.send_message(id, "Have a 'look' around...")
-                        mud.send_message(id, "A lot changes here and interdimensional travel")
-                        mud.send_message(id, "is always a pain in the ass.")
-                        LookCommand()
-                        ###   This makes your unique iid work on login
-                        ###
-                        ###   WHAT THE ACTUAL FUCK!!!??? I KNOW IT WORKS BUT WTF
-                        ### if you fork our code never change this
-                        ###  you will never recover (6:44AM Dec 29 2018)
-                        ###      ........    seriously   ....  dont do it
-                        ###
-                        invlist = invendb.get_name(invdata, login[id]["name"])
-                        slotlist = []
-                        invitems = 8
-                        equiplist = []
-                        if invlist:
-                            for checkinv in invlist:
-                                for item in checkinv:
-                                    if item != players[id]["name"] and item == "Empty":
-                                        invitems -= 1
-                                    if item != players[id]["name"] and item != "Empty":
-                                        invitems -= 1
-                                        orig = item[:4]
-                                        newiid = str(orig)+str(random.randint(100,10000000000))
-                                        while newiid in allitemslist:
-                                            newiid = str(orig)+str(random.randint(100,10000000000))
-                                        Items(newiid ,Items.allitems[orig].name, Items.allitems[orig].desc, players[id]["name"], Items.allitems[orig].type, Items.allitems[orig].eqtype, Items.allitems[orig].invdesc, Items.allitems[orig].bp, Items.allitems[orig].bpsize, Items.allitems[orig].eqstata, Items.allitems[orig].eqstatb, Items.allitems[orig].eqsvala, Items.allitems[orig].eqsvalb, Items.allitems[orig].sellval)
-                                        allitemslist.append(Items.allitems[str(newiid)].iid)
-                                        if invitems >0:
-                                            slotlist.append(Items.allitems[str(newiid)].iid)
-                                        else:
-                                            equiplist.append(Items.allitems[str(newiid)].iid)
-                        slotsfilled = int(0)-int(len(slotlist))
-                        totalslots = int(8)+int(slotsfilled)
-                        fillslots = 1
-                        while fillslots == 1:
-                            iteminlist = str(int(slotsfilled)+int(len(slotlist))+int(1))
-                            if len(slotlist) != int(iteminlist)-int(1):
-                                print("yay i filled slot"+iteminlist+" your majesty")
-                                players[id]["inventoryslot"]["slot"+iteminlist] = slotlist[int(int(iteminlist)-int(1))]
-                            if len(slotlist) == int(iteminlist)-int(1):
-                                while totalslots != 0:
-                                    players[id]["inventoryslot"]["slot"+iteminlist  ] = "Empty"
-                                    totalslots -= 1
-                            if slotsfilled == 0:
-                                fillslots = 0
-                            slotsfilled += 1
-                        players[id]["inventoryused"] = len(slotlist)
-                        for equipitem in equiplist:
-                            players[id][str(Items.allitems[str(equipitem)].eqtype)] = equipitem
-                        login[id]["process"] = "done"
-                if check[0] != login[id]["name"]:
-                    login[id]["name"] = None
-                    login[id]["password"] = None
-                    login[id]["process"] = None
-                if check[2] != login[id]["password"]:
-                    mud.send_message(id, "Bad password.")
-                    Login()
-                    login[id]["name"] = None
-                    login[id]["password"] = None
-                    login[id]["process"] = None
+                onlineplayers = []
+                for pid, pl in players.items():
+                    onlineplayers.append(players[pid]["name"])
+                    if str(login[id]["name"]) in onlineplayers:
+                        mud.send_message(id, "User already online")
+                        login[id]["process"] = None
+                        login[id]["name"] = None
+                        login[id]["password"] = None
+                        ResetCommand()
+                    else:
+                        if check[0] == login[id]["name"]:
+                            if check[2] == login[id]["password"]:
+                                players[id]["name"]        = check[0]
+                                players[id]["room"]        = check[1]
+                                players[id]["password"]    = check[2]
+                                players[id]["email"]       = check[3]
+                                players[id]["user"]        = check[4]
+                                players[id]["race"]        = check[5]
+                                players[id]["job"]         = check[6]
+                                players[id]["coin"]        = check[7]
+                                players[id]["ujob"]        = json.loads(check[8])
+                                players[id]["exp"]         = check[9]
+                                players[id]["ujoblevel"]   = json.loads(check[10])
+                                players[id]["status"]      = check[11]
+                              # populate players with race and class info
+                                ChangeJob(players[id]["race"], players[id]["job"])
+                                players[id]["level"] = 0
+                                players[id]["maxhp"] = players[id]["maxhp"]+((players[id]["maxhp"]*.5)*players[id]["level"])
+                                players[id]["maxmp"] = players[id]["maxmp"]+((players[id]["maxmp"]*.5)*players[id]["level"])
+                                players[id]["hp"] = players[id]["maxhp"]
+                                players[id]["mp"] = players[id]["maxmp"]
+                                players[id]["pvp"] = "no"
+                                players[id]["statustimer"] = 0
+                                players[id]["fightstarted"] = 0
+                                players[id]["timer"] = 0
+                                players[id]["fighttimer"] = 10
+                                players[id]["target"] = ''
+                                players[id]["outcome"] = ''
+                                players[id]["firstround"] = ''
+                                players[id]["goesfirst"] = ''
+                                players[id]["monster"] = ''
+                                players[id]["tp"] = 0
+                                players[id]["level"] = 0
+                                players[id]["next"] = 3000*players[id]["level"]
+                                if players[id]["next"] == 0:
+                                    players[id]["next"] = 3000
+                                mud.send_message(id, "Successfully loaded: {}.\n".format(players[id]["name"]))
+                                # print serverside a player logged in
+                                print("New login")
+                                print(players[id]["name"])
+                                mud.send_message(id, motd.read())
+                                mud.send_message(id, "You are being pulled through a dimensional gateway.")
+                                mud.send_message(id, "Welcome back to NixMud, {}.".format(players[id]["name"]))
+                                #mud.send_message(id, "Have a 'look' around...")
+                                mud.send_message(id, "A lot changes here and interdimensional travel")
+                                mud.send_message(id, "is always a pain in the ass.")
+                                LookCommand()
+                                ###   This makes your unique iid work on login
+                                ###
+                                ###   WHAT THE ACTUAL FUCK!!!??? I KNOW IT WORKS BUT WTF
+                                ### if you fork our code never change this
+                                ###  you will never recover (6:44AM Dec 29 2018)
+                                ###      ........    seriously   ....  dont do it
+                                ###
+                                invlist = invendb.get_name(invdata, login[id]["name"])
+                                slotlist = []
+                                invitems = 8
+                                equiplist = []
+                                if invlist:
+                                    for checkinv in invlist:
+                                        for item in checkinv:
+                                            if item != players[id]["name"] and item == "Empty":
+                                                invitems -= 1
+                                            if item != players[id]["name"] and item != "Empty":
+                                                invitems -= 1
+                                                orig = item[:4]
+                                                newiid = str(orig)+str(random.randint(100,10000000000))
+                                                while newiid in allitemslist:
+                                                    newiid = str(orig)+str(random.randint(100,10000000000))
+                                                Items(newiid ,Items.allitems[orig].name, Items.allitems[orig].desc, players[id]["name"], Items.allitems[orig].type, Items.allitems[orig].eqtype, Items.allitems[orig].invdesc, Items.allitems[orig].bp, Items.allitems[orig].bpsize, Items.allitems[orig].eqstata, Items.allitems[orig].eqstatb, Items.allitems[orig].eqsvala, Items.allitems[orig].eqsvalb, Items.allitems[orig].sellval)
+                                                allitemslist.append(Items.allitems[str(newiid)].iid)
+                                                if invitems >0:
+                                                    slotlist.append(Items.allitems[str(newiid)].iid)
+                                                else:
+                                                    equiplist.append(Items.allitems[str(newiid)].iid)
+                                slotsfilled = int(0)-int(len(slotlist))
+                                totalslots = int(8)+int(slotsfilled)
+                                fillslots = 1
+                                while fillslots == 1:
+                                    iteminlist = str(int(slotsfilled)+int(len(slotlist))+int(1))
+                                    if len(slotlist) != int(iteminlist)-int(1):
+                                        print("yay i filled slot"+iteminlist+" your majesty")
+                                        players[id]["inventoryslot"]["slot"+iteminlist] = slotlist[int(int(iteminlist)-int(1))]
+                                    if len(slotlist) == int(iteminlist)-int(1):
+                                        while totalslots != 0:
+                                            players[id]["inventoryslot"]["slot"+iteminlist  ] = "Empty"
+                                            totalslots -= 1
+                                    if slotsfilled == 0:
+                                        fillslots = 0
+                                    slotsfilled += 1
+                                players[id]["inventoryused"] = len(slotlist)
+                                for equipitem in equiplist:
+                                    players[id][str(Items.allitems[str(equipitem)].eqtype)] = equipitem
+                                login[id]["process"] = "done"
+                        if check[0] != login[id]["name"]:
+                            login[id]["name"] = None
+                            login[id]["password"] = None
+                            login[id]["process"] = None
+                        if check[2] != login[id]["password"]:
+                            mud.send_message(id, "Bad password.")
+                            Login()
+                            login[id]["name"] = None
+                            login[id]["password"] = None
+                            login[id]["process"] = None
                     ### end of dont touch this section
 def SetjobCommand():
 #prints available jobs
@@ -1419,8 +1429,6 @@ def StartCreatureTimers():
                                                 choices.append(z)
                 if choices:
                     Creatures.creatures[creature].room = choices[int(random.randint(0, len(choices)-1))]
-                    print(choices)
-                    print(len(choices))
                     for pid, pl in players.items():
                         if players[pid]["room"] == Creatures.creatures[creature].room:
                                mud.send_message(pid, "A "+Creatures.creatures[creature].name+" wanders into the room")
