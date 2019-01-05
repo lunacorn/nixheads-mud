@@ -805,7 +805,6 @@ def GrabCommand():
             try:
                 if text[1] == Containers.containers[c].name:
                     for y in Containers.containers[c].slots:
-                        print("got here")
                         for z in allitemslist:
                             if text[0] == Items.allitems[z].name and Containers.containers[c].slots[y] == text[0]:
                                 if players[id]["inventoryspace"] > players[id]["inventoryused"]:
