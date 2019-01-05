@@ -285,7 +285,6 @@ class Doors(object):
 class Containers(object):
     containers = {}
     def __init__(self, cnid, cnname, cnmap, cnstatus, cnlock, slots, lockname):
-
         self.cnid = cnid
         self.name = cnname
         self.map  = cnmap
@@ -528,22 +527,21 @@ for room in rooms:
 
 for container in fun["corevalues"]["containers"]:
     for cnvalue in fun["corevalues"]["containers"][container]:
-        print(cnvalue)
         if cnvalue == "name":
-            cnname = cnvalue
+            cnname = fun["corevalues"]["containers"][container][cnvalue]
         if cnvalue == "room":
-            cnmap = cnvalue
+            cnmap = fun["corevalues"]["containers"][container][cnvalue]
         if cnvalue == "status":
-            cnstatus = cnvalue
+            cnstatus = fun["corevalues"]["containers"][container][cnvalue]
         if cnvalue == "locked":
-            cnlock = cnvalue
+            cnlock = fun["corevalues"]["containers"][container][cnvalue]
         if cnvalue == "lockname":
-            lockname = cnvalue
+            lockname = fun["corevalues"]["containers"][container][cnvalue]
         if cnvalue == "slots":
-            slots = cnvalue
-cnid = "cntr"+str(random.randint(100,10000000000))
-Containers(cnid, cnname, cnmap, cnstatus, cnlock, slots, lockname)
-containerslist.append(cnid)
+            slots = fun["corevalues"]["containers"][container][cnvalue]
+    cnid = "cntr"+str(random.randint(100,10000000000))
+    Containers(cnid, cnname, cnmap, cnstatus, cnlock, slots, lockname)
+    containerslist.append(cnid)
 
 print(containerslist)
 
@@ -807,7 +805,8 @@ def GrabCommand():
             try:
                 if text[1] == Containers.containers[c].name:
                     for y in Containers.containers[c].slots:
-                       for z in allitemslist:
+                        print("got here")
+                        for z in allitemslist:
                             if text[0] == Items.allitems[z].name and Containers.containers[c].slots[y] == text[0]:
                                 if players[id]["inventoryspace"] > players[id]["inventoryused"]:
                                     for x in players[id]["inventoryslot"]:
@@ -829,8 +828,7 @@ def GrabCommand():
 
                                 else:
                                     mud.send_message(id, "Your inventory is full.")
-                                    gotitem = 1
-
+                                gotitem = 1
             except:
                 pass
 
@@ -848,7 +846,7 @@ def GrabCommand():
                                                 orig = z[:4]
                                                 newiid = orig+str(random.randint(100,10000000000))
                                                 while newiid in allitemslist:
-                                                     newiid = orig+str(random.randint(100,10000000000))
+                                                    newiid = orig+str(random.randint(100,10000000000))
                                                 allitemslist.append(newiid)
                                                 Items(newiid ,Items.allitems[orig].name, Items.allitems[orig].desc, players[id]["name"], Items.allitems[orig].type, Items.allitems[orig].eqtype, Items.allitems[orig].invdesc, Items.allitems[orig].bp, Items.allitems[orig].bpsize, Items.allitems[orig].eqstata, Items.allitems[orig].eqstatb, Items.allitems[orig].eqsvala, Items.allitems[orig].eqsvalb,Items.allitems[orig].sellval)
                                                 Creatures.creatures[m].drops = "Empty"
