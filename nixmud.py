@@ -2140,7 +2140,6 @@ while True:
                 Creatures.creatures[players[id]["monster"]].corp = "yes"
                 mud.send_message(id, "The monster drops a: "+Creatures.creatures[players[id]["monster"]].drops)
                 Creatures.creatures[players[id]["monster"]].desc = "The corpse of a "+Creatures.creatures[players[id]["monster"]].name+" is laying here"
-                Creatures.creatures[players[id]["monster"]].moves = "no"
                 players[id]["fightstarted"] = 0
                 players[id]["outcome"] = ''
                 players[id]["monster"] = ''
