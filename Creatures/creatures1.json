@@ -2,8 +2,8 @@
     "spider": {
         "cid": "spider",
         "room": {
-            "Dungeon1": 1,
-            "Dungeon2": 4
+            "Dungeon1": 0,
+            "Dungeon2": 0
              },
         "name": "spider",
         "desc": "A spider sits quietly in her web.",
@@ -17,15 +17,20 @@
         "drops": "venom_sack",
         "cspc": "bind",
         "csnm": "web",
-        "ctmr": 5,
+        "ctmr": 60,
+        "ccnt": 0,
+        "cmtr": 60,
+        "spwn": 0,
+        "mcnt": 0,
+        "diedin": "0",
         "corp": "no"
      },
 
     "monkey": {
         "cid": "monkey",
         "room": {
-            "Dungeon1": 2,
-            "Dungeon2": 1
+            "Dungeon1": 1,
+            "Dungeon2": 0
              },
         "name": "monkey",
         "desc": "A monkey snarls it's face at you",
@@ -35,20 +40,25 @@
         "cdef": 16,
         "clfe": 12,
         "life": 12,
-        "moves": "no",
+        "moves": "yes",
         "drops": "monkey_paw",
         "cspc": "bind",
         "csnm": "web",
-        "ctmr": 5,
+        "ctmr": 60,
+        "ccnt": 0,
+        "cmtr": 60,
+        "spwn": 0,
+        "mcnt": 0,
+        "diedin": "0",
         "corp": "no"
     },
 
     "pig": {
         "cid": "pig",
         "room": {
-            "Dungeon1": 5,
-            "Dungeon2": 1,
-            "Dungeon3": 17
+            "Dungeon1": 1,
+            "Dungeon2": 0,
+            "Dungeon3": 0
              },
         "name": "pig",
         "desc": "A pig snorts as it looks at you.",
@@ -59,18 +69,23 @@
         "clfe": 16,
         "life": 16,
         "moves": "no",
-        "drops": "pig_foot",       
+        "drops": "pig_foot",
         "cspc": "bind",
         "csnm": "web",
-        "ctmr": 5,
+        "ctmr": 60,
+        "ccnt": 0,
+        "cmtr": 60,
+        "spwn": 0,
+        "mcnt": 0,
+        "diedin": "0",
         "corp": "no"
     },
 
     "rat": {
         "cid": "rat",
         "room": {
-            "Dungeon1": 2,
-            "Dungeon2": 2
+            "Dungeon1": 1,
+            "Dungeon2": 0
              },
         "name": "rat",
         "desc": "a rat scuttles around the room.",
@@ -84,7 +99,12 @@
         "drops": "rat_tail",
         "cspc": "none",
         "csnm": "none",
-        "ctmr": 3,
+        "ctmr": 100,
+        "ccnt": 0,
+        "cmtr": 100,
+        "spwn": 0,
+        "mcnt": 0,
+        "diedin": "0",
         "corp": "no"
     }
 }

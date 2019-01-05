@@ -209,14 +209,14 @@ import random
 from mudserver import MudServer
 
 
-
+adminlist = ["zalgo", "luna"]
 #sys.setrecursionlimit()
 ### create a class to map all the creatures into
 ### saving space and effort adding in all creatures
 ### automatically adding in new creatures added to json
 class Creatures(object):
     creatures = {}
-    def __init__(self, cid, name, room, desc, clvl, cstr ,cdmg ,cdef ,clfe ,life ,moves ,drops ,cspc ,csnm , ctmr, corp):
+    def __init__(self, cid, name, room, desc, clvl, cstr ,cdmg ,cdef ,clfe ,life ,moves ,drops ,cspc ,csnm , ctmr, ccnt, cmtr, spwn, mcnt, diedin, corp):
         self.cid = cid
         self.name = name
         self.room = room
@@ -232,6 +232,11 @@ class Creatures(object):
         self.cspc = cspc
         self.csnm = csnm
         self.ctmr = ctmr
+        self.ccnt = ccnt
+        self.cmtr = cmtr
+        self.spwn = spwn
+        self.mcnt = mcnt
+        self.diedin = diedin
         self.corp = corp
         Creatures.creatures[cid] = self
 
@@ -397,6 +402,16 @@ for cid in credb.keys():
             csnm = value
         if stat == "ctmr":
             ctmr = value
+        if stat == "ccnt":
+            ccnt = value
+        if stat == "cmtr":
+            cmtr = value
+        if stat == "spwn":
+            spwn = value
+        if stat == "mcnt":
+            mcnt = value
+        if stat == "diedin":
+            diedin = value
         if stat == "corp":
             corp = value
         if stat == "room":
@@ -405,6 +420,7 @@ for cid in credb.keys():
                 value = str(json.dumps(credb[cid][stat][place])).replace('"', '')
                 room.append(place+":"+value)
 ############ loads every creature into class
+
     if room:
         for sweetpad in room:
             myroom = [x.strip() for x in sweetpad.split(':')]
@@ -413,7 +429,7 @@ for cid in credb.keys():
                 count += 1
                 monstercount += 1
                 if not str(ncid+str(monstercount)) in creaturelist:
-                    Creatures(str(ncid+str(monstercount)), name, myroom[0], desc, clvl, cstr, cdmg, cdef, clfe, life, moves, drops, cspc, csnm, ctmr, corp)
+                    Creatures(str(ncid+str(monstercount)), name, myroom[0], desc, clvl, cstr, cdmg, cdef, clfe, life, moves, drops, cspc, csnm, ctmr, ccnt, cmtr, spwn, mcnt, diedin, corp)
                     creaturelist.append(Creatures.creatures[str(ncid+str(monstercount))].cid)
 
 #### we need to load the items into the class
@@ -780,13 +796,6 @@ def DoorsCheckRoom(pr):
     #switch. which might reveal an exit or a
     #container
 
-
-#def GetCommand():
-    # same as grab but an extra param for the container
-    # like the bucket.  maybe we can add this option to grab
-    # so grab (item): room
-    # grab (item) (bucket): container
-
 #def PutCommand():
     # similar to grab n drop but puts the item into a container
     # obeject like a bucket.  object needs to be checked for
@@ -987,60 +996,71 @@ def ExamCommand():
 def SheetCommand():
     ## luna # i want to add some math to this as well to structure it based on line length
     # add unlocked jobs (ujobs) spells and skills
-    mud.send_message(id, ":"*62)
-    mud.send_message(id, ":"*62)
-    mud.send_message(id, ":"*62)
-    mud.send_message(id, ":"*23+"CHARACTER SHEET"+":"*24)
-    mud.send_message(id, ":"*62)
-    mud.send_message(id, ":"*62)
-    mud.send_message(id, "{}Name: {}  {}Race: {}  {}Level: {}   {}".format(":"*3,players[id]["name"],":"*8,players[id]["race"],":"*8,players[id]["level"],":"*5))
-    mud.send_message(id, ":"*62)
-    mud.send_message(id, "{}HP: {}   {}MAX HP: {}   {}MP: {}   {}MAX MP: {}   ".format(":"*2,players[id]["hp"],":"*4,players[id]["maxhp"],":"*4,players[id]["mp"],":"*5,players[id]["maxmp"],":"*7))
-    mud.send_message(id, ":"*62)
-    mud.send_message(id, ":"*22+" Character Stats "+":"*23)
-    mud.send_message(id, ":"*62)
-    mud.send_message(id, "{}STR:{} {}DEX:{} {}VIT:{} {}INT:{} {}MND:{} {}CHA:{} {}".format(":"*2,players[id]["str"],":"*2,players[id]["dex"],":"*2,players[id]["vit"],":"*2,players[id]["int"],":"*4,players[id]["mnd"],":"*2,players[id]["cha"],":"*6))
-    mud.send_message(id, ":"*62)
+    sheetframe = 70
+    mud.send_message(id, ":"*sheetframe)
+    mud.send_message(id, ":"*sheetframe)
+    mud.send_message(id, ":"*sheetframe)
+    mud.send_message(id, ":"*23+"CHARACTER SHEET"+":"*int(sheetframe-23-len("CHARACTER SHEET")))
+    mud.send_message(id, ":"*sheetframe)
+    mud.send_message(id, ":"*sheetframe)
+    lengthtosend = sheetframe-3-8-8-len(str(players[id]["name"]+players[id]["race"]+str(players[id]["level"])))-len("Name:   Race:   Level:    ")
+    mud.send_message(id, "{}Name: {}  {}Race: {}  {}Level: {}   {}".format(":"*3,players[id]["name"],":"*8,players[id]["race"],":"*8,players[id]["level"],":"*lengthtosend))
+    mud.send_message(id, ":"*sheetframe)
+    lengthtosend = sheetframe-int(len("HP:    MAX HP:    MP:    MAX MP:    "))-2-4-4-5-int(len(str(players[id]["maxmp"])+str(players[id]["mp"])+str(players[id]["hp"])+str(players[id]["maxhp"])))
+    mud.send_message(id, "{}HP: {}   {}MAX HP: {}   {}MP: {}   {}MAX MP: {}   {}".format(":"*2,players[id]["hp"],":"*4,players[id]["maxhp"],":"*4,players[id]["mp"],":"*5,players[id]["maxmp"],":"*lengthtosend))
+    mud.send_message(id, ":"*sheetframe)
+    mud.send_message(id, ":"*22+" Character Stats "+":"*int(sheetframe-22-int(len(" Character Stats "))))
+    mud.send_message(id, ":"*sheetframe)
+    lengthtosend = sheetframe-10-int(len(str(players[id]["str"]+players[id]["dex"]+players[id]["vit"]+players[id]["int"]+players[id]["mnd"]+players[id]["cha"])+str("STR: DEX: VIT: INT: MND: CHA: ")))-2-2-2-2-4-2
+    mud.send_message(id, "{}STR:{} {}DEX:{} {}VIT:{} {}INT:{} {}MND:{} {}CHA:{} {}".format(":"*2,players[id]["str"],":"*2,players[id]["dex"],":"*2,players[id]["vit"],":"*2,players[id]["int"],":"*4,players[id]["mnd"],":"*2,players[id]["cha"],":"*lengthtosend))
+    mud.send_message(id, ":"*sheetframe)
     #if players[id]["next"] - players[id]["exp"] > 100:
     #    bob = players[id]["next"]-players[id]["exp"]
     #    mud.send_message(id, "{}Crit. Chance{} {}% {}Coin{} {} {}TNL{} {} {}".format(":"*2,":"*3,players[id]["crit"],":"*3,":"*3,players[id]["coin"],":"*5,":"*3,str(bob)[3:]+"K",":"*6))
     #else:
-    mud.send_message(id, "{}Crit. Chance{} {}% {}Coin{} {} {}TNL{} {} {}".format(":"*2,":"*3,players[id]["crit"],":"*3,":"*3,players[id]["coin"],":"*5,":"*3,players[id]["next"]-players[id]["exp"],":"*6))
-    mud.send_message(id, ":"*62)
-    mud.send_message(id, "::Spells"+":"*54)
-    mud.send_message(id, ":"*62)
+    lengthtosend = int(sheetframe-int(len("Crit Chance  Coin  TNL  "))-int(len(str(players[id]["next"])+str(players[id]["exp"])+str(players[id]["crit"])+str(players[id]["coin"])))-2-3-3-3-5-3)
+    mud.send_message(id, "{}Crit. Chance{} {}% {}Coin{} {} {}TNL{} {} {}".format(":"*2,":"*3,players[id]["crit"],":"*3,":"*3,players[id]["coin"],":"*5,":"*3,players[id]["next"]-players[id]["exp"],":"*lengthtosend))
+    mud.send_message(id, ":"*sheetframe)
+    mud.send_message(id, "::Spells"+":"*int(sheetframe-int(len("::Spells"))))
+    mud.send_message(id, ":"*sheetframe)
 
     #mud.send_message(id, "::{}".format([fun["corevalues"]["jobs"][players[id]["job"]]["spells"][str(players[id]["level"]).replace("'spell'"," ")]]))
-    mud.send_message(id, "::"+" "*58+"::")
-    mud.send_message(id, "::"+" "*58+"::")
-    mud.send_message(id, "::"+" "*58+"::")
-    mud.send_message(id, "::"+" "*58+"::")
-    mud.send_message(id, "::"+" "*58+"::")
-    mud.send_message(id, "::"+" "*58+"::")
-    mud.send_message(id, ":"*62)
-    mud.send_message(id, "::Skills"+":"*54)
-    mud.send_message(id, ":"*62)
+    mud.send_message(id, "::"+" "*int(sheetframe-int(len("::::")))+"::")
+    mud.send_message(id, "::"+" "*int(sheetframe-int(len("::::")))+"::")
+    mud.send_message(id, "::"+" "*int(sheetframe-int(len("::::")))+"::")
+    mud.send_message(id, "::"+" "*int(sheetframe-int(len("::::")))+"::")
+    mud.send_message(id, "::"+" "*int(sheetframe-int(len("::::")))+"::")
+    mud.send_message(id, "::"+" "*int(sheetframe-int(len("::::")))+"::")
+    mud.send_message(id, ":"*sheetframe)
+    mud.send_message(id, "::Skills"+":"*int(sheetframe-int(len("::Skills"))))
+    mud.send_message(id, ":"*sheetframe)
     #mud.send_message(id, "::{}".format([fun["corevalues"]["jobs"][players[id]["job"]]["skills"][str(players[id]["level"]).replace("'spell'"," ")]]))
-    mud.send_message(id, "::"+" "*58+"::")
-    mud.send_message(id, "::"+" "*58+"::")
-    mud.send_message(id, "::"+" "*58+"::")
-    mud.send_message(id, "::"+" "*58+"::")
-    mud.send_message(id, "::"+" "*58+"::")
-    mud.send_message(id, "::"+" "*58+"::")
-    mud.send_message(id, "::"+" "*58+"::")
-    mud.send_message(id, ":"*62)
-    mud.send_message(id, "::User Rank"+":"*9+"Current Job"+":"*6+"PVP Status"+":"*4+"TP"+":"*9)
-    mud.send_message(id, ":: {}".format(players[id]["user"]) + "     :::::::: {} ::::::: {} :::::::: {} :::::::".format(players[id]["job"],players[id]["pvp"],players[id]["tp"]))
-    mud.send_message(id, ":"*62)
-    mud.send_message(id, "::Unlocked Jobs"+":"*47)
-    mud.send_message(id, ":::warrior:{}::whitemage:{}::thief:{}::indecisive:{}::bard:{}::::::".format(players[id]["ujob"]["warrior"],players[id]["ujob"]["whitemage"],players[id]["ujob"]["thief"],players[id]["ujob"]["indecisive"],players[id]["ujob"]["bard"]))
-    mud.send_message(id, ":"*62)
-    mud.send_message(id, ":::blackmage:{}::samurai:{}::ninja:{}::bartender:{}::mog:{}::::::::".format(players[id]["ujob"]["blackmage"],players[id]["ujob"]["samurai"],players[id]["ujob"]["ninja"],players[id]["ujob"]["bartender"],players[id]["ujob"]["mog"]))
-    mud.send_message(id, ":"*62)
-    mud.send_message(id, ":::linecook:{}::inventor:{}::landscaper:{}::druid:{}::witch:{}:::::".format(players[id]["ujob"]["linecook"],players[id]["ujob"]["inventor"],players[id]["ujob"]["landscaper"],players[id]["ujob"]["druid"],players[id]["ujob"]["witch"]))
-    mud.send_message(id, ":"*62)
-    mud.send_message(id, ":"*62)
-    mud.send_message(id, ":"*62)
+    mud.send_message(id, "::"+" "*int(sheetframe-int(len("::::")))+"::")
+    mud.send_message(id, "::"+" "*int(sheetframe-int(len("::::")))+"::")
+    mud.send_message(id, "::"+" "*int(sheetframe-int(len("::::")))+"::")
+    mud.send_message(id, "::"+" "*int(sheetframe-int(len("::::")))+"::")
+    mud.send_message(id, "::"+" "*int(sheetframe-int(len("::::")))+"::")
+    mud.send_message(id, "::"+" "*int(sheetframe-int(len("::::")))+"::")
+    mud.send_message(id, "::"+" "*int(sheetframe-int(len("::::")))+"::")
+    mud.send_message(id, ":"*sheetframe)
+    lengthtosend = int(sheetframe-9-6-4-int(len("::User RankCurrent JobPVP StatusTP")))
+    mud.send_message(id, "::User Rank"+":"*9+"Current Job"+":"*6+"PVP Status"+":"*4+"TP"+":"*lengthtosend)
+    lengthtosend = sheetframe-int(len(":: ")+len("     ::::::::  :::::::  ::::::::  ")+len(str(players[id]["user"])+str(players[id]["job"])+str(players[id]["pvp"])+str(players[id]["tp"])))
+    mud.send_message(id, ":: {}".format(players[id]["user"]) + "     :::::::: {} ::::::: {} :::::::: {} {}".format(players[id]["job"],players[id]["pvp"],players[id]["tp"],":"*lengthtosend))
+    mud.send_message(id, ":"*sheetframe)
+    mud.send_message(id, "::Unlocked Jobs"+":"*int(sheetframe-int(len("::Unlocked Jobs"))))
+
+    lengthtosend = sheetframe-int(len(":::warrior:::whitemage:::thief:::indecisive:::bard:"))-int(len(str(players[id]["ujob"]["warrior"]+players[id]["ujob"]["whitemage"]+players[id]["ujob"]["thief"]+players[id]["ujob"]["indecisive"]+players[id]["ujob"]["bard"])))
+    mud.send_message(id, ":::warrior:{}::whitemage:{}::thief:{}::indecisive:{}::bard:{}{}".format(players[id]["ujob"]["warrior"],players[id]["ujob"]["whitemage"],players[id]["ujob"]["thief"],players[id]["ujob"]["indecisive"],players[id]["ujob"]["bard"],":"*lengthtosend))
+    mud.send_message(id, ":"*sheetframe)
+    lengthtosend = sheetframe-int(len(":::blackmage:::samurai:::ninja:::bartender:::mog:"))-int(len(str(players[id]["ujob"]["blackmage"]+players[id]["ujob"]["samurai"]+players[id]["ujob"]["ninja"]+players[id]["ujob"]["bartender"]+players[id]["ujob"]["mog"])))
+    mud.send_message(id, ":::blackmage:{}::samurai:{}::ninja:{}::bartender:{}::mog:{}{}".format(players[id]["ujob"]["blackmage"],players[id]["ujob"]["samurai"],players[id]["ujob"]["ninja"],players[id]["ujob"]["bartender"],players[id]["ujob"]["mog"],":"*lengthtosend))
+    mud.send_message(id, ":"*sheetframe)
+    lengthtosend = sheetframe-int(len(":::linecook:::inventor:::landscaper:::druid:::witch:"))-int(len(str(players[id]["ujob"]["linecook"]+players[id]["ujob"]["inventor"]+players[id]["ujob"]["landscaper"]+players[id]["ujob"]["druid"]+players[id]["ujob"]["witch"])))
+    mud.send_message(id, ":::linecook:{}::inventor:{}::landscaper:{}::druid:{}::witch:{}{}".format(players[id]["ujob"]["linecook"],players[id]["ujob"]["inventor"],players[id]["ujob"]["landscaper"],players[id]["ujob"]["druid"],players[id]["ujob"]["witch"],":"*lengthtosend))
+    mud.send_message(id, ":"*sheetframe)
+    mud.send_message(id, ":"*sheetframe)
+    mud.send_message(id, ":"*sheetframe)
 
     #help me god need to print out the right format for json files
     #mud.send_message(id, "{}".format([fun["corevalues"]["jobs"][players[id]["job"]]["spells"][str(players[id]["level"]).replace("'spell'"," ")]]))
@@ -1205,110 +1225,120 @@ def LoginCommand():
                 login[id]["name"] = None
                 login[id]["password"] = None
             for check in userlist:
-                if check[0] == login[id]["name"]:
-                    if check[2] == login[id]["password"]:
-                        players[id]["name"]        = check[0]
-                        players[id]["room"]        = check[1]
-                        players[id]["password"]    = check[2]
-                        players[id]["email"]       = check[3]
-                        players[id]["user"]        = check[4]
-                        players[id]["race"]        = check[5]
-                        players[id]["job"]         = check[6]
-                        players[id]["coin"]        = check[7]
-                        players[id]["ujob"]        = json.loads(check[8])
-                        players[id]["exp"]         = check[9]
-                        players[id]["ujoblevel"]   = json.loads(check[10])
-                        players[id]["status"]      = check[11]
-                      # populate players with race and class info
-                        ChangeJob(players[id]["race"], players[id]["job"])
-                        players[id]["level"] = 0
-                        players[id]["maxhp"] = players[id]["maxhp"]+((players[id]["maxhp"]*.5)*players[id]["level"])
-                        players[id]["maxmp"] = players[id]["maxmp"]+((players[id]["maxmp"]*.5)*players[id]["level"])
-                        players[id]["hp"] = players[id]["maxhp"]
-                        players[id]["mp"] = players[id]["maxmp"]
-                        players[id]["pvp"] = "no"
-                        players[id]["statustimer"] = 0
-                        players[id]["fightstarted"] = 0
-                        players[id]["timer"] = 0
-                        players[id]["fighttimer"] = 10
-                        players[id]["target"] = ''
-                        players[id]["outcome"] = ''
-                        players[id]["firstround"] = ''
-                        players[id]["goesfirst"] = ''
-                        players[id]["monster"] = ''
-                        players[id]["tp"] = 0
-                        players[id]["level"] = 0
-                        players[id]["next"] = 3000*players[id]["level"]
-                        if players[id]["next"] == 0:
-                            players[id]["next"] = 3000
-                        mud.send_message(id, "Successfully loaded: {}.\n".format(players[id]["name"]))
-                        # print serverside a player logged in
-                        print("New login")
-                        print(players[id]["name"])
-                        mud.send_message(id, motd.read())
-                        mud.send_message(id, "You are being pulled through a dimensional gateway.")
-                        mud.send_message(id, "Welcome back to NixMud, {}.".format(players[id]["name"]))
-                        #mud.send_message(id, "Have a 'look' around...")
-                        mud.send_message(id, "A lot changes here and interdimensional travel")
-                        mud.send_message(id, "is always a pain in the ass.")
-                        LookCommand()
-                        ###   This makes your unique iid work on login
-                        ###
-                        ###   WHAT THE ACTUAL FUCK!!!??? I KNOW IT WORKS BUT WTF
-                        ### if you fork our code never change this
-                        ###  you will never recover (6:44AM Dec 29 2018)
-                        ###      ........    seriously   ....  dont do it
-                        ###
-                        invlist = invendb.get_name(invdata, login[id]["name"])
-                        slotlist = []
-                        invitems = 8
-                        equiplist = []
-                        if invlist:
-                            for checkinv in invlist:
-                                for item in checkinv:
-                                    if item != players[id]["name"] and item == "Empty":
-                                        invitems -= 1
-                                    if item != players[id]["name"] and item != "Empty":
-                                        invitems -= 1
-                                        orig = item[:4]
-                                        newiid = str(orig)+str(random.randint(100,10000000000))
-                                        while newiid in allitemslist:
+                onlineplayers = []
+                for pid, pl in players.items():
+                    onlineplayers.append(players[pid]["name"])
+                if str(login[id]["name"]) in onlineplayers:
+                    mud.send_message(id, "User already online")
+                    login[id]["process"] = None
+                    login[id]["name"] = None
+                    login[id]["password"] = None
+                    ResetCommand()
+                else:
+                    if check[0] == login[id]["name"]:
+                        if check[2] == login[id]["password"]:
+                            players[id]["name"]        = check[0]
+                            players[id]["room"]        = check[1]
+                            players[id]["password"]    = check[2]
+                            players[id]["email"]       = check[3]
+                            players[id]["user"]        = check[4]
+                            players[id]["race"]        = check[5]
+                            players[id]["job"]         = check[6]
+                            players[id]["coin"]        = check[7]
+                            players[id]["ujob"]        = json.loads(check[8])
+                            players[id]["exp"]         = check[9]
+                            players[id]["ujoblevel"]   = json.loads(check[10])
+                            players[id]["status"]      = check[11]
+                          # populate players with race and class info
+                            ChangeJob(players[id]["race"], players[id]["job"])
+                            players[id]["level"] = 0
+                            players[id]["maxhp"] = players[id]["maxhp"]+((players[id]["maxhp"]*.5)*players[id]["level"])
+                            players[id]["maxmp"] = players[id]["maxmp"]+((players[id]["maxmp"]*.5)*players[id]["level"])
+                            players[id]["hp"] = players[id]["maxhp"]
+                            players[id]["mp"] = players[id]["maxmp"]
+                            players[id]["pvp"] = "no"
+                            players[id]["statustimer"] = 0
+                            players[id]["fightstarted"] = 0
+                            players[id]["timer"] = 0
+                            players[id]["fighttimer"] = 10
+                            players[id]["target"] = ''
+                            players[id]["outcome"] = ''
+                            players[id]["firstround"] = ''
+                            players[id]["goesfirst"] = ''
+                            players[id]["monster"] = ''
+                            players[id]["tp"] = 0
+                            players[id]["level"] = 0
+                            players[id]["next"] = 3000*players[id]["level"]
+                            if players[id]["next"] == 0:
+                                players[id]["next"] = 3000
+                            mud.send_message(id, "Successfully loaded: {}.\n".format(players[id]["name"]))
+                            # print serverside a player logged in
+                            print("New login")
+                            print(players[id]["name"])
+                            mud.send_message(id, motd.read())
+                            mud.send_message(id, "You are being pulled through a dimensional gateway.")
+                            mud.send_message(id, "Welcome back to NixMud, {}.".format(players[id]["name"]))
+                            #mud.send_message(id, "Have a 'look' around...")
+                            mud.send_message(id, "A lot changes here and interdimensional travel")
+                            mud.send_message(id, "is always a pain in the ass.")
+                            LookCommand()
+                            ###   This makes your unique iid work on login
+                            ###
+                            ###   WHAT THE ACTUAL FUCK!!!??? I KNOW IT WORKS BUT WTF
+                            ### if you fork our code never change this
+                            ###  you will never recover (6:44AM Dec 29 2018)
+                            ###      ........    seriously   ....  dont do it
+                            ###
+                            invlist = invendb.get_name(invdata, login[id]["name"])
+                            slotlist = []
+                            invitems = 8
+                            equiplist = []
+                            if invlist:
+                                for checkinv in invlist:
+                                    for item in checkinv:
+                                        if item != players[id]["name"] and item == "Empty":
+                                            invitems -= 1
+                                        if item != players[id]["name"] and item != "Empty":
+                                            invitems -= 1
+                                            orig = item[:4]
                                             newiid = str(orig)+str(random.randint(100,10000000000))
-                                        Items(newiid ,Items.allitems[orig].name, Items.allitems[orig].desc, players[id]["name"], Items.allitems[orig].type, Items.allitems[orig].eqtype, Items.allitems[orig].invdesc, Items.allitems[orig].bp, Items.allitems[orig].bpsize, Items.allitems[orig].eqstata, Items.allitems[orig].eqstatb, Items.allitems[orig].eqsvala, Items.allitems[orig].eqsvalb, Items.allitems[orig].sellval)
-                                        allitemslist.append(Items.allitems[str(newiid)].iid)
-                                        if invitems >0:
-                                            slotlist.append(Items.allitems[str(newiid)].iid)
-                                        else:
-                                            equiplist.append(Items.allitems[str(newiid)].iid)
-                        slotsfilled = int(0)-int(len(slotlist))
-                        totalslots = int(8)+int(slotsfilled)
-                        fillslots = 1
-                        while fillslots == 1:
-                            iteminlist = str(int(slotsfilled)+int(len(slotlist))+int(1))
-                            if len(slotlist) != int(iteminlist)-int(1):
-                                print("yay i filled slot"+iteminlist+" your majesty")
-                                players[id]["inventoryslot"]["slot"+iteminlist] = slotlist[int(int(iteminlist)-int(1))]
-                            if len(slotlist) == int(iteminlist)-int(1):
-                                while totalslots != 0:
-                                    players[id]["inventoryslot"]["slot"+iteminlist  ] = "Empty"
-                                    totalslots -= 1
-                            if slotsfilled == 0:
-                                fillslots = 0
-                            slotsfilled += 1
-                        players[id]["inventoryused"] = len(slotlist)
-                        for equipitem in equiplist:
-                            players[id][str(Items.allitems[str(equipitem)].eqtype)] = equipitem
-                        login[id]["process"] = "done"
-                if check[0] != login[id]["name"]:
-                    login[id]["name"] = None
-                    login[id]["password"] = None
-                    login[id]["process"] = None
-                if check[2] != login[id]["password"]:
-                    mud.send_message(id, "Bad password.")
-                    Login()
-                    login[id]["name"] = None
-                    login[id]["password"] = None
-                    login[id]["process"] = None
+                                            while newiid in allitemslist:
+                                                newiid = str(orig)+str(random.randint(100,10000000000))
+                                            Items(newiid ,Items.allitems[orig].name, Items.allitems[orig].desc, players[id]["name"], Items.allitems[orig].type, Items.allitems[orig].eqtype, Items.allitems[orig].invdesc, Items.allitems[orig].bp, Items.allitems[orig].bpsize, Items.allitems[orig].eqstata, Items.allitems[orig].eqstatb, Items.allitems[orig].eqsvala, Items.allitems[orig].eqsvalb, Items.allitems[orig].sellval)
+                                            allitemslist.append(Items.allitems[str(newiid)].iid)
+                                            if invitems >0:
+                                                slotlist.append(Items.allitems[str(newiid)].iid)
+                                            else:
+                                                equiplist.append(Items.allitems[str(newiid)].iid)
+                            slotsfilled = int(0)-int(len(slotlist))
+                            totalslots = int(8)+int(slotsfilled)
+                            fillslots = 1
+                            while fillslots == 1:
+                                iteminlist = str(int(slotsfilled)+int(len(slotlist))+int(1))
+                                if len(slotlist) != int(iteminlist)-int(1):
+                                    print("yay i filled slot"+iteminlist+" your majesty")
+                                    players[id]["inventoryslot"]["slot"+iteminlist] = slotlist[int(int(iteminlist)-int(1))]
+                                if len(slotlist) == int(iteminlist)-int(1):
+                                    while totalslots != 0:
+                                        players[id]["inventoryslot"]["slot"+iteminlist  ] = "Empty"
+                                        totalslots -= 1
+                                if slotsfilled == 0:
+                                    fillslots = 0
+                                slotsfilled += 1
+                            players[id]["inventoryused"] = len(slotlist)
+                            for equipitem in equiplist:
+                                players[id][str(Items.allitems[str(equipitem)].eqtype)] = equipitem
+                            login[id]["process"] = "done"
+                    if check[0] != login[id]["name"]:
+                        login[id]["name"] = None
+                        login[id]["password"] = None
+                        login[id]["process"] = None
+                    if check[2] != login[id]["password"]:
+                        mud.send_message(id, "Bad password.")
+                        Login()
+                        login[id]["name"] = None
+                        login[id]["password"] = None
+                        login[id]["process"] = None
                     ### end of dont touch this section
 def SetjobCommand():
 #prints available jobs
@@ -1354,6 +1384,66 @@ def StartDoorTimers():
                     if players[pid]["room"] == Doors.doors[door].map:
                         mud.send_message(pid, "A clown pokes his head into the room , then slams the door")
         Doors.doors[door].gotopened += 1
+
+def StartCreatureTimers():
+    creaturemoved = 0
+    for creature in creaturelist:
+        if Creatures.creatures[creature].corp == "yes":
+            if int(Creatures.creatures[creature].ccnt) > int(Creatures.creatures[creature].ctmr):
+                if Creatures.creatures[creature].spwn == "0" or Creatures.creatures[creature].spwn == 0: ## just died
+                    Creatures.creatures[creature].spwn = 2 ##got despawned
+                    Creatures.creatures[creature].ccnt = 0
+                    Creatures.creatures[creature].diedin = Creatures.creatures[creature].room
+                    Creatures.creatures[creature].room = ''
+                elif Creatures.creatures[creature].spwn == 2: ## if despawned
+                    Creatures.creatures[creature].spwn = 1 ## waiting respawn
+                    Creatures.creatures[creature].ccnt = 0
+                elif Creatures.creatures[creature].spwn == 1:
+                    Creatures.creatures[creature].spwn = 0  #respawns
+                    Creatures.creatures[creature].ccnt = 0
+                    Creatures.creatures[creature].room = Creatures.creatures[creature].diedin
+                    Creatures.creatures[creature].corp = "no"
+                    for cid in credb.keys():
+                        if cid == Creatures.creatures[creature].name:
+                            for stat in credb[cid]:
+                                value = str(json.dumps(credb[cid][stat])).replace('"', '')
+                                if stat == "desc":
+                                    Creatures.creatures[creature].desc = value
+                                if stat == "life":
+                                    Creatures.creatures[creature].life = value
+                    for pid, pl in players.items():
+                        if players[pid]["room"] == Creatures.creatures[creature].room:
+                                mud.send_message(pid, "A "+Creatures.creatures[creature].name+" appears in the room")
+
+
+            Creatures.creatures[creature].ccnt = int(Creatures.creatures[creature].ccnt)+1
+
+        if Creatures.creatures[creature].moves == "yes" and Creatures.creatures[creature].corp == "no":
+            if int(Creatures.creatures[creature].mcnt) >= int(Creatures.creatures[creature].cmtr):
+                creaturemoved = 1
+                choices = []
+                for room in rooms:
+                    if room == Creatures.creatures[creature].room:
+                        for a in [rooms[room]]:
+                            for x in a:
+                                if x == "exits":
+                                    for y in rooms[room][x]:
+                                        if y != '':
+                                            for z in [rooms[room][x][y]]:
+                                                choices.append(z)
+                if choices:
+                    for pid, pl in players.items():
+                        if players[pid]["room"] == Creatures.creatures[creature].room:
+                            mud.send_message(pid, "A "+Creatures.creatures[creature].name+" left the room")
+                    Creatures.creatures[creature].room = choices[int(random.randint(0, len(choices)-1))]
+                    for pid, pl in players.items():
+                        if players[pid]["room"] == Creatures.creatures[creature].room:
+                            mud.send_message(pid, "A "+Creatures.creatures[creature].name+" wanders into the room")
+
+                Creatures.creatures[creature].mcnt = 0
+
+            Creatures.creatures[creature].mcnt = int(Creatures.creatures[creature].mcnt)+1
+
 
 def NewjobCommand():
     if playerprocess[id]["selection"] == None:
@@ -1753,6 +1843,14 @@ def CheckSkill(sk):
                 skillinfo.append(statie)
     return skillinfo
 
+def EmoteCommand(emotion):
+    for pid, pl in players.items():
+        if players[pid]["room"] == players[id]["room"]:
+            if emotion == "dance":
+                mud.send_message(pid, players[id]["name"]+" twerks")
+            else:
+                mud.send_message(pid, players[id]["name"]+" is feeling "+emotion)
+
 def SkillCommand():
     text = str(params).split(' ')
     skkll = CheckSkill(text[0])
@@ -1869,6 +1967,8 @@ def FightCommand():
                 mud.send_message(id, Creatures.creatures[players[id]["monster"]].name+" flicks you away like a bug, you sore through the air and land as a bloody mess on the floor")
                 players[id]["hp"] = players[id]["hp"] - players[id]["hp"]
             else:
+                ## add code here to make monster not move during fight
+                Creatures.creatures[players[id]["monster"]].moves = "no"
                 if int(Creatures.creatures[players[id]["monster"]].cdef) >= int(players[id]["dex"]):
                     players[id]["goesfirst"] = players[id]["monster"]
                 if int(Creatures.creatures[players[id]["monster"]].cdef) < int(players[id]["dex"]):
@@ -1945,7 +2045,7 @@ def kung_fu_fighting(monster):
             dmg = 0
             mud.send_message(id, "You suck, you need to train more, you missed the "+str(Creatures.creatures[monster].name))
         else:
-            mud.send_message(id, "You hit the "+str(monster)+", dealing "+str(dmg)+" damage")
+            mud.send_message(id, "You hit the "+str(Creatures.creatures[monster].name)+", dealing "+str(dmg)+" damage")
             players[id]["exp"] += 3*int(Creatures.creatures[monster].life)
         Creatures.creatures[monster].life = int(Creatures.creatures[monster].life) - int(dmg)
 
@@ -2063,9 +2163,9 @@ while True:
                 newcnid = str("corp")+str(random.randint(100,10000000000))
                 monmon = Creatures.creatures[players[id]["monster"]].name
                 Creatures.creatures[players[id]["monster"]].corp = "yes"
+                Creatures.creatures[players[id]["monster"]].moves = "yes"
                 mud.send_message(id, "The monster drops a: "+Creatures.creatures[players[id]["monster"]].drops)
                 Creatures.creatures[players[id]["monster"]].desc = "The corpse of a "+Creatures.creatures[players[id]["monster"]].name+" is laying here"
-                Creatures.creatures[players[id]["monster"]].moves = "no"
                 players[id]["fightstarted"] = 0
                 players[id]["outcome"] = ''
                 players[id]["monster"] = ''
@@ -2075,12 +2175,21 @@ while True:
                 pass
     except:
         pass
+    StartCreatureTimers()
     StartDoorTimers()
     # go through any new commands sent from players
     for id, command, params in mud.get_commands():
         if players[id]["exp"] >= players[id]["next"]:
             Levelup()
 
+        try:
+            players[id]["hp"] = int(round(players[id]["hp"]))
+            players[id]["mp"] = int(round(players[id]["mp"]))
+            players[id]["maxhp"] = int(round(players[id]["maxhp"]))
+            players[id]["maxmp"] = int(round(players[id]["maxmp"]))
+
+        except:
+            pass
 # if for any reason the player isn't in the player map, skip them and
 # move on to the next one
 # move the above comments down
@@ -2186,6 +2295,9 @@ while True:
         elif command == "setjob":
              SetjobCommand()
 
+        elif command == "emote":
+            emotion = params.split(' ')
+            EmoteCommand(emotion[0])
         # save command
         elif command == 'save':
             SaveCommand()
@@ -2211,8 +2323,11 @@ while True:
         # outputs a message to all users in game
         # useful during server maintenace to warn players to save.
         elif command == "gm":
-            mud.send_message(id, "Your user is set to GM mode")
-            players[id]["user"] = "GM"
+            if players[id]["name"] in adminlist:
+                mud.send_message(id, "Your user is set to GM mode")
+                players[id]["user"] = "GM"
+            else:
+                mud.send_message(id, "This is not a valid command '{}', silly dumb dumb.".format(command))
 
         elif command == "global":
             for pid, pl in players.items():
