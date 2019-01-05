@@ -20,7 +20,7 @@
         "ctmr": 5,
         "corp": "no"
      },
-    
+
     "monkey": {
         "cid": "monkey",
         "room": {
@@ -59,14 +59,7 @@
         "clfe": 16,
         "life": 16,
         "moves": "no",
-        "drops": {
-           "slot1":"pig_foot",
-           "slot2":"Empty",
-           "slot3":"Empty",
-           "slot4":"Empty",
-           "slot5":"Empty",
-           "slot6":"Empty"        
-        },
+        "drops": "pig_foot",       
         "cspc": "bind",
         "csnm": "web",
         "ctmr": 5,
@@ -88,18 +81,10 @@
         "clfe": 10,
         "life": 10,
         "moves": "yes",
-        "drops": {
-            "slot1":"rat_tail",
-            "slot2":"Empty",
-            "slot3":"Empty",
-            "slot4":"Empty",
-            "slot5":"Empty",
-            "slot6":"Empty"
-        },
+        "drops": "rat_tail",
         "cspc": "none",
         "csnm": "none",
         "ctmr": 3,
         "corp": "no"
     }
 }
-

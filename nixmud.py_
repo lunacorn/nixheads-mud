@@ -285,7 +285,6 @@ class Doors(object):
 class Containers(object):
     containers = {}
     def __init__(self, cnid, cnname, cnmap, cnstatus, cnlock, slots, lockname):
-
         self.cnid = cnid
         self.name = cnname
         self.map  = cnmap
