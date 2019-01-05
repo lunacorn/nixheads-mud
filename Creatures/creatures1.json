@@ -2,8 +2,13 @@
     "spider": {
         "cid": "spider",
         "room": {
-            "Dungeon1": 0,
-            "Dungeon2": 0
+            "Dungeon1": 1,
+            "Dungeon2": 2,
+            "Dungeon4": 6,
+            "Dungeon6": 2,
+            "Dungeon9": 2,
+            "Dungeon12": 2,
+            "Dungeon13": 5
              },
         "name": "spider",
         "desc": "A spider sits quietly in her web.",
@@ -25,8 +30,31 @@
         "diedin": "0",
         "corp": "no"
      },
+     "matriarch":{
+         "cid": "matriarch_spider",
+         "room":{
+             "Dungeon4": 1
+         },
+         "name":"matriarch_spider",
+         "desc": "The matriarch_spider hangs in her web with her young",
+         "clvl": 3,
+         "cstr": 16,
+         "cdmg": 0.14,
+         "cdef": 18,
+         "clfe": 20,
+         "life": 20,
+         "moves": "no",
+         "drops": "web_covered_boots",
+         "cspc": "bind",
+         "csnm": "web",
+         "ctmr": 70,
+         "spwn": 0,
+         "mcnt": 0,
+         "diedin": "0",
+         "corp": "no"
 
-    "monkey": {
+     },
+     "monkey": {
         "cid": "monkey",
         "room": {
             "Dungeon1": 1,
@@ -42,8 +70,8 @@
         "life": 12,
         "moves": "yes",
         "drops": "monkey_paw",
-        "cspc": "bind",
-        "csnm": "web",
+        "cspc": "none",
+        "csnm": "none",
         "ctmr": 60,
         "ccnt": 0,
         "cmtr": 60,
@@ -70,8 +98,35 @@
         "life": 16,
         "moves": "no",
         "drops": "pig_foot",
-        "cspc": "bind",
-        "csnm": "web",
+        "cspc": "none",
+        "csnm": "none",
+        "ctmr": 60,
+        "ccnt": 0,
+        "cmtr": 60,
+        "spwn": 0,
+        "mcnt": 0,
+        "diedin": "0",
+        "corp": "no"
+    },
+    "centipede": {
+        "cid": "centi",
+        "room": {
+            "Dungeon13": 5,
+            "Dungeon2": 0,
+            "Dungeon3": 0
+             },
+        "name": "centipede",
+        "desc": "A centipede moves about the room.",
+        "clvl": 4,
+        "cstr": 25,
+        "cdmg": 1,
+        "cdef": 18,
+        "clfe": 25,
+        "life": 25,
+        "moves": "no",
+        "drops": "venom_sack",
+        "cspc": "none",
+        "csnm": "none",
         "ctmr": 60,
         "ccnt": 0,
         "cmtr": 60,
@@ -85,7 +140,10 @@
         "cid": "rat",
         "room": {
             "Dungeon1": 1,
-            "Dungeon2": 0
+            "Dungeon2": 0,
+            "Dungeon5": 4,
+            "Dungeon11": 4,
+            "Dungeon19":3
              },
         "name": "rat",
         "desc": "a rat scuttles around the room.",
