@@ -209,7 +209,7 @@ import random
 from mudserver import MudServer
 
 
-
+adminlist = ["zalgo", "luna"]
 #sys.setrecursionlimit()
 ### create a class to map all the creatures into
 ### saving space and effort adding in all creatures
@@ -2298,8 +2298,11 @@ while True:
         # outputs a message to all users in game
         # useful during server maintenace to warn players to save.
         elif command == "gm":
-            mud.send_message(id, "Your user is set to GM mode")
-            players[id]["user"] = "GM"
+            if players[id]["name"] in adminlist:
+                mud.send_message(id, "Your user is set to GM mode")
+                players[id]["user"] = "GM"
+            else:
+                mud.send_message(id, "This is not a valid command '{}', silly dumb dumb.".format(command))
 
         elif command == "global":
             for pid, pl in players.items():
