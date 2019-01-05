@@ -2164,6 +2164,10 @@ while True:
         if players[id]["exp"] >= players[id]["next"]:
             Levelup()
 
+        try:
+            players[id]["hp"] = int(round(players[id]["hp"]))
+        except:
+            pass
 # if for any reason the player isn't in the player map, skip them and
 # move on to the next one
 # move the above comments down
