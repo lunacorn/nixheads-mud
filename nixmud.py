@@ -799,8 +799,8 @@ def GrabCommand():
     text = str(params.lower()).split(' ')
     item = ItemsCheckRoom(players[id]["room"]) # takes all items in current room
     cont = ContainersCheckRoom(players[id]["room"])
+    mob = CreatureCheckRoom(players[id]["room"])
     x = 1
-    print(cont)
     for c in cont:
         if gotitem == 0:
             try:
@@ -813,21 +813,17 @@ def GrabCommand():
                                         for s in [players[id]["inventoryslot"][x]]: ##extra [] for stoping s being char by char
                                             if s == "Empty":
                                                 if gotitem == 0:
-                                                    print("pickup bucket")
                                                     orig = z[:4]
-                                                    print(Containers.containers[c].slots[y])
                                                     newiid = orig+str(random.randint(100,10000000000))
                                                     while newiid in allitemslist:
                                                         newiid = orig+str(random.randint(100,10000000000))
                                                     allitemslist.append(newiid)
                                                     Items(newiid ,Items.allitems[orig].name, Items.allitems[orig].desc, players[id]["name"], Items.allitems[orig].type, Items.allitems[orig].eqtype, Items.allitems[orig].invdesc,            Items.allitems[orig].bp, Items.allitems[orig].bpsize, Items.allitems[orig].eqstata, Items.allitems[orig].eqstatb, Items.allitems[orig].eqsvala, Items.allitems[orig].eqsvalb,Items.allitems[orig].sellval)
                                                     Containers.containers[c].slots[y] = "Empty"
-                                                    print(Containers.containers[c].slots)
                                                     mud.send_message(id, "You pick up the "+str(Items.allitems[z].name))
                                                     players[id]["inventoryslot"][x] = str(Items.allitems[z].iid)
                                                     players[id]["inventoryused"] += 1
                                                     gotitem = 1
-                                                    print(gotitem)
                                                     break
 
                                 else:
@@ -837,6 +833,31 @@ def GrabCommand():
             except:
                 pass
 
+    for m in mob:
+        if gotitem == 0:
+            try:
+                if text[1] == Creatures.creatures[m].name and Creatures.creatures[m].corp == "yes":
+                    for z in allitemslist:
+                        if text[0] == Items.allitems[z].name and Creatures.creatures[m].drops == text[0]:
+                            if players[id]["inventoryspace"] > players[id]["inventoryused"]:
+                                for x in players[id]["inventoryslot"]:
+                                    for s in [players[id]["inventoryslot"][x]]: ##extra [] for stoping s being char by char
+                                        if s == "Empty":
+                                            if gotitem == 0:
+                                                orig = z[:4]
+                                                newiid = orig+str(random.randint(100,10000000000))
+                                                while newiid in allitemslist:
+                                                     newiid = orig+str(random.randint(100,10000000000))
+                                                allitemslist.append(newiid)
+                                                Items(newiid ,Items.allitems[orig].name, Items.allitems[orig].desc, players[id]["name"], Items.allitems[orig].type, Items.allitems[orig].eqtype, Items.allitems[orig].invdesc, Items.allitems[orig].bp, Items.allitems[orig].bpsize, Items.allitems[orig].eqstata, Items.allitems[orig].eqstatb, Items.allitems[orig].eqsvala, Items.allitems[orig].eqsvalb,Items.allitems[orig].sellval)
+                                                Creatures.creatures[m].drops = "Empty"
+                                                mud.send_message(id, "You pick up the "+str(Items.allitems[z].name))
+                                                players[id]["inventoryslot"][x] = str(Items.allitems[z].iid)
+                                                players[id]["inventoryused"] += 1
+                                                gotitem = 1
+                                                break
+            except:
+                pass
     for i in item:
         if gotitem == 0:
             if params.lower() == Items.allitems[i].name:
@@ -2043,13 +2064,8 @@ while True:
                 mud.send_message(id, "you killed "+Creatures.creatures[players[id]["monster"]].name)
                 newcnid = str("corp")+str(random.randint(100,10000000000))
                 monmon = Creatures.creatures[players[id]["monster"]].name
-                #myloot = {"x","x","x","x","x","x"}
-                loot = Creatures.creatures[players[id]["monster"]].drops
-                print(loot)
-                Containers(newcnid, monmon, players[id]["room"], "no", "open", loot , "nobody")
-                print(containerlist)
                 Creatures.creatures[players[id]["monster"]].corp = "yes"
-                Creatures.creatures[players[id]["monster"]].name = "dead "+Creatures.creatures[players[id]["monster"]].name
+                mud.send_message(id, "The monster drops a: "+Creatures.creatures[players[id]["monster"]].drops)
                 Creatures.creatures[players[id]["monster"]].desc = "The corpse of a "+Creatures.creatures[players[id]["monster"]].name+" is laying here"
                 Creatures.creatures[players[id]["monster"]].moves = "no"
                 players[id]["fightstarted"] = 0
