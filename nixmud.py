@@ -1439,10 +1439,13 @@ def StartCreatureTimers():
                                             for z in [rooms[room][x][y]]:
                                                 choices.append(z)
                 if choices:
+                    for pid, pl in players.items():
+                        if players[pid]["room"] == Creatures.creatures[creature].room:
+                            mud.send_message(pid, "A "+Creatures.creatures[creature].name+" left the room")
                     Creatures.creatures[creature].room = choices[int(random.randint(0, len(choices)-1))]
                     for pid, pl in players.items():
                         if players[pid]["room"] == Creatures.creatures[creature].room:
-                               mud.send_message(pid, "A "+Creatures.creatures[creature].name+" wanders into the room")
+                            mud.send_message(pid, "A "+Creatures.creatures[creature].name+" wanders into the room")
 
                 Creatures.creatures[creature].mcnt = 0
 
@@ -1846,6 +1849,14 @@ def CheckSkill(sk):
                 statie = str(json.dumps(fun["corevalues"]["skills"][skill][stat])).replace('"', '')
                 skillinfo.append(statie)
     return skillinfo
+
+def EmoteCommand(emotion):
+    for pid, pl in players.items():
+        if players[pid]["room"] == players[id]["room"]:
+            if emotion == "dance":
+                mud.send_message(pid, players[id]["name"]+" twerks")
+            else:
+                mud.send_message(pid, players[id]["name"]+" is feeling "+emotion)
 
 def SkillCommand():
     text = str(params).split(' ')
@@ -2288,6 +2299,9 @@ while True:
         elif command == "setjob":
              SetjobCommand()
 
+        elif command == "emote":
+            emotion = params.split(' ')
+            EmoteCommand(emotion[0])
         # save command
         elif command == 'save':
             SaveCommand()
