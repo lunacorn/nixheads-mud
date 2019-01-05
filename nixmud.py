@@ -1404,7 +1404,7 @@ def StartCreatureTimers():
 
             Creatures.creatures[creature].ccnt = int(Creatures.creatures[creature].ccnt)+1
 
-        if Creatures.creatures[creature].moves == "yes":
+        if Creatures.creatures[creature].moves == "yes" and Creatures.creatures[creature].corp == "no":
             if int(Creatures.creatures[creature].mcnt) >= int(Creatures.creatures[creature].cmtr):
                 creaturemoved = 1
                 choices = []
