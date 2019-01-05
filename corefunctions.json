@@ -329,7 +329,7 @@
                   "sword": "kick"
                        },
             "containers": {
-                "bucket1":{
+                "bucko":{
                       "name": "bucket",
                       "room": "Dungeon1",
                       "status": "open",
@@ -342,9 +342,10 @@
                             "slot4": "Empty",
                             "slot5": "Empty",
                             "slot6": "Empty"
-                             }
+                          },
+                        "timer": 6000
                         },
-                    "cluster1":{
+                    "clusto":{
                         "name":"cluster",
                         "room": "Dungeon4",
                         "status": "open",
@@ -357,9 +358,10 @@
                             "slot4": "wooden_cane",
                             "slot5": "hemp_gloves",
                             "slot6": "hemp_coif"
-                        }
+                        },
+                        "timer": 6000
                       },
-                      "cupboards1":{
+                      "cupbo":{
                         "name": "cupboards",
                         "room": "Dungeon9",
                         "status": "open",
@@ -372,11 +374,12 @@
                             "slot4": "honey",
                             "slot5": "Empty",
                             "slot6": "Empty"
-                                 }
+                          },
+                          "timer":6000
                                },
-                        "cupboards1":{
-                            "name": "cupboards",
-                            "room": "Dungeon9",
+                        "cheso":{
+                            "name": "chest",
+                            "room": "Dungeon15",
                             "status": "open",
                             "locked": "no",
                             "lockname": "nobody",
@@ -387,7 +390,8 @@
                                 "slot4": "Empty",
                                 "slot5": "Empty",
                                 "slot6": "Empty"
-                                    }
+                              },
+                              "timer":6000
                                 }
                       },
                 "stats":{
