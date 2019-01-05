@@ -110,19 +110,6 @@
                   "sword": "kick"
                        },
             "containers": {
-                "corpse": {
-                      "name": "corpse",
-                      "room": "None",
-                      "status": "open",
-                      "locked": "no",
-                      "lockname": "none",
-                      "slota": "Empty",
-                      "slotb": "Empty",
-                      "slotc": "Empty",
-                      "slotd": "Empty",
-                      "slote": "Empty",
-                      "slotf": "Empty"
-                },
                 "bucket1":{
                       "name": "bucket",
                       "room": "Dungeon1",
@@ -137,7 +124,6 @@
                             "slot5": "Empty",
                             "slot6": "Empty"
                              }   
-
                         }
                       },
                 "stats":{
@@ -198,7 +184,6 @@
                               },
                     "skills": {
 
-
                               }
                             },
                 "thief": {
@@ -258,7 +243,6 @@
                     "status": "heal",
                     "cost": 3,
                     "job": "whitemage"
-
 
                              },
                 "fire":{
