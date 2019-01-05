@@ -1031,71 +1031,26 @@ def SheetCommand():
     ## luna # i want to add some math to this as well to structure it based on line length
     # add unlocked jobs (ujobs) spells and skills
     sheetframe = 70
-    mud.send_message(id, ":"*sheetframe)
-    mud.send_message(id, ":"*sheetframe)
-    mud.send_message(id, ":"*sheetframe)
-    mud.send_message(id, ":"*23+"CHARACTER SHEET"+":"*int(sheetframe-23-len("CHARACTER SHEET")))
-    mud.send_message(id, ":"*sheetframe)
-    mud.send_message(id, ":"*sheetframe)
-    lengthtosend = sheetframe-3-8-8-len(str(players[id]["name"]+players[id]["race"]+str(players[id]["level"])))-len("Name:   Race:   Level:    ")
-    mud.send_message(id, "{}Name: {}  {}Race: {}  {}Level: {}   {}".format(":"*3,players[id]["name"],":"*8,players[id]["race"],":"*8,players[id]["level"],":"*lengthtosend))
-    mud.send_message(id, ":"*sheetframe)
-    lengthtosend = sheetframe-int(len("HP:    MAX HP:    MP:    MAX MP:    "))-2-4-4-5-int(len(str(players[id]["maxmp"])+str(players[id]["mp"])+str(players[id]["hp"])+str(players[id]["maxhp"])))
-    mud.send_message(id, "{}HP: {}   {}MAX HP: {}   {}MP: {}   {}MAX MP: {}   {}".format(":"*2,players[id]["hp"],":"*4,players[id]["maxhp"],":"*4,players[id]["mp"],":"*5,players[id]["maxmp"],":"*lengthtosend))
-    mud.send_message(id, ":"*sheetframe)
-    mud.send_message(id, ":"*22+" Character Stats "+":"*int(sheetframe-22-int(len(" Character Stats "))))
-    mud.send_message(id, ":"*sheetframe)
-    lengthtosend = sheetframe-10-int(len(str(players[id]["str"]+players[id]["dex"]+players[id]["vit"]+players[id]["int"]+players[id]["mnd"]+players[id]["cha"])+str("STR: DEX: VIT: INT: MND: CHA: ")))-2-2-2-2-4-2
-    mud.send_message(id, "{}STR:{} {}DEX:{} {}VIT:{} {}INT:{} {}MND:{} {}CHA:{} {}".format(":"*2,players[id]["str"],":"*2,players[id]["dex"],":"*2,players[id]["vit"],":"*2,players[id]["int"],":"*4,players[id]["mnd"],":"*2,players[id]["cha"],":"*lengthtosend))
-    mud.send_message(id, ":"*sheetframe)
-    #if players[id]["next"] - players[id]["exp"] > 100:
-    #    bob = players[id]["next"]-players[id]["exp"]
-    #    mud.send_message(id, "{}Crit. Chance{} {}% {}Coin{} {} {}TNL{} {} {}".format(":"*2,":"*3,players[id]["crit"],":"*3,":"*3,players[id]["coin"],":"*5,":"*3,str(bob)[3:]+"K",":"*6))
-    #else:
-    lengthtosend = int(sheetframe-int(len("Crit Chance  Coin  TNL  "))-int(len(str(players[id]["next"])+str(players[id]["exp"])+str(players[id]["crit"])+str(players[id]["coin"])))-2-3-3-3-5-3)
-    mud.send_message(id, "{}Crit. Chance{} {}% {}Coin{} {} {}TNL{} {} {}".format(":"*2,":"*3,players[id]["crit"],":"*3,":"*3,players[id]["coin"],":"*5,":"*3,players[id]["next"]-players[id]["exp"],":"*lengthtosend))
-    mud.send_message(id, ":"*sheetframe)
-    mud.send_message(id, "::Spells"+":"*int(sheetframe-int(len("::Spells"))))
-    mud.send_message(id, ":"*sheetframe)
+    lines = [
+    str(":"*sheetframe), str(":"*sheetframe), str(":"*sheetframe), str(":"*23+"CHARACTER SHEET"+":"*sheetframe), str(":"*sheetframe), str(":"*sheetframe),
+    str(":"*3+"Name: "+str(players[id]["name"]+"  Race: "+players[id]["race"]+"  Level: "+str(players[id]["level"]))+str(":"*sheetframe)), str(":"*sheetframe),
+    str(":"*2+"HP: "+str(players[id]["hp"])+"  Max HP: "+str(players[id]["maxhp"])+"  MP: "+str(players[id]["mp"])+"  Max MP: "+str(players[id]["maxhp"])+":"*sheetframe),
+    str(":"*sheetframe), str(":"*22+" Character Stats "+":"*sheetframe), str(":"*sheetframe),
+    str(":"*2+"STR: "+str(players[id]["str"])+":"*2+"DEX: "+str(players[id]["dex"])+":"*2+"VIT: "+str(players[id]["vit"])+":"*2+"INT: "+str(players[id]["int"])+":"*4+"MND: "+str(players[id]["mnd"])+":"*2+"CHA: "+str(players[id]["cha"])+":"*sheetframe),
+    str(":"*sheetframe), str(":"*2+"Crit. Chance"+":"*3+str(players[id]["crit"])+"% "+":"*3+"Coin "+str(players[id]["coin"])+":"*5+"TNL "+":"*3+str(players[id]["exp"])+"/"+str(players[id]["next"])+":"*sheetframe),
+    str(":"*sheetframe), str("::Spells"+":"*sheetframe), str(":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe),
+    str(":"*sheetframe), str("::Skills"+":"*sheetframe), str(":"*sheetframe),
+    str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe),
+    str(":"*sheetframe), str("::User Rank"+":"*9+"Current Job"+":"*6+"PVP Status"+":"*4+"TP"+":"*sheetframe),
+    str(":: "+str((players[id]["user"])+"     :::::::: "+str(players[id]["job"])+" ::::::: "+str(players[id]["pvp"])+" :::::::: "+str(players[id]["tp"])+" "+":"*sheetframe)), str(":"*sheetframe),
+    str("::Unlocked Jobs"+":"*sheetframe), str(":::warrior:"+str(players[id]["ujob"]["warrior"])+":whitemage:"+str(players[id]["ujob"]["whitemage"])+"::thief:"+str(players[id]["ujob"]["thief"])+":indecisive:"+str(players[id]["ujob"]["indecisive"])+"::bard:"+str(players[id]["ujob"]["bard"])+":"*sheetframe),
+    str(":"*sheetframe), str( ":::blackmage:"+str(players[id]["ujob"]["blackmage"])+"::samurai:"+str(players[id]["ujob"]["samurai"])+"::ninja:"+str(players[id]["ujob"]["ninja"])+"::bartender:"+str(players[id]["ujob"]["bartender"])+"::mog:"+str(players[id]["ujob"]["mog"])+":"*sheetframe),
+    str(":"*sheetframe), str(":::linecook:"+str(players[id]["ujob"]["linecook"])+"::inventor:"+str(players[id]["ujob"]["inventor"])+"::landscaper:"+str(players[id]["ujob"]["landscaper"])+"::druid:"+str(players[id]["ujob"]["druid"])+"::witch:"+str(players[id]["ujob"]["witch"])+":"*sheetframe),
+    str(":"*sheetframe), str(":"*sheetframe), str(":"*sheetframe)
+    ]
 
-    #mud.send_message(id, "::{}".format([fun["corevalues"]["jobs"][players[id]["job"]]["spells"][str(players[id]["level"]).replace("'spell'"," ")]]))
-    mud.send_message(id, "::"+" "*int(sheetframe-int(len("::::")))+"::")
-    mud.send_message(id, "::"+" "*int(sheetframe-int(len("::::")))+"::")
-    mud.send_message(id, "::"+" "*int(sheetframe-int(len("::::")))+"::")
-    mud.send_message(id, "::"+" "*int(sheetframe-int(len("::::")))+"::")
-    mud.send_message(id, "::"+" "*int(sheetframe-int(len("::::")))+"::")
-    mud.send_message(id, "::"+" "*int(sheetframe-int(len("::::")))+"::")
-    mud.send_message(id, ":"*sheetframe)
-    mud.send_message(id, "::Skills"+":"*int(sheetframe-int(len("::Skills"))))
-    mud.send_message(id, ":"*sheetframe)
-    #mud.send_message(id, "::{}".format([fun["corevalues"]["jobs"][players[id]["job"]]["skills"][str(players[id]["level"]).replace("'spell'"," ")]]))
-    mud.send_message(id, "::"+" "*int(sheetframe-int(len("::::")))+"::")
-    mud.send_message(id, "::"+" "*int(sheetframe-int(len("::::")))+"::")
-    mud.send_message(id, "::"+" "*int(sheetframe-int(len("::::")))+"::")
-    mud.send_message(id, "::"+" "*int(sheetframe-int(len("::::")))+"::")
-    mud.send_message(id, "::"+" "*int(sheetframe-int(len("::::")))+"::")
-    mud.send_message(id, "::"+" "*int(sheetframe-int(len("::::")))+"::")
-    mud.send_message(id, "::"+" "*int(sheetframe-int(len("::::")))+"::")
-    mud.send_message(id, ":"*sheetframe)
-    lengthtosend = int(sheetframe-9-6-4-int(len("::User RankCurrent JobPVP StatusTP")))
-    mud.send_message(id, "::User Rank"+":"*9+"Current Job"+":"*6+"PVP Status"+":"*4+"TP"+":"*lengthtosend)
-    lengthtosend = sheetframe-int(len(":: ")+len("     ::::::::  :::::::  ::::::::  ")+len(str(players[id]["user"])+str(players[id]["job"])+str(players[id]["pvp"])+str(players[id]["tp"])))
-    mud.send_message(id, ":: {}".format(players[id]["user"]) + "     :::::::: {} ::::::: {} :::::::: {} {}".format(players[id]["job"],players[id]["pvp"],players[id]["tp"],":"*lengthtosend))
-    mud.send_message(id, ":"*sheetframe)
-    mud.send_message(id, "::Unlocked Jobs"+":"*int(sheetframe-int(len("::Unlocked Jobs"))))
-
-    lengthtosend = sheetframe-int(len(":::warrior:::whitemage:::thief:::indecisive:::bard:"))-int(len(str(players[id]["ujob"]["warrior"]+players[id]["ujob"]["whitemage"]+players[id]["ujob"]["thief"]+players[id]["ujob"]["indecisive"]+players[id]["ujob"]["bard"])))
-    mud.send_message(id, ":::warrior:{}::whitemage:{}::thief:{}::indecisive:{}::bard:{}{}".format(players[id]["ujob"]["warrior"],players[id]["ujob"]["whitemage"],players[id]["ujob"]["thief"],players[id]["ujob"]["indecisive"],players[id]["ujob"]["bard"],":"*lengthtosend))
-    mud.send_message(id, ":"*sheetframe)
-    lengthtosend = sheetframe-int(len(":::blackmage:::samurai:::ninja:::bartender:::mog:"))-int(len(str(players[id]["ujob"]["blackmage"]+players[id]["ujob"]["samurai"]+players[id]["ujob"]["ninja"]+players[id]["ujob"]["bartender"]+players[id]["ujob"]["mog"])))
-    mud.send_message(id, ":::blackmage:{}::samurai:{}::ninja:{}::bartender:{}::mog:{}{}".format(players[id]["ujob"]["blackmage"],players[id]["ujob"]["samurai"],players[id]["ujob"]["ninja"],players[id]["ujob"]["bartender"],players[id]["ujob"]["mog"],":"*lengthtosend))
-    mud.send_message(id, ":"*sheetframe)
-    lengthtosend = sheetframe-int(len(":::linecook:::inventor:::landscaper:::druid:::witch:"))-int(len(str(players[id]["ujob"]["linecook"]+players[id]["ujob"]["inventor"]+players[id]["ujob"]["landscaper"]+players[id]["ujob"]["druid"]+players[id]["ujob"]["witch"])))
-    mud.send_message(id, ":::linecook:{}::inventor:{}::landscaper:{}::druid:{}::witch:{}{}".format(players[id]["ujob"]["linecook"],players[id]["ujob"]["inventor"],players[id]["ujob"]["landscaper"],players[id]["ujob"]["druid"],players[id]["ujob"]["witch"],":"*lengthtosend))
-    mud.send_message(id, ":"*sheetframe)
-    mud.send_message(id, ":"*sheetframe)
-    mud.send_message(id, ":"*sheetframe)
-
+    for line in lines:
+        mud.send_message(id, line[:sheetframe])
     #help me god need to print out the right format for json files
     #mud.send_message(id, "{}".format([fun["corevalues"]["jobs"][players[id]["job"]]["spells"][str(players[id]["level"]).replace("'spell'"," ")]]))
 
