@@ -7,7 +7,7 @@
                           "name": "rat_tail",
                           "invdesc": "A bloody rait tail",
                           "desc": "The tail of a murdered rat",
-                          "room": "Dungeon1",
+                          "room": "None",
                           "type": "loot",
                           "eqtype": "not",
                           "bp": "no",
@@ -19,7 +19,64 @@
                           "dtmr": 1800,
                           "stmr": 600,
                           "sellval": 2
-                        }
+                        },
+                        "venom_sack":{
+                           "iid": "vnsk",
+                           "name": "venom_sack",
+                           "invdesc": "The venom sack of that there spider.",
+                           "desc": "The stink venom sack of a spider",
+                           "room": "None",
+                           "type": "craft",
+                           "eqtype": "not",
+                           "bp": "no",
+                           "bpsize": "nil",
+                           "eqstata": "nil",
+                           "eqstatb": "nil",
+                           "eqsvala": 0,
+                           "eqsvalb": 0,
+                           "dtmr": 1800,
+                           "stmr": 600,
+                           "sellval": 6
+                         },
+                         "monkey_paw":{
+                           "iid": "mnkpw",
+                           "name": "monkey_paw",
+                           "invdesc": "A bloody paw",
+                           "desc": "The monkey_paw of that corpse",
+                           "room": "None",
+                           "type": "loot",
+                           "eqtype": "not",
+                           "bp": "no",
+                           "bpsize": "nil",
+                           "eqstata": "nil",
+                           "eqstatb": "nil",
+                           "eqsvala": 0,
+                           "eqsvalb": 0,
+                           "dtmr": 1800,
+                           "stmr": 600,
+                           "sellval": 4
+                         },
+                         "pig_foot":{
+                           "iid": "pifo",
+                           "name": "pig_foot",
+                           "invdesc": "A leftover pigs foot",
+                           "desc": "bloody pig_foot",
+                           "room": "None",
+                           "type": "loot",
+                           "eqtype": "not",
+                           "bp": "no",
+                           "bpsize": "nil",
+                           "eqstata": "nil",
+                           "eqstatb": "nil",
+                           "eqsvala": 0,
+                           "eqsvalb": 0,
+                           "dtmr": 1800,
+                           "stmr": 600,
+                           "sellval": 2
+                         }
+
+
+
                 },
                 "equipment": {
                         "hemp_shirt":{
