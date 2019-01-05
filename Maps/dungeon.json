@@ -44,10 +44,10 @@
 
         "Dungeon3": {
 
-            "name": "Teleportation Center",
-            "description": "There are three glowing portals in this room. A white one with\nan image of a town, a grey one that resembles a swamp\nand a bright and windy one that seems to smell like a desert.\nSure...there are other exits..  but come on... portals.",
+            "name": "Old Baracks",
+            "description": "This old once used baracks was at one time very active.\nNow the ruins of this dungeon have left its tables\nrotting and uncleaned for who knows how long.",
             "objects": {
-                
+
             },
             "exits": {
               "": {
@@ -57,49 +57,49 @@
                 "locked": "no",
                 "mapto": "Dungeon2"
                 },
-                "white": "HousePath",
-                "grey": "Swamp1",
-                "bright": "Desert1"
+                "west": "Dungeon4"
             }
 
         },
 
         "Dungeon4": {
-
-            "description": "Room",
-
+            "name": "Spider Hive",
+            "description": "Spider's are nesting all over this room, The walls are full of\nwebs and as you enter you hear them scattering across\nthe room.  There is a rather large matriarch in the corner\nwith her young clustered in her web. There is a\nstrange cluster in the corner room wrapped in spidersilk.",
+            "objects": {
+                "Cluster": "This appears to be some poor adventurers equipment.  Perhaps some is useful."
+            },
             "exits": {
 
                 "north": "Dungeon5",
                 "east": "Dungeon3",
-                "south": "Dungeon2",
                 "west": "Dungeon7",
                 "northwest": "Dungeon8"
-
-
-
             }
 
         },
 
         "Dungeon5": {
+            "name": "Dusty Room",
+            "description": "This room is mostly empty just dust lying around.  It's dry\nwhich is a nice change from the damp of some of\nthe other rooms. You take a second to enjoy the difference\nin air quality.",
+            "objects": {
 
-            "description": "Room",
-
+                },
             "exits": {
 
                 "east": "Dungeon6",
                 "south": "Dungeon4",
                 "west": "Dungeon8"
+              }
 
-            }
 
         },
 
         "Dungeon6": {
+            "name": "Water Closet",
+            "description": "This room is disqusting.  It's a dirty old water closet that\nhasn't been cleaned in a long long time.",
+            "objects": {
 
-            "description": "Room",
-
+                },
             "exits": {
 
                 "west": "Dungeon5"
@@ -109,9 +109,11 @@
         },
 
         "Dungeon7": {
+            "name": "Hallway to dryer land",
+            "description": "This hallway drys out and the stench of the more damp rooms\nfades to cleaner air in this corridor.",
+            "objects": {
 
-            "description": "Room",
-
+            },
             "exits": {
 
                 "north": "Dungeon10",
@@ -122,9 +124,11 @@
         },
 
         "Dungeon8": {
+            "name": "Crossroad Hallway",
+            "description": "This crossroad spreads out in several directions.  You can\nhear screams coming from the west.",
+            "objects": {
 
-            "description": "Room",
-
+            },
             "exits": {
 
                 "north": "Dungeon9",
@@ -137,9 +141,13 @@
         },
 
         "Dungeon9": {
-
-            "description": "Room",
-
+            "name": "Old Kitchen",
+            "description": "This old kitchen is full of pots pans and cupboards.  There\nisn't much useful here to the naked eye.  Perhaps\n a closer look around could reveal more.",
+            "objects": {
+              "cupboards": "these cupboards are old and stink of rotten food",
+              "pots": "So many dirty pots...",
+              "pans": "Filty pans with crusty old food."
+            },
             "exits": {
 
                 "south": "Dungeon8",
@@ -150,9 +158,11 @@
         },
 
         "Dungeon10": {
+            "name": "A Short Hallway",
+            "description": "This short hallways in a few directions. Splitting off to\nvarious parts of this strange maze you are in.",
+            "objects": {
 
-            "description": "Room",
-
+            },
             "exits": {
 
                 "northeast": "Dungeon9",
@@ -165,9 +175,11 @@
         },
 
         "Dungeon11": {
+            "name": "Edge of the Catacombs",
+            "description": "This is the edge of a darker set of corridors.  The air is\nmusty, the dark corridors stretch on of a while to the\nwest while to the east you see a hallway with better lighting.",
+            "objects": {
 
-            "description": "Room",
-
+            },
             "exits": {
 
                 "east": "Dungeon10",
@@ -178,9 +190,11 @@
         },
 
         "Dungeon12": {
+            "name": "Further into the Catacombs",
+            "description": "You begin to hear the echos of a loud screatch coming from\nwithin the catacombs.  Its hard to make out where it is\ncoming from at this point but you are certain if you continue on you\nmight find out.",
+            "objects": {
 
-            "description": "Room",
-
+            },
             "exits": {
 
                 "east": "Dungeon11",
@@ -192,9 +206,11 @@
         },
 
         "Dungeon13": {
+            "name": "Catacombs Hallway",
+            "description": "This room is full of spiders and centipedes.  It's pretty\n gross in here to be honest.  Webs everywhere\nand the sound of scuttling bugs.",
+            "objects": {
 
-            "description": "Room",
-
+            },
             "exits": {
 
                 "north": "Dungeon12",
@@ -205,9 +221,11 @@
         },
 
         "Dungeon14": {
-
-            "description": "Room",
-
+            "name": "Burial Chamber",
+            "description": "Here we are in an old burial chamber.  There are some coffins\naround the room scattered randomnly.  There is also\na strange looking room to the west.  Funny that these\ncoffins are tossed everywhere.  Its as if you\nare not the first person to find this room since this\ndungeons abandonment.",
+            "objects": {
+              "coffins": "Let the dead sleep you terrible person!"
+            },
             "exits": {
 
                 "east": "Dungeon12",
@@ -218,9 +236,12 @@
         },
 
         "Dungeon15": {
-
-            "description": "Room",
-
+            "name": "Altar Room",
+            "description": "This room seems to be what was once an old altar to some\nforgotten god.  There are candles and a small shrine\nwith a tiny little chest at its base",
+            "objects": {
+               "shrine": "This shrine looks to have been untouched for decades.",
+               "chest": "The outside looks worn.  Wonder what is inside do you?"
+            },
             "exits": {
 
                 "east": "Dungeon14",
@@ -231,9 +252,11 @@
         },
 
         "Dungeon16": {
+            "name": "TRAP",
+            "description": "This room is a trap.  You should check rooms before you enter\nthem.  Luckily we are being nice to teach\nyou a lesson.",
+            "objects": {
 
-            "description": "Room",
-
+            },
             "exits": {
 
                 "north": "Dungeon15"
@@ -243,9 +266,11 @@
         },
 
         "Dungeon17": {
+            "name": "Long Hallway",
+            "description": "This long hallway seems to be descending down.  The sound of\nscreetching is much louder here.  Hard to make out\nwhat it is however you are definitely closer to the\nsource of the noise as you enter the room.",
+            "objects": {
 
-            "description": "Room",
-
+            },
             "exits": {
 
                 "north": "Dungeon13",
@@ -256,9 +281,11 @@
         },
 
         "Dungeon18": {
+            "name": "Edge of a Slope",
+            "description": "You see a slipply slope.  It descends down and the sound of\nscreetching is very loud.  Whatever is making that\nnoise... It's down this slope.",
+            "objects": {
 
-            "description": "You see a slipply slope",
-
+            },
             "exits": {
 
                 "north": "Dungeon17",
@@ -270,9 +297,11 @@
         },
 
         "Dungeon19": {
+            "name": "Burial Chamber",
+            "description": "This is a old burial chamber.  The coffins are all empty and\nturned over... this place must have been\nrobbed at one point.",
+            "objects": {
 
-            "description": "Room",
-
+            },
             "exits": {
 
                 "west": "Dungeon18"
@@ -282,12 +311,14 @@
         },
 
         "Dungeon20": {
-
+            "name": "Tarantula Den",
             "description": "Boss",
+            "objects": {
 
+            },
             "exits": {
 
-                "up": "######"
+                "up": "TownCenter"
 
             }
 
