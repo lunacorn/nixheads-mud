@@ -6,19 +6,9 @@
 --Ncurses Interface to:  for id, command, params in mud.get_commands():
 **Line 145 : simplemud.py
 
--- fix spelling of they from there in check contraptions
-
--- fix spelling of elvari in race choice within new section
-
 --Write character sheet [progress]
 
--- do not allow same player to login twice at same time
-
 -- add an id option to character shee so other players can exam you and see it
-
---set up a way to become GM [needs work]
-
---set up a job change system [need to store lvls independently]
 
 --add status n threat table to combat
 
@@ -26,10 +16,6 @@
 
 --luna needs help with sheet command.  spacing, listing of spells n skills according to job and lvl
 
---add slots function to containers
-
---add put and get command for containers
-
---round hp to whole numbers
+--add put command for containers
 
 --add shopkeeper npcs n buy, list commands

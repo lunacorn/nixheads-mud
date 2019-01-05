@@ -796,13 +796,6 @@ def DoorsCheckRoom(pr):
     #switch. which might reveal an exit or a
     #container
 
-
-#def GetCommand():
-    # same as grab but an extra param for the container
-    # like the bucket.  maybe we can add this option to grab
-    # so grab (item): room
-    # grab (item) (bucket): container
-
 #def PutCommand():
     # similar to grab n drop but puts the item into a container
     # obeject like a bucket.  object needs to be checked for
@@ -1974,6 +1967,8 @@ def FightCommand():
                 mud.send_message(id, Creatures.creatures[players[id]["monster"]].name+" flicks you away like a bug, you sore through the air and land as a bloody mess on the floor")
                 players[id]["hp"] = players[id]["hp"] - players[id]["hp"]
             else:
+                ## add code here to make monster not move during fight
+                Creatures.creatures[players[id]["monster"]].moves = "no"
                 if int(Creatures.creatures[players[id]["monster"]].cdef) >= int(players[id]["dex"]):
                     players[id]["goesfirst"] = players[id]["monster"]
                 if int(Creatures.creatures[players[id]["monster"]].cdef) < int(players[id]["dex"]):
@@ -1984,6 +1979,7 @@ def FightCommand():
         if players[id]["outcome"] == players[id]["name"]:
             players[id]["hp"] = 1
             mud.send_message(id, "you died")
+            Creatures.creatures[players[id]["monster"]].moves = "yes"
             players[id]["exp"] = players[id]["exp"]-(players[id]["exp"] * .6)
             if players[id]["exp"] < 0:
                 Leveldown()
@@ -2050,7 +2046,7 @@ def kung_fu_fighting(monster):
             dmg = 0
             mud.send_message(id, "You suck, you need to train more, you missed the "+str(Creatures.creatures[monster].name))
         else:
-            mud.send_message(id, "You hit the "+str(monster)+", dealing "+str(dmg)+" damage")
+            mud.send_message(id, "You hit the "+str(Creatures.creatures[monster].name)+", dealing "+str(dmg)+" damage")
             players[id]["exp"] += 3*int(Creatures.creatures[monster].life)
         Creatures.creatures[monster].life = int(Creatures.creatures[monster].life) - int(dmg)
 
@@ -2168,6 +2164,7 @@ while True:
                 newcnid = str("corp")+str(random.randint(100,10000000000))
                 monmon = Creatures.creatures[players[id]["monster"]].name
                 Creatures.creatures[players[id]["monster"]].corp = "yes"
+                Creatures.creatures[players[id]["monster"]].moves = "yes"
                 mud.send_message(id, "The monster drops a: "+Creatures.creatures[players[id]["monster"]].drops)
                 Creatures.creatures[players[id]["monster"]].desc = "The corpse of a "+Creatures.creatures[players[id]["monster"]].name+" is laying here"
                 players[id]["fightstarted"] = 0
