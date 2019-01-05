@@ -1979,6 +1979,7 @@ def FightCommand():
         if players[id]["outcome"] == players[id]["name"]:
             players[id]["hp"] = 1
             mud.send_message(id, "you died")
+            Creatures.creatures[players[id]["monster"]].moves = "yes"
             players[id]["exp"] = players[id]["exp"]-(players[id]["exp"] * .6)
             if players[id]["exp"] < 0:
                 Leveldown()
