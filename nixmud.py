@@ -813,6 +813,9 @@ def GrabCommand():
         if gotitem == 0:
             try:
                 if text[1] == Containers.containers[c].name:
+                    if Containers.containers[c].lock == "yes":
+                        mud.send_message(id, "That thing is locked!! You tryin to be a thief!!")
+                        gotitem = 1
                     for y in Containers.containers[c].slots:
                         for z in allitemslist:
                             if text[0] == Items.allitems[z].name and Containers.containers[c].slots[y] == text[0]:
@@ -936,13 +939,40 @@ def GiveCommand():
     except IndexError:
         mud.send_message(id, "Give <person> <item> ... okay back to the basics")
 
+def PutCommand():
+    cont = ContainersCheckRoom(players[id]["room"])
+    putitem = 0
+    text = str(params.lower()).split(' ')
+    for  x in players[id]["inventoryslot"]:
+         for s in [players[id]["inventoryslot"][x]]:
+             if s != "Empty":
+                 if text[0] == Items.allitems[s].name:
+                     for c in cont:
+                        try:
+                            if text[1] == Containers.containers[c].name:
+                                for y in Containers.containers[c].slots:
+                                    if Containers.containers[c].lock == "yes":
+                                        mud.send_message(id, "This thing is locked!!")
+                                        putitem = 1
+                                        break
+                                    if Containers.containers[c].slots[y] == "Empty" and putitem == 0:
+                                        print("finishing")
+                                        Containers.containers[c].slots[y] = Items.allitems[s].name
+                                        players[id]["inventoryslot"][x] = "Empty"
+                                        mud.send_message(id, "You put the "+text[0]+" in the "+text[1])
+                                        putitem = 1
+                                        break
+                        except:
+                            pass
+    if putitem == 0:
+        mud.send_message(id, "Put what where now?")
+
 
 def DropCommand():  ## find item, assign new iid and room, delete old iid
     droppeditem = 0
     for x in players[id]["inventoryslot"]:
         for s in [players[id]["inventoryslot"][x]]:
             if s != "Empty":
-                print(Items.allitems[s].name)
                 if params.lower() == Items.allitems[s].name and droppeditem == 0:
                     players[id]["inventoryslot"][x] = "Empty"
                     newiid = str(Items.allitems[s].iid)+str(random.randint(100,10000000000))
@@ -972,10 +1002,14 @@ def ExamCommand():
         for c in cont:
             if text[1] == "list":
                 if text[0] == Containers.containers[c].name:
-                    mud.send_message(id, "You peek inside the {} and see the following:".format(Containers.containers[c].name))
-                    for y in Containers.containers[c].slots:
-                        mud.send_message(id, Containers.containers[c].slots[y])
+                    if Containers.containers[c].lock == "yes":
+                        mud.send_message(id, "Hey that's locked you can't look!!!")
                         ding=1
+                    else:
+                        mud.send_message(id, "You peek inside the {} and see the following:".format(Containers.containers[c].name))
+                        for y in Containers.containers[c].slots:
+                            mud.send_message(id, Containers.containers[c].slots[y])
+                            ding=1
     except:
         pass
     #if the object exists in room
@@ -2370,6 +2404,10 @@ while True:
 
         elif command == "grab":
             GrabCommand()
+
+        elif command == "put":
+            PutCommand()
+
         elif command == "give":
             GiveCommand()
 
