@@ -343,7 +343,10 @@
                             "slot5": "Empty",
                             "slot6": "Empty"
                           },
-                        "timer": 6000
+                        "empty": "no",
+                        "bank": "no",
+                        "ctmr": 6000,
+                        "cntr": 0
                         },
                     "clusto":{
                         "name":"cluster",
@@ -359,7 +362,10 @@
                             "slot5": "hemp_gloves",
                             "slot6": "hemp_coif"
                         },
-                        "timer": 6000
+                        "empty": "no",
+                        "bank": "no",
+                        "ctmr": 6000,
+                        "cntr": 0
                       },
                       "cupbo":{
                         "name": "cupboards",
@@ -375,7 +381,10 @@
                             "slot5": "Empty",
                             "slot6": "Empty"
                           },
-                          "timer":6000
+                          "empty": "no",
+                          "bank": "no",
+                          "ctmr": 6000,
+                          "cntr": 0
                                },
                         "cheso":{
                             "name": "chest",
@@ -391,7 +400,10 @@
                                 "slot5": "Empty",
                                 "slot6": "Empty"
                               },
-                              "timer":6000
+                              "empty": "no",
+                              "bank": "no",
+                              "ctmr": 6000,
+                              "cntr": 0
                                 }
                       },
                 "stats":{
