@@ -421,9 +421,9 @@
                     "mnd": -3,
                     "cha": -3,
                     "crit": 1,
-                    "Spells": {
+                    "spells": {
                               },
-                    "Skills": {
+                    "skills": {
                           "bash": 0,
                           "shout": 0
                               }
