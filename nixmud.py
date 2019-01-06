@@ -1068,7 +1068,7 @@ def SheetCommand():
     str(":"*sheetframe), str("::Spells"+":"*sheetframe), str(":"*sheetframe)
     ]
     lines2 = [
-    str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe),
+#    str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe),
     str(":"*sheetframe), str("::User Rank"+":"*9+"Current Job"+":"*6+"PVP Status"+":"*4+"TP"+":"*sheetframe),
     str(":: "+str((players[id]["user"])+"     :::::::: "+str(players[id]["job"])+" ::::::: "+str(players[id]["pvp"])+" :::::::: "+str(players[id]["tp"])+" "+":"*sheetframe)), str(":"*sheetframe),
     str("::Unlocked Jobs"+":"*sheetframe), str(":::warrior:"+str(players[id]["ujob"]["warrior"])+":whitemage:"+str(players[id]["ujob"]["whitemage"])+"::thief:"+str(players[id]["ujob"]["thief"])+":indecisive:"+str(players[id]["ujob"]["indecisive"])+"::bard:"+str(players[id]["ujob"]["bard"])+":"*sheetframe),
@@ -1086,17 +1086,16 @@ def SheetCommand():
                     for stuff in fun["corevalues"]["jobs"][job][mystuff]:
                         throwthis = str("::"+" "+stuff+" "*int(66-len(stuff))+":"*sheetframe)
                         mud.send_message(id, throwthis[:sheetframe])
-    mud.send_message(id, str("::"+" "*66+":"*sheetframe))
-    mud.send_message(id, str("::Skills"+":"*sheetframe))
+    mud.send_message(id, str("::"+" "*66+":"*sheetframe)[:sheetframe])
+    mud.send_message(id, str("::Skills"+":"*sheetframe)[:sheetframe])
     for job in fun["corevalues"]["jobs"]:
         if job == players[id]["job"]:
             for mystuff in fun["corevalues"]["jobs"][job]:
-                if mystuff == "spells":
+                if mystuff == "skills":
                     for stuff in fun["corevalues"]["jobs"][job][mystuff]:
-                        print(stuff)
                         throwthis = str("::"+" "+stuff+" "*int(66-len(stuff))+":"*sheetframe)
                         mud.send_message(id, throwthis[:sheetframe])
-    mud.send_message(id, str("::"+" "*66+":"*sheetframe))
+    mud.send_message(id, str("::"+" "*66+":"*sheetframe)[:sheetframe])
     for line in lines2:
         mud.send_message(id, line[:sheetframe])
     #help me god need to print out the right format for json files
