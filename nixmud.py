@@ -2087,7 +2087,6 @@ def kung_fu_fighting(monster, movepool):
                 mud.send_message(id, str(Creatures.creatures[monster].name)+" attacks you, dealing "+str(dmg)+" damage")
                 players[id]["hp"] = players[id]["hp"] - dmg
                 mud.send_message(id, "**** HP: {} **** MP: {} **** NEXT: {} **** PVP: {} ****".format(players[id]["hp"],players[id]["mp"],players[id]["next"]-players[id]["exp"],players[id]["pvp"]))
-
         else:
             dmg = GetDammage(monster, players[id]["name"])
             if dmg == 0:
