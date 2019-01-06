@@ -2054,11 +2054,11 @@ def kung_fu_fighting(monster):
         movepool = []
         basemoveamount = 5 ## might add this to the creature so its a dynamic percentage
         count = 0
-        if Creatures.creatures[monster].basemove != "no":
-            print("I checked base move")
-            while basemoveamount >= count:
-                movepool.append(Creatures.creatures[monster].basemove)
-                count += 1
+        #if Creatures.creatures[monster].basemove != "no":
+        print("I checked moves")
+        #    while basemoveamount >= count:
+        #        movepool.append(Creatures.creatures[monster].basemove)
+        #        count += 1
         if Creatures.creatures[monster].csnm != "none":
             print("tried to though:# WARNING:")
             movepool.append(Creatures.creatures[monster].csnm)
