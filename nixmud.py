@@ -298,7 +298,7 @@ class Doors(object):
 
 class Containers(object):
     containers = {}
-    def __init__(self, cnid, cnname, cnmap, cnstatus, cnlock, slots, lockname):
+    def __init__(self, cnid, cnname, cnmap, cnstatus, cnlock, slots, lockname, empty, bank, ctmr, cntr, cnorig):
         self.cnid = cnid
         self.name = cnname
         self.map  = cnmap
@@ -306,6 +306,12 @@ class Containers(object):
         self.lock = cnlock
         self.slots = slots
         self.lockname = lockname
+        self.empty = empty
+        self.bank = bank
+        self.ctmr = ctmr
+        self.cntr = cntr
+        self.cnorig = cnorig
+        self.defaultslots = {}
         Containers.containers[cnid] = self
 
 # import core values
@@ -375,6 +381,7 @@ room = []
 myroom = []
 doorslist = []
 containerslist = []
+defaultcontainerslist = []
 monstercount = 0
 ########### this grabs from the json for creatures
 for cid in credb.keys():
@@ -512,8 +519,6 @@ for itemcat in fun ["corevalues"]["items"]:
                     eqsvala = value
                 if stat == "eqsvalb":
                     eqsvalb = value
-                #if stat == "eqstatus":
-                #    eqstatus = value
         if not str(iid) in defaultsitemslist:
             logging.debug(str("Added  : "+str(iid)+" "+str(name)+" "+str(desc)+" "+str(room)+" "+str(type)+" "+str(eqtype)+" "+str(invdesc)+" "+str(bp)+" "+str(bpsize)+" "+str(eqstata)+" "+str(eqstatb)+" "+str(eqsvala)+" "+str(eqsvalb)+" "+str(sellval)))
             Items(iid ,name, desc, room, type, eqtype, invdesc, bp, bpsize, eqstata, eqstatb, eqsvala, eqsvalb, sellval) #, eqstatus)
@@ -553,7 +558,6 @@ for room in rooms:
                         logging.debug(str("Added :  "+str(did)+" "+str(ename)+" "+str(estatus)+" "+str(elock)+" "+str(dt)+" "+str(omap)+" "+str(exits)+" "+str(mapto)+" "+str(gotopened)))
                         Doors(did, ename, estatus, elock, dt, omap, exits, mapto, gotopened)
                         doorslist.append(did)
-
 for container in fun["corevalues"]["containers"]:
     for cnvalue in fun["corevalues"]["containers"][container]:
         if cnvalue == "name":
@@ -568,10 +572,26 @@ for container in fun["corevalues"]["containers"]:
             lockname = fun["corevalues"]["containers"][container][cnvalue]
         if cnvalue == "slots":
             slots = fun["corevalues"]["containers"][container][cnvalue]
+        if cnvalue == "empty":
+            empty = fun["corevalues"]["containers"][container][cnvalue]
+        if cnvalue == "bank":
+            bank = fun["corevalues"]["containers"][container][cnvalue]
+        if cnvalue == "ctmr":
+            ctmr = fun["corevalues"]["containers"][container][cnvalue]
+        if cnvalue == "cntr":
+            cntr = fun["corevalues"]["containers"][container][cnvalue]
+        cnorig = container
+
     cnid = "cntr"+str(random.randint(100,10000000000))
-    logging.debug("Added : "+str(cnid)+str(cnname)+str(cnmap)+str(cnstatus)+str(cnlock)+str(slots)+str(lockname))
-    Containers(cnid, cnname, cnmap, cnstatus, cnlock, slots, lockname)
-    containerslist.append(cnid)
+    if cnid not in containerslist:
+        logging.debug("Added : "+str(cnid)+str(cnname)+str(cnmap)+str(cnstatus)+str(cnlock)+str(slots)+str(lockname))
+        Containers(cnid, cnname, cnmap, cnstatus, cnlock, slots, lockname, empty, bank, ctmr, cntr, cnorig)
+        containerslist.append(cnid)
+        for i in slots:
+            Containers.containers[cnid].defaultslots[i] = Containers.containers[cnid].slots[i]
+
+
+
 
 
 for yy in defaultsitemslist:
@@ -840,6 +860,7 @@ def GrabCommand():
                                                     allitemslist.append(newiid)
                                                     Items(newiid ,Items.allitems[orig].name, Items.allitems[orig].desc, players[id]["name"], Items.allitems[orig].type, Items.allitems[orig].eqtype, Items.allitems[orig].invdesc,            Items.allitems[orig].bp, Items.allitems[orig].bpsize, Items.allitems[orig].eqstata, Items.allitems[orig].eqstatb, Items.allitems[orig].eqsvala, Items.allitems[orig].eqsvalb,Items.allitems[orig].sellval)
                                                     Containers.containers[c].slots[y] = "Empty"
+                                                    Containers.containers[c].empty = "yes"
                                                     mud.send_message(id, "You pick up the "+str(Items.allitems[z].name))
                                                     players[id]["inventoryslot"][x] = str(Items.allitems[z].iid)
                                                     players[id]["inventoryused"] += 1
@@ -965,6 +986,7 @@ def PutCommand():
                                         break
                                     if Containers.containers[c].slots[y] == "Empty" and putitem == 0:
                                         Containers.containers[c].slots[y] = Items.allitems[s].name
+                                        Containers.containers[c].empty = "no"
                                         players[id]["inventoryslot"][x] = "Empty"
                                         mud.send_message(id, "You put the "+text[0]+" in the "+text[1])
                                         putitem = 1
@@ -1376,6 +1398,20 @@ def StartDoorTimers():
                     if players[pid]["room"] == Doors.doors[door].map:
                         mud.send_message(pid, "A clown pokes his head into the room , then slams the door")
         Doors.doors[door].gotopened += 1
+
+def StartContainerTimers():
+    for box in containerslist:
+        if Containers.containers[box].empty == "yes" and Containers.containers[box].bank != "yes":
+            print(str(int(Containers.containers[box].cntr)))
+            if int(Containers.containers[box].ctmr) < int(Containers.containers[box].cntr):
+                for y in Containers.containers[box].slots:
+                    Containers.containers[box].slots[y] = Containers.containers[box].defaultslots[y]
+                    Containers.containers[box].empty = "no"
+                    Containers.containers[box].cntr = 0
+                logging.debug("Re loaded slots in  : "+str(cnid)+str(cnname)+str(cnmap)+str(cnstatus)+str(cnlock)+str(slots)+str(lockname))
+            else:
+                Containers.containers[box].cntr = int(Containers.containers[box].cntr)+1
+
 
 def StartCreatureTimers():
     creaturemoved = 0
@@ -2164,6 +2200,7 @@ while True:
     except:
         pass
     StartCreatureTimers()
+    StartContainerTimers()
     StartDoorTimers()
     # go through any new commands sent from players
     for id, command, params in mud.get_commands():
