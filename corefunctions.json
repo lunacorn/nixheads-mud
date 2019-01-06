@@ -93,7 +93,7 @@
                            "sellval": 6
                          },
                          "monkey_paw":{
-                           "iid": "mnkpw",
+                           "iid": "mnkp",
                            "name": "monkey_paw",
                            "invdesc": "A bloody paw",
                            "desc": "The monkey_paw of that corpse",
@@ -259,9 +259,9 @@
                           "stmr": 600,
                           "sellval": 6
                                   },
-                        "hemp_coif": {
-                          "iid": "hepa",
-                          "name": "hemp_pants",
+                        "hemp_hat": {
+                          "iid": "heha",
+                          "name": "hemp_hat",
                           "invdesc": "soil em? hell they basically are soil.",
                           "desc": "A old decaying hemp_coif is here.",
                           "room": "None",
@@ -360,7 +360,7 @@
                             "slot3": "hemp_boots",
                             "slot4": "wooden_cane",
                             "slot5": "hemp_gloves",
-                            "slot6": "hemp_coif"
+                            "slot6": "hemp_hat"
                         },
                         "empty": "no",
                         "bank": "no",

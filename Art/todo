@@ -6,9 +6,8 @@
 --Ncurses Interface to:  for id, command, params in mud.get_commands():
 **Line 145 : simplemud.py
 
---Write character sheet [progress]
 
---add an id option to character shee so other players can exam you and see it
+--add an id option to character sheet so other players can exam you and see it
 
 --add status n threat table to combat
 
