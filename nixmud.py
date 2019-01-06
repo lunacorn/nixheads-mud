@@ -760,6 +760,7 @@ def InventoryCommand():
         if players[id]["inventoryslot"][x] != "Empty":
             for i in [players[id]["inventoryslot"][x]]:
                 mud.send_message(id, "::"+str(Items.allitems[i].name))
+                print(Items.allitems[i].iid)
         else:
             mud.send_message(id, "Empty")
 
@@ -800,6 +801,7 @@ def SaveCommand():
 def ItemsCheckRoom(pr):
     items = []
     for itemsx in allitemslist:
+        #3rd time from grabbing bucket crashes on 804 @ Dragonkeeper
        if itemsx == Items.allitems[itemsx].iid:
            if pr == Items.allitems[itemsx].room:
                items.append(itemsx)
@@ -859,15 +861,16 @@ def GrabCommand():
                                                     while newiid in allitemslist:
                                                         newiid = orig+str(random.randint(100,10000000000))
                                                     allitemslist.append(newiid)
-                                                    Items(newiid ,Items.allitems[orig].name, Items.allitems[orig].desc, players[id]["name"], Items.allitems[orig].type, Items.allitems[orig].eqtype, Items.allitems[orig].invdesc,            Items.allitems[orig].bp, Items.allitems[orig].bpsize, Items.allitems[orig].eqstata, Items.allitems[orig].eqstatb, Items.allitems[orig].eqsvala, Items.allitems[orig].eqsvalb,Items.allitems[orig].sellval)
+                                                    allitemslist.remove(z)
+                                                    Items(newiid ,Items.allitems[orig].name, Items.allitems[orig].desc, players[id]["name"], Items.allitems[orig].type, Items.allitems[orig].eqtype, Items.allitems[orig].invdesc, Items.allitems[orig].bp, Items.allitems[orig].bpsize, Items.allitems[orig].eqstata, Items.allitems[orig].eqstatb, Items.allitems[orig].eqsvala, Items.allitems[orig].eqsvalb,Items.allitems[orig].sellval)
                                                     Containers.containers[c].slots[y] = "Empty"
                                                     Containers.containers[c].empty = "yes"
-                                                    mud.send_message(id, "You pick up the "+str(Items.allitems[z].name))
-                                                    players[id]["inventoryslot"][x] = str(Items.allitems[z].iid)
+                                                    mud.send_message(id, "You pick up the "+str(Items.allitems[newiid].name))
+                                                    players[id]["inventoryslot"][x] = str(Items.allitems[newiid].iid)
                                                     players[id]["inventoryused"] += 1
                                                     gotitem = 1
+                                                    del(Items.allitems[z])
                                                     break
-
                                 else:
                                     mud.send_message(id, "Your inventory is full.")
                                 gotitem = 1
@@ -1006,7 +1009,7 @@ def DropCommand():  ## find item, assign new iid and room, delete old iid
                 if params.lower() == Items.allitems[s].name and droppeditem == 0:
                     players[id]["inventoryslot"][x] = "Empty"
                     newiid = str(Items.allitems[s].iid)+str(random.randint(100,10000000000))
-                    Items(newiid ,Items.allitems[s].name, Items.allitems[s].desc, players[id]["room"], Items.allitems[s].type, Items.allitems[s].eqtype, Items.allitems[s].invdesc, Items.allitems[s].bp, Items.allitems[s].bpsize, Items.allitems[s].eqstata, Items.allitems[s].eqstatb, Items.allitems[s].eqsvala, Items.allitems[s].eqsvalb)
+                    Items(newiid ,Items.allitems[s].name, Items.allitems[s].desc, players[id]["room"], Items.allitems[s].type, Items.allitems[s].eqtype, Items.allitems[s].invdesc, Items.allitems[s].bp, Items.allitems[s].bpsize, Items.allitems[s].eqstata, Items.allitems[s].eqstatb, Items.allitems[s].eqsvala, Items.allitems[s].eqsvalb, Items.allitems[s].sellval)
                     allitemslist.append(Items.allitems[str(newiid)].iid)
                     allitemslist.remove(s)
                     droppeditem = 1
@@ -1196,6 +1199,7 @@ def EquipCommand():
                                     mud.send_message(id, "You have equipment in that slot.")
                                     iequipped = 1
                                     mud.send_message(id, "you need to unequip "+str(Items.allitems[i].eqtype)+" to equip "+params.lower())
+
     if iequipped == 0 and params.lower() != Items.allitems[i].name:
         mud.send_message(id, "what are you trying to equip you fool!!")
 
@@ -1421,7 +1425,6 @@ def StartDoorTimers():
 def StartContainerTimers():
     for box in containerslist:
         if Containers.containers[box].empty == "yes" and Containers.containers[box].bank != "yes":
-            print(str(int(Containers.containers[box].cntr)))
             if int(Containers.containers[box].ctmr) < int(Containers.containers[box].cntr):
                 for y in Containers.containers[box].slots:
                     Containers.containers[box].slots[y] = Containers.containers[box].defaultslots[y]
@@ -1992,16 +1995,19 @@ def StartFightTimer():
     if players[id]["fighttimer"] >= players[id]["timer"]:
         players[id]["timer"] += 1
 
+#:# WARNING: def CheckHate():
+
 
 movepool = []
 def FightCommand():
+
     if players[id]["fightstarted"] == 0:
         creatures = CreatureCheckRoom(players[id]["room"])
         for creature in creatures:
-            if Creatures.creatures[creature].name == str(params.lower()):
+            if Creatures.creatures[creature].name == str(params.lower()) and Creatures.creatures[creature].corp != "yes":
                 players[id]["monster"] = creature
                 break
-        if players[id]["monster"] == '':
+        if players[id]["monster"] == '' :
             mud.send_message(id, "there is no creature here called "+params.lower())
         else:
             mud.send_message(id, "You try starting a fight with "+params.lower())
@@ -2048,17 +2054,20 @@ def kung_fu_fighting(monster):
         movepool = []
         basemoveamount = 5 ## might add this to the creature so its a dynamic percentage
         count = 0
-        if Creatures.creatures[monster].basemove != "no":
-            while basemoveamount >= count:
-                movepool.append(Creatures.creatures[monster].basemove)
-                count += 1
-        if Creatures.creatures[monster].csnm != "no":
+        #if Creatures.creatures[monster].basemove != "no":
+        print("I checked moves")
+        #    while basemoveamount >= count:
+        #        movepool.append(Creatures.creatures[monster].basemove)
+        #        count += 1
+        if Creatures.creatures[monster].csnm != "none":
+            print("tried to though:# WARNING:")
             movepool.append(Creatures.creatures[monster].csnm)
+            print("did it")
         players[id]["firstround"] = 0
     if players[id]["goesfirst"] == monster:
         movetouse = movepool[int(str(random.randint(1, len(movepool))))]
         if movetouse == Creatures.creatures[monster].csnm:
-            pass #CastCommand(monster, movetouse)
+            CastCommandM(monster, movetouse)
         else:
             dmg = GetDammage(monster, players[id]["name"])
             if dmg == 0:
@@ -2104,6 +2113,15 @@ def kung_fu_fighting(monster):
         players[id]["hp"] = players[id]["hp"] - dmg
         mud.send_message(id, "**** HP: {} **** MP: {} **** NEXT: {} **** PVP: {} ****".format(players[id]["hp"],players[id]["mp"],players[id]["next"]-players[id]["exp"],players[id]["pvp"]))
         return 0
+
+def CastCommandM(monster, movetouse):
+    # roll = random number
+    #if random number > players[id]["dex"]:
+    move = "bind"
+    print(fun["corevaluess"]["Spells"][move])
+    #   players[id]["status"] == get skill from Spells
+
+
 
 #cid name room desc clvl cstr
 #cdmg cdef clfe life moves
@@ -2449,8 +2467,8 @@ while True:
 
         elif command == "equip":
             EquipCommand()
-        #elif command == "unequip":
-         #   UnequipCommand()
+        elif command == "unequip":
+            UnequipCommand()
 
         elif command == "uptime":
             mud.send_message(id, str(uptime))
@@ -2462,6 +2480,7 @@ while True:
 
         elif command == "email":
             send_mail("NIXMUD@nixheads.co.uk", "email to send too", "NixMud password reset", "password and user for associated user")
+
         # 'go' command
         elif command == "go":
             GoCommand()
