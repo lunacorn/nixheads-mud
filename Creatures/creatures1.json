@@ -28,7 +28,9 @@
         "spwn": 0,
         "mcnt": 0,
         "diedin": "0",
-        "corp": "no"
+        "corp": "no",
+        "hate" : "nobody",
+        "fighting": 0
      },
      "matriarch":{
          "cid": "matriarch_spider",
@@ -53,7 +55,9 @@
          "spwn": 0,
          "mcnt": 0,
          "diedin": "0",
-         "corp": "no"
+         "corp": "no",
+         "hate" : "nobody",
+         "fighting": 0
 
      },
      "monkey": {
@@ -80,7 +84,9 @@
         "spwn": 0,
         "mcnt": 0,
         "diedin": "0",
-        "corp": "no"
+        "corp": "no",
+        "hate" : "nobody",
+        "fighting": 0
     },
 
     "pig": {
@@ -108,7 +114,9 @@
         "spwn": 0,
         "mcnt": 0,
         "diedin": "0",
-        "corp": "no"
+        "corp": "no",
+        "hate" : "nobody",
+        "fighting": 0
     },
     "centipede": {
         "cid": "centi",
@@ -135,7 +143,9 @@
         "spwn": 0,
         "mcnt": 0,
         "diedin": "0",
-        "corp": "no"
+        "corp": "no",
+        "hate" : "nobody",
+        "fighting": 0
     },
 
     "rat": {
@@ -165,6 +175,8 @@
         "spwn": 0,
         "mcnt": 0,
         "diedin": "0",
-        "corp": "no"
+        "corp": "no",
+        "hate" : "nobody",
+        "fighting": 0
     }
 }

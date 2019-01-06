@@ -226,7 +226,7 @@ logging.debug("Server Started")
 ### automatically adding in new creatures added to json
 class Creatures(object):
     creatures = {}
-    def __init__(self, cid, name, room, desc, clvl, cstr ,cdmg ,cdef ,clfe ,life ,moves ,drops ,cspc ,csnm , ctmr, ccnt, cmtr, spwn, mcnt, diedin, corp):
+    def __init__(self, cid, name, room, desc, clvl, cstr ,cdmg ,cdef ,clfe ,life ,moves ,drops ,cspc ,csnm , ctmr, ccnt, cmtr, spwn, mcnt, diedin, corp, hate, fighting):
         self.cid = cid
         self.name = name
         self.room = room
@@ -248,6 +248,8 @@ class Creatures(object):
         self.mcnt = mcnt
         self.diedin = diedin
         self.corp = corp
+        self.hate = hate
+        self.fighting = fighting
         Creatures.creatures[cid] = self
 
 class Npcs(object):
@@ -431,6 +433,10 @@ for cid in credb.keys():
             diedin = value
         if stat == "corp":
             corp = value
+        if stat == "hate":
+            hate = value
+        if stat == "fighting":
+            fighting = value
         if stat == "room":
             room = []
             for place in credb[cid][stat]:
@@ -446,7 +452,7 @@ for cid in credb.keys():
                 count += 1
                 monstercount += 1
                 if not str(ncid+str(monstercount)) in creaturelist:
-                    Creatures(str(ncid+str(monstercount)), name, myroom[0], desc, clvl, cstr, cdmg, cdef, clfe, life, moves, drops, cspc, csnm, ctmr, ccnt, cmtr, spwn, mcnt, diedin, corp)
+                    Creatures(str(ncid+str(monstercount)), name, myroom[0], desc, clvl, cstr, cdmg, cdef, clfe, life, moves, drops, cspc, csnm, ctmr, ccnt, cmtr, spwn, mcnt, diedin, corp, hate, fighting)
                     logging.debug(str("Added :  "+str(ncid+str(monstercount))+' '+str(name)+' '+str(myroom[0])+' '+str(desc)+' '+str(clvl)+' '+str(cstr)+' '+str(cdmg)+' '+str(cdef)+' '+str(clfe)+' '+str(life)+' '+str(moves)+' '+str(drops)+' '+str(cspc)+' '+str(csnm)+' '+str(ctmr)+' '+str(ccnt)+' '+str(cmtr)+' '+str(spwn)+' '+str(mcnt)+' '+str(diedin)+' '+str(corp)))
                     creaturelist.append(Creatures.creatures[str(ncid+str(monstercount))].cid)
 
@@ -2006,7 +2012,13 @@ def FightCommand():
         for creature in creatures:
             if Creatures.creatures[creature].name == str(params.lower()) and Creatures.creatures[creature].corp != "yes":
                 players[id]["monster"] = creature
-                break
+                Creatures.creatures[creature].fighting = 1
+                if Creatures.creatures[creature].hate == "nobody":
+                    print("this happened")
+                    Creatures.creatures[creature].hate = players[id]["name"]
+                    break
+                else:
+                    break
         if players[id]["monster"] == '' :
             mud.send_message(id, "there is no creature here called "+params.lower())
         else:
@@ -2051,6 +2063,7 @@ def FightCommand():
 
 
 def kung_fu_fighting(monster, movepool):
+    print("got here")
     if monster != players[id]["target"] and players[id]["firstround"] == 1:
         mud.send_message(id, "you are now fighting "+Creatures.creatures[monster].name)
         players[id]["target"] = monster
@@ -2071,7 +2084,7 @@ def kung_fu_fighting(monster, movepool):
         #    movepool.append(Creatures.creatures[monster].csnm)
         #    print("did it")
         players[id]["firstround"] = 0
-        if players[id]["goesfirst"] == monster:
+        if players[id]["goesfirst"] == monster and Creatures.creatures[monster].hate == players[id]["name"]:
             print("monster went first")
             dmg = GetDammage(monster, players[id]["name"])
             if random.randint(1,10) > 7 and Creatures.creatures[monster].csnm != "not" and players[id]["status"] != Creatures.creatures[monster].cspc:
@@ -2087,6 +2100,9 @@ def kung_fu_fighting(monster, movepool):
                 mud.send_message(id, str(Creatures.creatures[monster].name)+" attacks you, dealing "+str(dmg)+" damage")
                 players[id]["hp"] = players[id]["hp"] - dmg
                 mud.send_message(id, "**** HP: {} **** MP: {} **** NEXT: {} **** PVP: {} ****".format(players[id]["hp"],players[id]["mp"],players[id]["next"]-players[id]["exp"],players[id]["pvp"]))
+        elif players[id]["goesfirst"] == monster and Creatures.creatures[monster].hate != players[id]["name"]:
+            mud.send_message(id, str(Creatures.creatures[monster].name)+" is attacking: "+str(Creatures.creatures[monster].hate))
+            dmg = 0
         else:
             dmg = GetDammage(monster, players[id]["name"])
             if dmg == 0:
@@ -2111,19 +2127,20 @@ def kung_fu_fighting(monster, movepool):
             return monster
 
         ####
-        dmg = GetDammage(players[id]["name"], monster)
-        if dmg == 0:
-            dmg = 1
-            mud.send_message(id, "You are powerless against "+str(Creatures.creatures[monster].name)+", dealing "+str(dmg)+" damage")
-        if dmg == 4:
-            pass
-        elif dmg == "miss":
-            dmg = 0
-            mud.send_message(id, "You suck, you need to train more, you missed the "+str(Creatures.creatures[monster].name))
-        else:
-            mud.send_message(id, "You hit the "+str(Creatures.creatures[monster].name)+", dealing "+str(dmg)+" damage")
-            players[id]["exp"] += 3*int(Creatures.creatures[monster].life)
-        Creatures.creatures[monster].life = int(Creatures.creatures[monster].life) - int(dmg)
+        if Creatures.creatures[monster].hate == players[id]["name"]:
+            dmg = GetDammage(players[id]["name"], monster)
+            if dmg == 0:
+                dmg = 1
+                mud.send_message(id, "You are powerless against "+str(Creatures.creatures[monster].name)+", dealing "+str(dmg)+" damage")
+                if dmg == 4:
+                    pass
+                elif dmg == "miss":
+                    dmg = 0
+                    mud.send_message(id, "You suck, you need to train more, you missed the "+str(Creatures.creatures[monster].name))
+                else:
+                    mud.send_message(id, "You hit the "+str(Creatures.creatures[monster].name)+", dealing "+str(dmg)+" damage")
+                    players[id]["exp"] += 3*int(Creatures.creatures[monster].life)
+                Creatures.creatures[monster].life = int(Creatures.creatures[monster].life) - int(dmg)
 
         dmg = GetDammage(monster, players[id]["name"])
         if random.randint(1,10) > 7 and Creatures.creatures[monster].csnm != "not" and players[id]["status"] != Creatures.creatures[monster].cspc:
@@ -2145,7 +2162,7 @@ def CastCommandM(monster, movename, moveskill):
     roll = random.randint(1, int(Creatures.creatures[monster].cstr)+ players[id]["dex"])
     mud.send_message(id, "The "+str(Creatures.creatures[monster].name)+" uses "+movename)
     if roll > players[id]["dex"]:
-        for x in fun["corevalues"][spells]:
+        for x in fun["corevalues"]["spells"]:
             if moveskill == x:
               if x != "damage":
                   players[id]["status"] = moveskill
