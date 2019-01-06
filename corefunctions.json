@@ -535,7 +535,7 @@
                 "bind":{
                     "unlock": 3,
                     "value": 6,
-                    "status": "move",
+                    "status": "bind",
                     "cost": 5,
                     "job": "blackmage"
                              },
