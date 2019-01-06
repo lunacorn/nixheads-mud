@@ -195,6 +195,7 @@ Team: Dragonkeeper, Lunacorn  Jan 2nd, 2019
 # basic files to import
 # including the json
 # library
+from sendmail import send_mail
 import datetime
 import time
 import db as database
@@ -2474,6 +2475,9 @@ while True:
 
         elif command == "close":
             CloseCommand()
+
+        elif command == "email":
+            send_mail("NIXMUD@nixheads.co.uk", "email to send too", "NixMud password reset", "password and user for associated user")
         # 'go' command
         elif command == "go":
             GoCommand()
