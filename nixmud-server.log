@@ -5555,3 +5555,542 @@ DEBUG:root:Added : cntr516995299clusterDungeon4openno{'slot1': 'hemp_pants', 'sl
 DEBUG:root:Added : cntr6263374701cupboardsDungeon9openno{'slot1': 'rare_steak', 'slot2': 'jerky', 'slot3': 'jerky', 'slot4': 'honey', 'slot5': 'Empty', 'slot6': 'Empty'}nobody
 DEBUG:root:Added : cntr9300343545chestDungeon15openno{'slot1': 'copper_ring', 'slot2': 'Empty', 'slot3': 'Empty', 'slot4': 'Empty', 'slot5': 'Empty', 'slot6': 'Empty'}nobody
 DEBUG:root:New loginx
+DEBUG:root:Server Started
+DEBUG:root:Added :  spider1 spider Dungeon1 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider2 spider Dungeon2 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider3 spider Dungeon2 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider4 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider5 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider6 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider7 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider8 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider9 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider10 spider Dungeon6 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider11 spider Dungeon6 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider12 spider Dungeon9 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider13 spider Dungeon9 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider14 spider Dungeon12 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider15 spider Dungeon12 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider16 spider Dungeon13 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider17 spider Dungeon13 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider18 spider Dungeon13 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider19 spider Dungeon13 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider20 spider Dungeon13 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  matriarch_spider21 matriarch_spider Dungeon4 The matriarch_spider hangs in her web with her young 3 16 0.14 18 20 20 no web_covered_boots bind web 1000 0 800 0 0 0 no
+DEBUG:root:Added :  centi22 centipede Dungeon13 A centipede moves about the room. 4 25 1 18 25 25 no venom_sack none none 1000 0 300 0 0 0 no
+DEBUG:root:Added :  centi23 centipede Dungeon13 A centipede moves about the room. 4 25 1 18 25 25 no venom_sack none none 1000 0 300 0 0 0 no
+DEBUG:root:Added :  centi24 centipede Dungeon13 A centipede moves about the room. 4 25 1 18 25 25 no venom_sack none none 1000 0 300 0 0 0 no
+DEBUG:root:Added :  centi25 centipede Dungeon13 A centipede moves about the room. 4 25 1 18 25 25 no venom_sack none none 1000 0 300 0 0 0 no
+DEBUG:root:Added :  centi26 centipede Dungeon13 A centipede moves about the room. 4 25 1 18 25 25 no venom_sack none none 1000 0 300 0 0 0 no
+DEBUG:root:Added :  rat27 rat Dungeon1 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat28 rat Dungeon5 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat29 rat Dungeon5 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat30 rat Dungeon5 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat31 rat Dungeon5 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat32 rat Dungeon11 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat33 rat Dungeon11 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat34 rat Dungeon11 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat35 rat Dungeon11 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat36 rat Dungeon19 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat37 rat Dungeon19 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat38 rat Dungeon19 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added  : rttl9887712716 rat_tail The tail of a murdered rat None loot not A bloody rait tail no nil nil nil 0 0 2
+DEBUG:root:Added  : rstk5500194887 rare_steak a rare_steak is plopped here None loot not A bloody but cooked, hunk of meat no nil nil nil 0 0 1
+DEBUG:root:Added  : jerk7177330608 jerky A strip of jerky sits here None edible not dried up jerky no nil nil nil 0 0 2
+DEBUG:root:Added  : hony4914114322 Honey A small container of honey is here None craft not A small container of honey no nil nil nil 0 0 5
+DEBUG:root:Added  : vnsk1335018182 venom_sack The stink venom sack of a spider None craft not The venom sack of that there spider. no nil nil nil 0 0 6
+DEBUG:root:Added  : mnkp1092479340 monkey_paw The monkey_paw of that corpse None loot not A bloody paw no nil nil nil 0 0 4
+DEBUG:root:Added  : pifo8090354083 pig_foot bloody pig_foot None loot not A leftover pigs foot no nil nil nil 0 0 2
+DEBUG:root:Added  : hesh8350326356 hemp_shirt A fiberous hemp_shirt lay here. Dungeon2 eq body you might not wanna smoke this. no nil vit dex 2 2 4
+DEBUG:root:Added  : hepa5364628705 hemp_pants A old pair of hemp_pants lay here. Dungeon2 eq legs soil em? hell they basically are soil. no nil vit dex 1 1 6
+DEBUG:root:Added  : caca6076101401 candycane a candycane sits on the ground. Dungeon1 eq weapon Ultimate Elvish wand no nil str dex 2 0 2
+DEBUG:root:Added  : wosw2916878558 wooden_sword The best sword in the world... lies here. Dungeon1 eq weapon Activating denting paper ability!! no nil str dex 2 0 5
+DEBUG:root:Added  : woca3100548476 wooden_cane A wooden_cane lay on the floor None eq weapon A wooden mage's cane no nil int dex 3 2 6
+DEBUG:root:Added  : hebo3321781113 hemp_boots A filthy pair of hemp_boots lay here. None eq feet you got shit on yer shitty boots... no nil vit dex 1 2 6
+DEBUG:root:Added  : hegl5435024130 hemp_gloves A rotting pair of hemp_pants lay here. None eq hands half rotten, half lame gloves. no nil vit dex 1 1 6
+DEBUG:root:Added  : heha3487148148 hemp_hat A old decaying hemp_coif is here. None eq head soil em? hell they basically are soil. no nil vit dex 2 1 6
+DEBUG:root:Added  : wcbt6122647706 web_covered_boots web_covered_boots lie here.  They once were nice. None eq feet These were decent boots, now covered in webs no nil vit dex 2 2 10
+DEBUG:root:Added  : cprg6957876467 copper_ring this copper_ring once shined not anymore. None eq ring This old ring is worn. no nil str dex 0 3 10
+DEBUG:root:Added  : rttl rat_tail The tail of a murdered rat fuckall loot not A bloody rait tail no nil nil nil 0 0 10
+DEBUG:root:Added  : rstk rare_steak a rare_steak is plopped here fuckall loot not A bloody but cooked, hunk of meat no nil nil nil 0 0 10
+DEBUG:root:Added  : jerk jerky A strip of jerky sits here fuckall edible not dried up jerky no nil nil nil 0 0 10
+DEBUG:root:Added  : hony Honey A small container of honey is here fuckall craft not A small container of honey no nil nil nil 0 0 10
+DEBUG:root:Added  : vnsk venom_sack The stink venom sack of a spider fuckall craft not The venom sack of that there spider. no nil nil nil 0 0 10
+DEBUG:root:Added  : mnkp monkey_paw The monkey_paw of that corpse fuckall loot not A bloody paw no nil nil nil 0 0 10
+DEBUG:root:Added  : pifo pig_foot bloody pig_foot fuckall loot not A leftover pigs foot no nil nil nil 0 0 10
+DEBUG:root:Added  : hesh hemp_shirt A fiberous hemp_shirt lay here. fuckall eq body you might not wanna smoke this. no nil vit dex 2 2 10
+DEBUG:root:Added  : hepa hemp_pants A old pair of hemp_pants lay here. fuckall eq legs soil em? hell they basically are soil. no nil vit dex 1 1 10
+DEBUG:root:Added  : caca candycane a candycane sits on the ground. fuckall eq weapon Ultimate Elvish wand no nil str dex 2 0 10
+DEBUG:root:Added  : wosw wooden_sword The best sword in the world... lies here. fuckall eq weapon Activating denting paper ability!! no nil str dex 2 0 10
+DEBUG:root:Added  : woca wooden_cane A wooden_cane lay on the floor fuckall eq weapon A wooden mage's cane no nil int dex 3 2 10
+DEBUG:root:Added  : hebo hemp_boots A filthy pair of hemp_boots lay here. fuckall eq feet you got shit on yer shitty boots... no nil vit dex 1 2 10
+DEBUG:root:Added  : hegl hemp_gloves A rotting pair of hemp_pants lay here. fuckall eq hands half rotten, half lame gloves. no nil vit dex 1 1 10
+DEBUG:root:Added  : heha hemp_hat A old decaying hemp_coif is here. fuckall eq head soil em? hell they basically are soil. no nil vit dex 2 1 10
+DEBUG:root:Added  : wcbt web_covered_boots web_covered_boots lie here.  They once were nice. fuckall eq feet These were decent boots, now covered in webs no nil vit dex 2 2 10
+DEBUG:root:Added  : cprg copper_ring this copper_ring once shined not anymore. fuckall eq ring This old ring is worn. no nil str dex 0 3 10
+DEBUG:root:Added :  door931046890 door open no 60 Dungeon2 south Dungeon3 0
+DEBUG:root:Added :  door1694066259 door closed no 60 Dungeon3 north Dungeon2 0
+DEBUG:root:Added :  door7085700118 door open no 60 FoodStorePath north FoodStore 0
+DEBUG:root:Added :  door4792742679 door open no 60 WeaponStorePath north WeaponStore 0
+DEBUG:root:Added :  door9136532906 door open no 60 PotionStorePath north PotionStore 0
+DEBUG:root:Added :  door8249831529 door open no 60 ArmorStorePath north ArmorStore 0
+DEBUG:root:Added :  door732716384 door open no 60 FoodStore south FoodStorePath 0
+DEBUG:root:Added :  door7120162675 door open no 60 WeaponStore south WeaponStorePath 0
+DEBUG:root:Added :  door9342497878 door open no 60 PotionStore south PotionStorePath 0
+DEBUG:root:Added :  door967326732 door open no 60 ArmorStore south ArmorStorePath 0
+DEBUG:root:Added : cntr5353640082bucketDungeon1openno{'slot1': 'wooden_sword', 'slot2': 'Empty', 'slot3': 'Empty', 'slot4': 'Empty', 'slot5': 'Empty', 'slot6': 'Empty'}nobody
+DEBUG:root:Added : cntr6445129782clusterDungeon4openno{'slot1': 'hemp_pants', 'slot2': 'hemp_shirt', 'slot3': 'hemp_boots', 'slot4': 'wooden_cane', 'slot5': 'hemp_gloves', 'slot6': 'hemp_hat'}nobody
+DEBUG:root:Added : cntr3441806310cupboardsDungeon9openno{'slot1': 'rare_steak', 'slot2': 'jerky', 'slot3': 'jerky', 'slot4': 'honey', 'slot5': 'Empty', 'slot6': 'Empty'}nobody
+DEBUG:root:Added : cntr3125091182chestDungeon15openno{'slot1': 'copper_ring', 'slot2': 'Empty', 'slot3': 'Empty', 'slot4': 'Empty', 'slot5': 'Empty', 'slot6': 'Empty'}nobody
+DEBUG:root:New Player  : luna
+DEBUG:root:Created a new save file for: luna
+DEBUG:root:New loginluna
+DEBUG:root:Updated save file for: luna
+DEBUG:root:Server Started
+DEBUG:root:Added :  spider1 spider Dungeon1 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider2 spider Dungeon2 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider3 spider Dungeon2 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider4 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider5 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider6 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider7 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider8 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider9 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider10 spider Dungeon6 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider11 spider Dungeon6 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider12 spider Dungeon9 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider13 spider Dungeon9 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider14 spider Dungeon12 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider15 spider Dungeon12 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider16 spider Dungeon13 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider17 spider Dungeon13 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider18 spider Dungeon13 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider19 spider Dungeon13 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider20 spider Dungeon13 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  matriarch_spider21 matriarch_spider Dungeon4 The matriarch_spider hangs in her web with her young 3 16 0.14 18 20 20 no web_covered_boots bind web 1000 0 800 0 0 0 no
+DEBUG:root:Added :  centi22 centipede Dungeon13 A centipede moves about the room. 4 25 1 18 25 25 no venom_sack none none 1000 0 300 0 0 0 no
+DEBUG:root:Added :  centi23 centipede Dungeon13 A centipede moves about the room. 4 25 1 18 25 25 no venom_sack none none 1000 0 300 0 0 0 no
+DEBUG:root:Added :  centi24 centipede Dungeon13 A centipede moves about the room. 4 25 1 18 25 25 no venom_sack none none 1000 0 300 0 0 0 no
+DEBUG:root:Added :  centi25 centipede Dungeon13 A centipede moves about the room. 4 25 1 18 25 25 no venom_sack none none 1000 0 300 0 0 0 no
+DEBUG:root:Added :  centi26 centipede Dungeon13 A centipede moves about the room. 4 25 1 18 25 25 no venom_sack none none 1000 0 300 0 0 0 no
+DEBUG:root:Added :  rat27 rat Dungeon1 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat28 rat Dungeon5 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat29 rat Dungeon5 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat30 rat Dungeon5 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat31 rat Dungeon5 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat32 rat Dungeon11 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat33 rat Dungeon11 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat34 rat Dungeon11 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat35 rat Dungeon11 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat36 rat Dungeon19 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat37 rat Dungeon19 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat38 rat Dungeon19 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added  : rttl8302148667 rat_tail The tail of a murdered rat None loot not A bloody rait tail no nil nil nil 0 0 2
+DEBUG:root:Added  : rstk6243584109 rare_steak a rare_steak is plopped here None loot not A bloody but cooked, hunk of meat no nil nil nil 0 0 1
+DEBUG:root:Added  : jerk1176820372 jerky A strip of jerky sits here None edible not dried up jerky no nil nil nil 0 0 2
+DEBUG:root:Added  : hony2604980459 Honey A small container of honey is here None craft not A small container of honey no nil nil nil 0 0 5
+DEBUG:root:Added  : vnsk9013009272 venom_sack The stink venom sack of a spider None craft not The venom sack of that there spider. no nil nil nil 0 0 6
+DEBUG:root:Added  : mnkp5577610755 monkey_paw The monkey_paw of that corpse None loot not A bloody paw no nil nil nil 0 0 4
+DEBUG:root:Added  : pifo7656397174 pig_foot bloody pig_foot None loot not A leftover pigs foot no nil nil nil 0 0 2
+DEBUG:root:Added  : hesh2963840929 hemp_shirt A fiberous hemp_shirt lay here. Dungeon2 eq body you might not wanna smoke this. no nil vit dex 2 2 4
+DEBUG:root:Added  : hepa985214675 hemp_pants A old pair of hemp_pants lay here. Dungeon2 eq legs soil em? hell they basically are soil. no nil vit dex 1 1 6
+DEBUG:root:Added  : caca3841495968 candycane a candycane sits on the ground. Dungeon1 eq weapon Ultimate Elvish wand no nil str dex 2 0 2
+DEBUG:root:Added  : wosw5750747149 wooden_sword The best sword in the world... lies here. Dungeon1 eq weapon Activating denting paper ability!! no nil str dex 2 0 5
+DEBUG:root:Added  : woca8389469518 wooden_cane A wooden_cane lay on the floor None eq weapon A wooden mage's cane no nil int dex 3 2 6
+DEBUG:root:Added  : hebo5254950279 hemp_boots A filthy pair of hemp_boots lay here. None eq feet you got shit on yer shitty boots... no nil vit dex 1 2 6
+DEBUG:root:Added  : hegl6373559961 hemp_gloves A rotting pair of hemp_pants lay here. None eq hands half rotten, half lame gloves. no nil vit dex 1 1 6
+DEBUG:root:Added  : heha8336780862 hemp_hat A old decaying hemp_coif is here. None eq head soil em? hell they basically are soil. no nil vit dex 2 1 6
+DEBUG:root:Added  : wcbt8756514718 web_covered_boots web_covered_boots lie here.  They once were nice. None eq feet These were decent boots, now covered in webs no nil vit dex 2 2 10
+DEBUG:root:Added  : cprg6697454644 copper_ring this copper_ring once shined not anymore. None eq ring This old ring is worn. no nil str dex 0 3 10
+DEBUG:root:Added  : rttl rat_tail The tail of a murdered rat fuckall loot not A bloody rait tail no nil nil nil 0 0 10
+DEBUG:root:Added  : rstk rare_steak a rare_steak is plopped here fuckall loot not A bloody but cooked, hunk of meat no nil nil nil 0 0 10
+DEBUG:root:Added  : jerk jerky A strip of jerky sits here fuckall edible not dried up jerky no nil nil nil 0 0 10
+DEBUG:root:Added  : hony Honey A small container of honey is here fuckall craft not A small container of honey no nil nil nil 0 0 10
+DEBUG:root:Added  : vnsk venom_sack The stink venom sack of a spider fuckall craft not The venom sack of that there spider. no nil nil nil 0 0 10
+DEBUG:root:Added  : mnkp monkey_paw The monkey_paw of that corpse fuckall loot not A bloody paw no nil nil nil 0 0 10
+DEBUG:root:Added  : pifo pig_foot bloody pig_foot fuckall loot not A leftover pigs foot no nil nil nil 0 0 10
+DEBUG:root:Added  : hesh hemp_shirt A fiberous hemp_shirt lay here. fuckall eq body you might not wanna smoke this. no nil vit dex 2 2 10
+DEBUG:root:Added  : hepa hemp_pants A old pair of hemp_pants lay here. fuckall eq legs soil em? hell they basically are soil. no nil vit dex 1 1 10
+DEBUG:root:Added  : caca candycane a candycane sits on the ground. fuckall eq weapon Ultimate Elvish wand no nil str dex 2 0 10
+DEBUG:root:Added  : wosw wooden_sword The best sword in the world... lies here. fuckall eq weapon Activating denting paper ability!! no nil str dex 2 0 10
+DEBUG:root:Added  : woca wooden_cane A wooden_cane lay on the floor fuckall eq weapon A wooden mage's cane no nil int dex 3 2 10
+DEBUG:root:Added  : hebo hemp_boots A filthy pair of hemp_boots lay here. fuckall eq feet you got shit on yer shitty boots... no nil vit dex 1 2 10
+DEBUG:root:Added  : hegl hemp_gloves A rotting pair of hemp_pants lay here. fuckall eq hands half rotten, half lame gloves. no nil vit dex 1 1 10
+DEBUG:root:Added  : heha hemp_hat A old decaying hemp_coif is here. fuckall eq head soil em? hell they basically are soil. no nil vit dex 2 1 10
+DEBUG:root:Added  : wcbt web_covered_boots web_covered_boots lie here.  They once were nice. fuckall eq feet These were decent boots, now covered in webs no nil vit dex 2 2 10
+DEBUG:root:Added  : cprg copper_ring this copper_ring once shined not anymore. fuckall eq ring This old ring is worn. no nil str dex 0 3 10
+DEBUG:root:Added :  door3106341878 door open no 60 Dungeon2 south Dungeon3 0
+DEBUG:root:Added :  door9101313256 door closed no 60 Dungeon3 north Dungeon2 0
+DEBUG:root:Added :  door705869152 door open no 60 FoodStorePath north FoodStore 0
+DEBUG:root:Added :  door8565681654 door open no 60 WeaponStorePath north WeaponStore 0
+DEBUG:root:Added :  door6360698411 door open no 60 PotionStorePath north PotionStore 0
+DEBUG:root:Added :  door9667776774 door open no 60 ArmorStorePath north ArmorStore 0
+DEBUG:root:Added :  door489580107 door open no 60 FoodStore south FoodStorePath 0
+DEBUG:root:Added :  door4060925981 door open no 60 WeaponStore south WeaponStorePath 0
+DEBUG:root:Added :  door4979570861 door open no 60 PotionStore south PotionStorePath 0
+DEBUG:root:Added :  door9085750285 door open no 60 ArmorStore south ArmorStorePath 0
+DEBUG:root:Added : cntr4827202212bucketDungeon1openno{'slot1': 'wooden_sword', 'slot2': 'Empty', 'slot3': 'Empty', 'slot4': 'Empty', 'slot5': 'Empty', 'slot6': 'Empty'}nobody
+DEBUG:root:Added : cntr7739984025clusterDungeon4openno{'slot1': 'hemp_pants', 'slot2': 'hemp_shirt', 'slot3': 'hemp_boots', 'slot4': 'wooden_cane', 'slot5': 'hemp_gloves', 'slot6': 'hemp_hat'}nobody
+DEBUG:root:Added : cntr9417120705cupboardsDungeon9openno{'slot1': 'rare_steak', 'slot2': 'jerky', 'slot3': 'jerky', 'slot4': 'honey', 'slot5': 'Empty', 'slot6': 'Empty'}nobody
+DEBUG:root:Added : cntr3902426254chestDungeon15openno{'slot1': 'copper_ring', 'slot2': 'Empty', 'slot3': 'Empty', 'slot4': 'Empty', 'slot5': 'Empty', 'slot6': 'Empty'}nobody
+DEBUG:root:New loginluna
+DEBUG:root:Re loaded slots in  : cntr3902426254chestDungeon15openno{'slot1': 'copper_ring', 'slot2': 'Empty', 'slot3': 'Empty', 'slot4': 'Empty', 'slot5': 'Empty', 'slot6': 'Empty'}nobody
+DEBUG:root:Server Started
+DEBUG:root:Added :  spider1 spider Dungeon1 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider2 spider Dungeon2 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider3 spider Dungeon2 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider4 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider5 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider6 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider7 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider8 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider9 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider10 spider Dungeon6 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider11 spider Dungeon6 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider12 spider Dungeon9 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider13 spider Dungeon9 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider14 spider Dungeon12 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider15 spider Dungeon12 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider16 spider Dungeon13 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider17 spider Dungeon13 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider18 spider Dungeon13 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider19 spider Dungeon13 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider20 spider Dungeon13 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  matriarch_spider21 matriarch_spider Dungeon4 The matriarch_spider hangs in her web with her young 3 16 0.14 18 20 20 no web_covered_boots bind web 1000 0 800 0 0 0 no
+DEBUG:root:Added :  centi22 centipede Dungeon13 A centipede moves about the room. 4 25 1 18 25 25 no venom_sack none none 1000 0 300 0 0 0 no
+DEBUG:root:Added :  centi23 centipede Dungeon13 A centipede moves about the room. 4 25 1 18 25 25 no venom_sack none none 1000 0 300 0 0 0 no
+DEBUG:root:Added :  centi24 centipede Dungeon13 A centipede moves about the room. 4 25 1 18 25 25 no venom_sack none none 1000 0 300 0 0 0 no
+DEBUG:root:Added :  centi25 centipede Dungeon13 A centipede moves about the room. 4 25 1 18 25 25 no venom_sack none none 1000 0 300 0 0 0 no
+DEBUG:root:Added :  centi26 centipede Dungeon13 A centipede moves about the room. 4 25 1 18 25 25 no venom_sack none none 1000 0 300 0 0 0 no
+DEBUG:root:Added :  rat27 rat Dungeon1 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat28 rat Dungeon5 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat29 rat Dungeon5 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat30 rat Dungeon5 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat31 rat Dungeon5 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat32 rat Dungeon11 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat33 rat Dungeon11 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat34 rat Dungeon11 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat35 rat Dungeon11 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat36 rat Dungeon19 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat37 rat Dungeon19 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat38 rat Dungeon19 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added  : rttl2574175204 rat_tail The tail of a murdered rat None loot not A bloody rait tail no nil nil nil 0 0 2
+DEBUG:root:Added  : rstk1313580778 rare_steak a rare_steak is plopped here None loot not A bloody but cooked, hunk of meat no nil nil nil 0 0 1
+DEBUG:root:Added  : jerk5578433958 jerky A strip of jerky sits here None edible not dried up jerky no nil nil nil 0 0 2
+DEBUG:root:Added  : hony9015722325 Honey A small container of honey is here None craft not A small container of honey no nil nil nil 0 0 5
+DEBUG:root:Added  : vnsk9613541136 venom_sack The stink venom sack of a spider None craft not The venom sack of that there spider. no nil nil nil 0 0 6
+DEBUG:root:Added  : mnkp1799346575 monkey_paw The monkey_paw of that corpse None loot not A bloody paw no nil nil nil 0 0 4
+DEBUG:root:Added  : pifo4070552154 pig_foot bloody pig_foot None loot not A leftover pigs foot no nil nil nil 0 0 2
+DEBUG:root:Added  : hesh5324852375 hemp_shirt A fiberous hemp_shirt lay here. Dungeon2 eq body you might not wanna smoke this. no nil vit dex 2 2 4
+DEBUG:root:Added  : hepa4788846101 hemp_pants A old pair of hemp_pants lay here. Dungeon2 eq legs soil em? hell they basically are soil. no nil vit dex 1 1 6
+DEBUG:root:Added  : caca3044667760 candycane a candycane sits on the ground. Dungeon1 eq weapon Ultimate Elvish wand no nil str dex 2 0 2
+DEBUG:root:Added  : wosw8750008325 wooden_sword The best sword in the world... lies here. Dungeon1 eq weapon Activating denting paper ability!! no nil str dex 2 0 5
+DEBUG:root:Added  : woca8926464425 wooden_cane A wooden_cane lay on the floor None eq weapon A wooden mage's cane no nil int dex 3 2 6
+DEBUG:root:Added  : hebo3810634196 hemp_boots A filthy pair of hemp_boots lay here. None eq feet you got shit on yer shitty boots... no nil vit dex 1 2 6
+DEBUG:root:Added  : hegl8794677607 hemp_gloves A rotting pair of hemp_pants lay here. None eq hands half rotten, half lame gloves. no nil vit dex 1 1 6
+DEBUG:root:Added  : heha454500752 hemp_hat A old decaying hemp_coif is here. None eq head soil em? hell they basically are soil. no nil vit dex 2 1 6
+DEBUG:root:Added  : wcbt2208548653 web_covered_boots web_covered_boots lie here.  They once were nice. None eq feet These were decent boots, now covered in webs no nil vit dex 2 2 10
+DEBUG:root:Added  : cprg8975056276 copper_ring this copper_ring once shined not anymore. None eq ring This old ring is worn. no nil str dex 0 3 10
+DEBUG:root:Added  : rttl rat_tail The tail of a murdered rat fuckall loot not A bloody rait tail no nil nil nil 0 0 10
+DEBUG:root:Added  : rstk rare_steak a rare_steak is plopped here fuckall loot not A bloody but cooked, hunk of meat no nil nil nil 0 0 10
+DEBUG:root:Added  : jerk jerky A strip of jerky sits here fuckall edible not dried up jerky no nil nil nil 0 0 10
+DEBUG:root:Added  : hony Honey A small container of honey is here fuckall craft not A small container of honey no nil nil nil 0 0 10
+DEBUG:root:Added  : vnsk venom_sack The stink venom sack of a spider fuckall craft not The venom sack of that there spider. no nil nil nil 0 0 10
+DEBUG:root:Added  : mnkp monkey_paw The monkey_paw of that corpse fuckall loot not A bloody paw no nil nil nil 0 0 10
+DEBUG:root:Added  : pifo pig_foot bloody pig_foot fuckall loot not A leftover pigs foot no nil nil nil 0 0 10
+DEBUG:root:Added  : hesh hemp_shirt A fiberous hemp_shirt lay here. fuckall eq body you might not wanna smoke this. no nil vit dex 2 2 10
+DEBUG:root:Added  : hepa hemp_pants A old pair of hemp_pants lay here. fuckall eq legs soil em? hell they basically are soil. no nil vit dex 1 1 10
+DEBUG:root:Added  : caca candycane a candycane sits on the ground. fuckall eq weapon Ultimate Elvish wand no nil str dex 2 0 10
+DEBUG:root:Added  : wosw wooden_sword The best sword in the world... lies here. fuckall eq weapon Activating denting paper ability!! no nil str dex 2 0 10
+DEBUG:root:Added  : woca wooden_cane A wooden_cane lay on the floor fuckall eq weapon A wooden mage's cane no nil int dex 3 2 10
+DEBUG:root:Added  : hebo hemp_boots A filthy pair of hemp_boots lay here. fuckall eq feet you got shit on yer shitty boots... no nil vit dex 1 2 10
+DEBUG:root:Added  : hegl hemp_gloves A rotting pair of hemp_pants lay here. fuckall eq hands half rotten, half lame gloves. no nil vit dex 1 1 10
+DEBUG:root:Added  : heha hemp_hat A old decaying hemp_coif is here. fuckall eq head soil em? hell they basically are soil. no nil vit dex 2 1 10
+DEBUG:root:Added  : wcbt web_covered_boots web_covered_boots lie here.  They once were nice. fuckall eq feet These were decent boots, now covered in webs no nil vit dex 2 2 10
+DEBUG:root:Added  : cprg copper_ring this copper_ring once shined not anymore. fuckall eq ring This old ring is worn. no nil str dex 0 3 10
+DEBUG:root:Added :  door1342566973 door open no 60 Dungeon2 south Dungeon3 0
+DEBUG:root:Added :  door9341697921 door closed no 60 Dungeon3 north Dungeon2 0
+DEBUG:root:Added :  door9114733367 door open no 60 FoodStorePath north FoodStore 0
+DEBUG:root:Added :  door6684938882 door open no 60 WeaponStorePath north WeaponStore 0
+DEBUG:root:Added :  door3520085440 door open no 60 PotionStorePath north PotionStore 0
+DEBUG:root:Added :  door9870418207 door open no 60 ArmorStorePath north ArmorStore 0
+DEBUG:root:Added :  door7677005824 door open no 60 FoodStore south FoodStorePath 0
+DEBUG:root:Added :  door8720862968 door open no 60 WeaponStore south WeaponStorePath 0
+DEBUG:root:Added :  door7762563678 door open no 60 PotionStore south PotionStorePath 0
+DEBUG:root:Added :  door4621963274 door open no 60 ArmorStore south ArmorStorePath 0
+DEBUG:root:Added : cntr8575694214bucketDungeon1openno{'slot1': 'wooden_sword', 'slot2': 'Empty', 'slot3': 'Empty', 'slot4': 'Empty', 'slot5': 'Empty', 'slot6': 'Empty'}nobody
+DEBUG:root:Added : cntr7297127234clusterDungeon4openno{'slot1': 'hemp_pants', 'slot2': 'hemp_shirt', 'slot3': 'hemp_boots', 'slot4': 'wooden_cane', 'slot5': 'hemp_gloves', 'slot6': 'hemp_hat'}nobody
+DEBUG:root:Added : cntr1022340781cupboardsDungeon9openno{'slot1': 'rare_steak', 'slot2': 'jerky', 'slot3': 'jerky', 'slot4': 'honey', 'slot5': 'Empty', 'slot6': 'Empty'}nobody
+DEBUG:root:Added : cntr6470833163chestDungeon15openno{'slot1': 'copper_ring', 'slot2': 'Empty', 'slot3': 'Empty', 'slot4': 'Empty', 'slot5': 'Empty', 'slot6': 'Empty'}nobody
+DEBUG:root:New loginluna
+DEBUG:root:Updated save file for: luna
+DEBUG:root:Re loaded slots in  : cntr6470833163chestDungeon15openno{'slot1': 'copper_ring', 'slot2': 'Empty', 'slot3': 'Empty', 'slot4': 'Empty', 'slot5': 'Empty', 'slot6': 'Empty'}nobody
+DEBUG:root:Re loaded slots in  : cntr6470833163chestDungeon15openno{'slot1': 'copper_ring', 'slot2': 'Empty', 'slot3': 'Empty', 'slot4': 'Empty', 'slot5': 'Empty', 'slot6': 'Empty'}nobody
+DEBUG:root:Server Started
+DEBUG:root:Added :  spider1 spider Dungeon1 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider2 spider Dungeon2 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider3 spider Dungeon2 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider4 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider5 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider6 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider7 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider8 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider9 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider10 spider Dungeon6 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider11 spider Dungeon6 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider12 spider Dungeon9 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider13 spider Dungeon9 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider14 spider Dungeon12 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider15 spider Dungeon12 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider16 spider Dungeon13 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider17 spider Dungeon13 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider18 spider Dungeon13 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider19 spider Dungeon13 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider20 spider Dungeon13 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  matriarch_spider21 matriarch_spider Dungeon4 The matriarch_spider hangs in her web with her young 3 16 0.14 18 20 20 no web_covered_boots bind web 1000 0 800 0 0 0 no
+DEBUG:root:Added :  centi22 centipede Dungeon13 A centipede moves about the room. 4 25 1 18 25 25 no venom_sack none none 1000 0 300 0 0 0 no
+DEBUG:root:Added :  centi23 centipede Dungeon13 A centipede moves about the room. 4 25 1 18 25 25 no venom_sack none none 1000 0 300 0 0 0 no
+DEBUG:root:Added :  centi24 centipede Dungeon13 A centipede moves about the room. 4 25 1 18 25 25 no venom_sack none none 1000 0 300 0 0 0 no
+DEBUG:root:Added :  centi25 centipede Dungeon13 A centipede moves about the room. 4 25 1 18 25 25 no venom_sack none none 1000 0 300 0 0 0 no
+DEBUG:root:Added :  centi26 centipede Dungeon13 A centipede moves about the room. 4 25 1 18 25 25 no venom_sack none none 1000 0 300 0 0 0 no
+DEBUG:root:Added :  rat27 rat Dungeon1 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat28 rat Dungeon5 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat29 rat Dungeon5 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat30 rat Dungeon5 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat31 rat Dungeon5 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat32 rat Dungeon11 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat33 rat Dungeon11 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat34 rat Dungeon11 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat35 rat Dungeon11 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat36 rat Dungeon19 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat37 rat Dungeon19 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat38 rat Dungeon19 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added  : rttl1943445652 rat_tail The tail of a murdered rat None loot not A bloody rait tail no nil nil nil 0 0 2
+DEBUG:root:Added  : rstk9153635401 rare_steak a rare_steak is plopped here None loot not A bloody but cooked, hunk of meat no nil nil nil 0 0 1
+DEBUG:root:Added  : jerk8401001692 jerky A strip of jerky sits here None edible not dried up jerky no nil nil nil 0 0 2
+DEBUG:root:Added  : hony857329138 Honey A small container of honey is here None craft not A small container of honey no nil nil nil 0 0 5
+DEBUG:root:Added  : vnsk3261097968 venom_sack The stink venom sack of a spider None craft not The venom sack of that there spider. no nil nil nil 0 0 6
+DEBUG:root:Added  : mnkp2330840082 monkey_paw The monkey_paw of that corpse None loot not A bloody paw no nil nil nil 0 0 4
+DEBUG:root:Added  : pifo9620426470 pig_foot bloody pig_foot None loot not A leftover pigs foot no nil nil nil 0 0 2
+DEBUG:root:Added  : hesh3282245057 hemp_shirt A fiberous hemp_shirt lay here. Dungeon2 eq body you might not wanna smoke this. no nil vit dex 2 2 4
+DEBUG:root:Added  : hepa3367611413 hemp_pants A old pair of hemp_pants lay here. Dungeon2 eq legs soil em? hell they basically are soil. no nil vit dex 1 1 6
+DEBUG:root:Added  : caca8227760747 candycane a candycane sits on the ground. Dungeon1 eq weapon Ultimate Elvish wand no nil str dex 2 0 2
+DEBUG:root:Added  : wosw9339541775 wooden_sword The best sword in the world... lies here. Dungeon1 eq weapon Activating denting paper ability!! no nil str dex 2 0 5
+DEBUG:root:Added  : woca1752969223 wooden_cane A wooden_cane lay on the floor None eq weapon A wooden mage's cane no nil int dex 3 2 6
+DEBUG:root:Added  : hebo2762451624 hemp_boots A filthy pair of hemp_boots lay here. None eq feet you got shit on yer shitty boots... no nil vit dex 1 2 6
+DEBUG:root:Added  : hegl2846060957 hemp_gloves A rotting pair of hemp_pants lay here. None eq hands half rotten, half lame gloves. no nil vit dex 1 1 6
+DEBUG:root:Added  : heha1737097538 hemp_hat A old decaying hemp_coif is here. None eq head soil em? hell they basically are soil. no nil vit dex 2 1 6
+DEBUG:root:Added  : wcbt2388825751 web_covered_boots web_covered_boots lie here.  They once were nice. None eq feet These were decent boots, now covered in webs no nil vit dex 2 2 10
+DEBUG:root:Added  : cprg2915414079 copper_ring this copper_ring once shined not anymore. None eq ring This old ring is worn. no nil str dex 0 3 10
+DEBUG:root:Added  : rttl rat_tail The tail of a murdered rat fuckall loot not A bloody rait tail no nil nil nil 0 0 10
+DEBUG:root:Added  : rstk rare_steak a rare_steak is plopped here fuckall loot not A bloody but cooked, hunk of meat no nil nil nil 0 0 10
+DEBUG:root:Added  : jerk jerky A strip of jerky sits here fuckall edible not dried up jerky no nil nil nil 0 0 10
+DEBUG:root:Added  : hony Honey A small container of honey is here fuckall craft not A small container of honey no nil nil nil 0 0 10
+DEBUG:root:Added  : vnsk venom_sack The stink venom sack of a spider fuckall craft not The venom sack of that there spider. no nil nil nil 0 0 10
+DEBUG:root:Added  : mnkp monkey_paw The monkey_paw of that corpse fuckall loot not A bloody paw no nil nil nil 0 0 10
+DEBUG:root:Added  : pifo pig_foot bloody pig_foot fuckall loot not A leftover pigs foot no nil nil nil 0 0 10
+DEBUG:root:Added  : hesh hemp_shirt A fiberous hemp_shirt lay here. fuckall eq body you might not wanna smoke this. no nil vit dex 2 2 10
+DEBUG:root:Added  : hepa hemp_pants A old pair of hemp_pants lay here. fuckall eq legs soil em? hell they basically are soil. no nil vit dex 1 1 10
+DEBUG:root:Added  : caca candycane a candycane sits on the ground. fuckall eq weapon Ultimate Elvish wand no nil str dex 2 0 10
+DEBUG:root:Added  : wosw wooden_sword The best sword in the world... lies here. fuckall eq weapon Activating denting paper ability!! no nil str dex 2 0 10
+DEBUG:root:Added  : woca wooden_cane A wooden_cane lay on the floor fuckall eq weapon A wooden mage's cane no nil int dex 3 2 10
+DEBUG:root:Added  : hebo hemp_boots A filthy pair of hemp_boots lay here. fuckall eq feet you got shit on yer shitty boots... no nil vit dex 1 2 10
+DEBUG:root:Added  : hegl hemp_gloves A rotting pair of hemp_pants lay here. fuckall eq hands half rotten, half lame gloves. no nil vit dex 1 1 10
+DEBUG:root:Added  : heha hemp_hat A old decaying hemp_coif is here. fuckall eq head soil em? hell they basically are soil. no nil vit dex 2 1 10
+DEBUG:root:Added  : wcbt web_covered_boots web_covered_boots lie here.  They once were nice. fuckall eq feet These were decent boots, now covered in webs no nil vit dex 2 2 10
+DEBUG:root:Added  : cprg copper_ring this copper_ring once shined not anymore. fuckall eq ring This old ring is worn. no nil str dex 0 3 10
+DEBUG:root:Added :  door7921660236 door open no 60 Dungeon2 south Dungeon3 0
+DEBUG:root:Added :  door8183452754 door closed no 60 Dungeon3 north Dungeon2 0
+DEBUG:root:Added :  door2277812294 door open no 60 FoodStorePath north FoodStore 0
+DEBUG:root:Added :  door6756950081 door open no 60 WeaponStorePath north WeaponStore 0
+DEBUG:root:Added :  door4198102381 door open no 60 PotionStorePath north PotionStore 0
+DEBUG:root:Added :  door9644297997 door open no 60 ArmorStorePath north ArmorStore 0
+DEBUG:root:Added :  door4582987735 door open no 60 FoodStore south FoodStorePath 0
+DEBUG:root:Added :  door308209968 door open no 60 WeaponStore south WeaponStorePath 0
+DEBUG:root:Added :  door7355395983 door open no 60 PotionStore south PotionStorePath 0
+DEBUG:root:Added :  door853544949 door open no 60 ArmorStore south ArmorStorePath 0
+DEBUG:root:Added : cntr9565083816bucketDungeon1openno{'slot1': 'wooden_sword', 'slot2': 'Empty', 'slot3': 'Empty', 'slot4': 'Empty', 'slot5': 'Empty', 'slot6': 'Empty'}nobody
+DEBUG:root:Added : cntr3141275453clusterDungeon4openno{'slot1': 'hemp_pants', 'slot2': 'hemp_shirt', 'slot3': 'hemp_boots', 'slot4': 'wooden_cane', 'slot5': 'hemp_gloves', 'slot6': 'hemp_hat'}nobody
+DEBUG:root:Added : cntr4633333782cupboardsDungeon9openno{'slot1': 'rare_steak', 'slot2': 'jerky', 'slot3': 'jerky', 'slot4': 'honey', 'slot5': 'Empty', 'slot6': 'Empty'}nobody
+DEBUG:root:Added : cntr7553702934chestDungeon15openno{'slot1': 'copper_ring', 'slot2': 'Empty', 'slot3': 'Empty', 'slot4': 'Empty', 'slot5': 'Empty', 'slot6': 'Empty'}nobody
+DEBUG:root:New loginluna
+DEBUG:root:Re loaded slots in  : cntr7553702934chestDungeon15openno{'slot1': 'copper_ring', 'slot2': 'Empty', 'slot3': 'Empty', 'slot4': 'Empty', 'slot5': 'Empty', 'slot6': 'Empty'}nobody
+DEBUG:root:Re loaded slots in  : cntr7553702934chestDungeon15openno{'slot1': 'copper_ring', 'slot2': 'Empty', 'slot3': 'Empty', 'slot4': 'Empty', 'slot5': 'Empty', 'slot6': 'Empty'}nobody
+DEBUG:root:Server Started
+DEBUG:root:Added :  spider1 spider Dungeon1 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider2 spider Dungeon2 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider3 spider Dungeon2 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider4 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider5 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider6 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider7 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider8 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider9 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider10 spider Dungeon6 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider11 spider Dungeon6 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider12 spider Dungeon9 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider13 spider Dungeon9 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider14 spider Dungeon12 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider15 spider Dungeon12 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider16 spider Dungeon13 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider17 spider Dungeon13 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider18 spider Dungeon13 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider19 spider Dungeon13 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider20 spider Dungeon13 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  matriarch_spider21 matriarch_spider Dungeon4 The matriarch_spider hangs in her web with her young 3 16 0.14 18 20 20 no web_covered_boots bind web 1000 0 800 0 0 0 no
+DEBUG:root:Added :  centi22 centipede Dungeon13 A centipede moves about the room. 4 25 1 18 25 25 no venom_sack none none 1000 0 300 0 0 0 no
+DEBUG:root:Added :  centi23 centipede Dungeon13 A centipede moves about the room. 4 25 1 18 25 25 no venom_sack none none 1000 0 300 0 0 0 no
+DEBUG:root:Added :  centi24 centipede Dungeon13 A centipede moves about the room. 4 25 1 18 25 25 no venom_sack none none 1000 0 300 0 0 0 no
+DEBUG:root:Added :  centi25 centipede Dungeon13 A centipede moves about the room. 4 25 1 18 25 25 no venom_sack none none 1000 0 300 0 0 0 no
+DEBUG:root:Added :  centi26 centipede Dungeon13 A centipede moves about the room. 4 25 1 18 25 25 no venom_sack none none 1000 0 300 0 0 0 no
+DEBUG:root:Added :  rat27 rat Dungeon1 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat28 rat Dungeon5 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat29 rat Dungeon5 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat30 rat Dungeon5 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat31 rat Dungeon5 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat32 rat Dungeon11 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat33 rat Dungeon11 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat34 rat Dungeon11 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat35 rat Dungeon11 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat36 rat Dungeon19 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat37 rat Dungeon19 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat38 rat Dungeon19 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added  : rttl9036669108 rat_tail The tail of a murdered rat None loot not A bloody rait tail no nil nil nil 0 0 2
+DEBUG:root:Added  : rstk1953585290 rare_steak a rare_steak is plopped here None loot not A bloody but cooked, hunk of meat no nil nil nil 0 0 1
+DEBUG:root:Added  : jerk3714183563 jerky A strip of jerky sits here None edible not dried up jerky no nil nil nil 0 0 2
+DEBUG:root:Added  : hony3694569509 Honey A small container of honey is here None craft not A small container of honey no nil nil nil 0 0 5
+DEBUG:root:Added  : vnsk8840481757 venom_sack The stink venom sack of a spider None craft not The venom sack of that there spider. no nil nil nil 0 0 6
+DEBUG:root:Added  : mnkp3982188877 monkey_paw The monkey_paw of that corpse None loot not A bloody paw no nil nil nil 0 0 4
+DEBUG:root:Added  : pifo4750756430 pig_foot bloody pig_foot None loot not A leftover pigs foot no nil nil nil 0 0 2
+DEBUG:root:Added  : hesh4903940241 hemp_shirt A fiberous hemp_shirt lay here. Dungeon2 eq body you might not wanna smoke this. no nil vit dex 2 2 4
+DEBUG:root:Added  : hepa724053524 hemp_pants A old pair of hemp_pants lay here. Dungeon2 eq legs soil em? hell they basically are soil. no nil vit dex 1 1 6
+DEBUG:root:Added  : caca811649675 candycane a candycane sits on the ground. Dungeon1 eq weapon Ultimate Elvish wand no nil str dex 2 0 2
+DEBUG:root:Added  : wosw5190390095 wooden_sword The best sword in the world... lies here. Dungeon1 eq weapon Activating denting paper ability!! no nil str dex 2 0 5
+DEBUG:root:Added  : woca6326441360 wooden_cane A wooden_cane lay on the floor None eq weapon A wooden mage's cane no nil int dex 3 2 6
+DEBUG:root:Added  : hebo6684013685 hemp_boots A filthy pair of hemp_boots lay here. None eq feet you got shit on yer shitty boots... no nil vit dex 1 2 6
+DEBUG:root:Added  : hegl8557189548 hemp_gloves A rotting pair of hemp_pants lay here. None eq hands half rotten, half lame gloves. no nil vit dex 1 1 6
+DEBUG:root:Added  : heha9627687290 hemp_hat A old decaying hemp_coif is here. None eq head soil em? hell they basically are soil. no nil vit dex 2 1 6
+DEBUG:root:Added  : wcbt7102150022 web_covered_boots web_covered_boots lie here.  They once were nice. None eq feet These were decent boots, now covered in webs no nil vit dex 2 2 10
+DEBUG:root:Added  : cprg2781598205 copper_ring this copper_ring once shined not anymore. None eq ring This old ring is worn. no nil str dex 0 3 10
+DEBUG:root:Added  : rttl rat_tail The tail of a murdered rat fuckall loot not A bloody rait tail no nil nil nil 0 0 10
+DEBUG:root:Added  : rstk rare_steak a rare_steak is plopped here fuckall loot not A bloody but cooked, hunk of meat no nil nil nil 0 0 10
+DEBUG:root:Added  : jerk jerky A strip of jerky sits here fuckall edible not dried up jerky no nil nil nil 0 0 10
+DEBUG:root:Added  : hony Honey A small container of honey is here fuckall craft not A small container of honey no nil nil nil 0 0 10
+DEBUG:root:Added  : vnsk venom_sack The stink venom sack of a spider fuckall craft not The venom sack of that there spider. no nil nil nil 0 0 10
+DEBUG:root:Added  : mnkp monkey_paw The monkey_paw of that corpse fuckall loot not A bloody paw no nil nil nil 0 0 10
+DEBUG:root:Added  : pifo pig_foot bloody pig_foot fuckall loot not A leftover pigs foot no nil nil nil 0 0 10
+DEBUG:root:Added  : hesh hemp_shirt A fiberous hemp_shirt lay here. fuckall eq body you might not wanna smoke this. no nil vit dex 2 2 10
+DEBUG:root:Added  : hepa hemp_pants A old pair of hemp_pants lay here. fuckall eq legs soil em? hell they basically are soil. no nil vit dex 1 1 10
+DEBUG:root:Added  : caca candycane a candycane sits on the ground. fuckall eq weapon Ultimate Elvish wand no nil str dex 2 0 10
+DEBUG:root:Added  : wosw wooden_sword The best sword in the world... lies here. fuckall eq weapon Activating denting paper ability!! no nil str dex 2 0 10
+DEBUG:root:Added  : woca wooden_cane A wooden_cane lay on the floor fuckall eq weapon A wooden mage's cane no nil int dex 3 2 10
+DEBUG:root:Added  : hebo hemp_boots A filthy pair of hemp_boots lay here. fuckall eq feet you got shit on yer shitty boots... no nil vit dex 1 2 10
+DEBUG:root:Added  : hegl hemp_gloves A rotting pair of hemp_pants lay here. fuckall eq hands half rotten, half lame gloves. no nil vit dex 1 1 10
+DEBUG:root:Added  : heha hemp_hat A old decaying hemp_coif is here. fuckall eq head soil em? hell they basically are soil. no nil vit dex 2 1 10
+DEBUG:root:Added  : wcbt web_covered_boots web_covered_boots lie here.  They once were nice. fuckall eq feet These were decent boots, now covered in webs no nil vit dex 2 2 10
+DEBUG:root:Added  : cprg copper_ring this copper_ring once shined not anymore. fuckall eq ring This old ring is worn. no nil str dex 0 3 10
+DEBUG:root:Added :  door3562418647 door open no 60 Dungeon2 south Dungeon3 0
+DEBUG:root:Added :  door3053371887 door closed no 60 Dungeon3 north Dungeon2 0
+DEBUG:root:Added :  door4266601297 door open no 60 FoodStorePath north FoodStore 0
+DEBUG:root:Added :  door1762215016 door open no 60 WeaponStorePath north WeaponStore 0
+DEBUG:root:Added :  door825736831 door open no 60 PotionStorePath north PotionStore 0
+DEBUG:root:Added :  door801673379 door open no 60 ArmorStorePath north ArmorStore 0
+DEBUG:root:Added :  door7132672101 door open no 60 FoodStore south FoodStorePath 0
+DEBUG:root:Added :  door5595387679 door open no 60 WeaponStore south WeaponStorePath 0
+DEBUG:root:Added :  door2149492396 door open no 60 PotionStore south PotionStorePath 0
+DEBUG:root:Added :  door2767741873 door open no 60 ArmorStore south ArmorStorePath 0
+DEBUG:root:Added : cntr9438107199bucketDungeon1openno{'slot1': 'wooden_sword', 'slot2': 'Empty', 'slot3': 'Empty', 'slot4': 'Empty', 'slot5': 'Empty', 'slot6': 'Empty'}nobody
+DEBUG:root:Added : cntr8147798998clusterDungeon4openno{'slot1': 'hemp_pants', 'slot2': 'hemp_shirt', 'slot3': 'hemp_boots', 'slot4': 'wooden_cane', 'slot5': 'hemp_gloves', 'slot6': 'hemp_hat'}nobody
+DEBUG:root:Added : cntr9473559986cupboardsDungeon9openno{'slot1': 'rare_steak', 'slot2': 'jerky', 'slot3': 'jerky', 'slot4': 'honey', 'slot5': 'Empty', 'slot6': 'Empty'}nobody
+DEBUG:root:Added : cntr4110203356chestDungeon15openno{'slot1': 'copper_ring', 'slot2': 'Empty', 'slot3': 'Empty', 'slot4': 'Empty', 'slot5': 'Empty', 'slot6': 'Empty'}nobody
+DEBUG:root:New loginluna
+DEBUG:root:Re loaded slots in  : cntr4110203356chestDungeon15openno{'slot1': 'copper_ring', 'slot2': 'Empty', 'slot3': 'Empty', 'slot4': 'Empty', 'slot5': 'Empty', 'slot6': 'Empty'}nobody
+DEBUG:root:Re loaded slots in  : cntr4110203356chestDungeon15openno{'slot1': 'copper_ring', 'slot2': 'Empty', 'slot3': 'Empty', 'slot4': 'Empty', 'slot5': 'Empty', 'slot6': 'Empty'}nobody
+DEBUG:root:Server Started
+DEBUG:root:Added :  spider1 spider Dungeon1 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider2 spider Dungeon2 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider3 spider Dungeon2 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider4 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider5 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider6 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider7 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider8 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider9 spider Dungeon4 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider10 spider Dungeon6 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider11 spider Dungeon6 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider12 spider Dungeon9 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider13 spider Dungeon9 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider14 spider Dungeon12 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider15 spider Dungeon12 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider16 spider Dungeon13 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider17 spider Dungeon13 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider18 spider Dungeon13 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider19 spider Dungeon13 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  spider20 spider Dungeon13 A spider sits quietly in her web. 1 15 1 12 10 10 no venom_sack bind web 1000 0 850 0 0 0 no
+DEBUG:root:Added :  matriarch_spider21 matriarch_spider Dungeon4 The matriarch_spider hangs in her web with her young 3 16 0.14 18 20 20 no web_covered_boots bind web 1000 0 800 0 0 0 no
+DEBUG:root:Added :  centi22 centipede Dungeon13 A centipede moves about the room. 4 25 1 18 25 25 no venom_sack none none 1000 0 300 0 0 0 no
+DEBUG:root:Added :  centi23 centipede Dungeon13 A centipede moves about the room. 4 25 1 18 25 25 no venom_sack none none 1000 0 300 0 0 0 no
+DEBUG:root:Added :  centi24 centipede Dungeon13 A centipede moves about the room. 4 25 1 18 25 25 no venom_sack none none 1000 0 300 0 0 0 no
+DEBUG:root:Added :  centi25 centipede Dungeon13 A centipede moves about the room. 4 25 1 18 25 25 no venom_sack none none 1000 0 300 0 0 0 no
+DEBUG:root:Added :  centi26 centipede Dungeon13 A centipede moves about the room. 4 25 1 18 25 25 no venom_sack none none 1000 0 300 0 0 0 no
+DEBUG:root:Added :  rat27 rat Dungeon1 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat28 rat Dungeon5 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat29 rat Dungeon5 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat30 rat Dungeon5 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat31 rat Dungeon5 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat32 rat Dungeon11 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat33 rat Dungeon11 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat34 rat Dungeon11 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat35 rat Dungeon11 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat36 rat Dungeon19 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat37 rat Dungeon19 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added :  rat38 rat Dungeon19 a rat scuttles around the room. 1 15 0.125 7 10 10 yes rat_tail none none 1000 0 800 0 0 0 no
+DEBUG:root:Added  : rttl9530752168 rat_tail The tail of a murdered rat None loot not A bloody rait tail no nil nil nil 0 0 2
+DEBUG:root:Added  : rstk2845857833 rare_steak a rare_steak is plopped here None loot not A bloody but cooked, hunk of meat no nil nil nil 0 0 1
+DEBUG:root:Added  : jerk6943505495 jerky A strip of jerky sits here None edible not dried up jerky no nil nil nil 0 0 2
+DEBUG:root:Added  : hony9252944060 Honey A small container of honey is here None craft not A small container of honey no nil nil nil 0 0 5
+DEBUG:root:Added  : vnsk9904578948 venom_sack The stink venom sack of a spider None craft not The venom sack of that there spider. no nil nil nil 0 0 6
+DEBUG:root:Added  : mnkp1760176454 monkey_paw The monkey_paw of that corpse None loot not A bloody paw no nil nil nil 0 0 4
+DEBUG:root:Added  : pifo7408699439 pig_foot bloody pig_foot None loot not A leftover pigs foot no nil nil nil 0 0 2
+DEBUG:root:Added  : hesh7607049780 hemp_shirt A fiberous hemp_shirt lay here. Dungeon2 eq body you might not wanna smoke this. no nil vit dex 2 2 4
+DEBUG:root:Added  : hepa8481583800 hemp_pants A old pair of hemp_pants lay here. Dungeon2 eq legs soil em? hell they basically are soil. no nil vit dex 1 1 6
+DEBUG:root:Added  : caca9837933636 candycane a candycane sits on the ground. Dungeon1 eq weapon Ultimate Elvish wand no nil str dex 2 0 2
+DEBUG:root:Added  : wosw5786959904 wooden_sword The best sword in the world... lies here. Dungeon1 eq weapon Activating denting paper ability!! no nil str dex 2 0 5
+DEBUG:root:Added  : woca8920468779 wooden_cane A wooden_cane lay on the floor None eq weapon A wooden mage's cane no nil int dex 3 2 6
+DEBUG:root:Added  : hebo918250932 hemp_boots A filthy pair of hemp_boots lay here. None eq feet you got shit on yer shitty boots... no nil vit dex 1 2 6
+DEBUG:root:Added  : hegl7482899246 hemp_gloves A rotting pair of hemp_pants lay here. None eq hands half rotten, half lame gloves. no nil vit dex 1 1 6
+DEBUG:root:Added  : heha4916284587 hemp_hat A old decaying hemp_coif is here. None eq head soil em? hell they basically are soil. no nil vit dex 2 1 6
+DEBUG:root:Added  : wcbt299882545 web_covered_boots web_covered_boots lie here.  They once were nice. None eq feet These were decent boots, now covered in webs no nil vit dex 2 2 10
+DEBUG:root:Added  : cprg8327037755 copper_ring this copper_ring once shined not anymore. None eq ring This old ring is worn. no nil str dex 0 3 10
+DEBUG:root:Added  : rttl rat_tail The tail of a murdered rat fuckall loot not A bloody rait tail no nil nil nil 0 0 10
+DEBUG:root:Added  : rstk rare_steak a rare_steak is plopped here fuckall loot not A bloody but cooked, hunk of meat no nil nil nil 0 0 10
+DEBUG:root:Added  : jerk jerky A strip of jerky sits here fuckall edible not dried up jerky no nil nil nil 0 0 10
+DEBUG:root:Added  : hony Honey A small container of honey is here fuckall craft not A small container of honey no nil nil nil 0 0 10
+DEBUG:root:Added  : vnsk venom_sack The stink venom sack of a spider fuckall craft not The venom sack of that there spider. no nil nil nil 0 0 10
+DEBUG:root:Added  : mnkp monkey_paw The monkey_paw of that corpse fuckall loot not A bloody paw no nil nil nil 0 0 10
+DEBUG:root:Added  : pifo pig_foot bloody pig_foot fuckall loot not A leftover pigs foot no nil nil nil 0 0 10
+DEBUG:root:Added  : hesh hemp_shirt A fiberous hemp_shirt lay here. fuckall eq body you might not wanna smoke this. no nil vit dex 2 2 10
+DEBUG:root:Added  : hepa hemp_pants A old pair of hemp_pants lay here. fuckall eq legs soil em? hell they basically are soil. no nil vit dex 1 1 10
+DEBUG:root:Added  : caca candycane a candycane sits on the ground. fuckall eq weapon Ultimate Elvish wand no nil str dex 2 0 10
+DEBUG:root:Added  : wosw wooden_sword The best sword in the world... lies here. fuckall eq weapon Activating denting paper ability!! no nil str dex 2 0 10
+DEBUG:root:Added  : woca wooden_cane A wooden_cane lay on the floor fuckall eq weapon A wooden mage's cane no nil int dex 3 2 10
+DEBUG:root:Added  : hebo hemp_boots A filthy pair of hemp_boots lay here. fuckall eq feet you got shit on yer shitty boots... no nil vit dex 1 2 10
+DEBUG:root:Added  : hegl hemp_gloves A rotting pair of hemp_pants lay here. fuckall eq hands half rotten, half lame gloves. no nil vit dex 1 1 10
+DEBUG:root:Added  : heha hemp_hat A old decaying hemp_coif is here. fuckall eq head soil em? hell they basically are soil. no nil vit dex 2 1 10
+DEBUG:root:Added  : wcbt web_covered_boots web_covered_boots lie here.  They once were nice. fuckall eq feet These were decent boots, now covered in webs no nil vit dex 2 2 10
+DEBUG:root:Added  : cprg copper_ring this copper_ring once shined not anymore. fuckall eq ring This old ring is worn. no nil str dex 0 3 10
+DEBUG:root:Added :  door9502675522 door open no 60 Dungeon2 south Dungeon3 0
+DEBUG:root:Added :  door9177561740 door closed no 60 Dungeon3 north Dungeon2 0
+DEBUG:root:Added :  door1694763982 door open no 60 FoodStorePath north FoodStore 0
+DEBUG:root:Added :  door4360507747 door open no 60 WeaponStorePath north WeaponStore 0
+DEBUG:root:Added :  door3440854291 door open no 60 PotionStorePath north PotionStore 0
+DEBUG:root:Added :  door3995295208 door open no 60 ArmorStorePath north ArmorStore 0
+DEBUG:root:Added :  door7110865561 door open no 60 FoodStore south FoodStorePath 0
+DEBUG:root:Added :  door6659118317 door open no 60 WeaponStore south WeaponStorePath 0
+DEBUG:root:Added :  door8185638430 door open no 60 PotionStore south PotionStorePath 0
+DEBUG:root:Added :  door9370616718 door open no 60 ArmorStore south ArmorStorePath 0
+DEBUG:root:Added : cntr4877913327bucketDungeon1openno{'slot1': 'wooden_sword', 'slot2': 'Empty', 'slot3': 'Empty', 'slot4': 'Empty', 'slot5': 'Empty', 'slot6': 'Empty'}nobody
+DEBUG:root:Added : cntr6776686488clusterDungeon4openno{'slot1': 'hemp_pants', 'slot2': 'hemp_shirt', 'slot3': 'hemp_boots', 'slot4': 'wooden_cane', 'slot5': 'hemp_gloves', 'slot6': 'hemp_hat'}nobody
+DEBUG:root:Added : cntr6669387950cupboardsDungeon9openno{'slot1': 'rare_steak', 'slot2': 'jerky', 'slot3': 'jerky', 'slot4': 'honey', 'slot5': 'Empty', 'slot6': 'Empty'}nobody
+DEBUG:root:Added : cntr5883469328chestDungeon15openno{'slot1': 'copper_ring', 'slot2': 'Empty', 'slot3': 'Empty', 'slot4': 'Empty', 'slot5': 'Empty', 'slot6': 'Empty'}nobody
+DEBUG:root:New loginluna

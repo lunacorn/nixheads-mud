@@ -345,7 +345,7 @@
                           },
                         "empty": "no",
                         "bank": "no",
-                        "ctmr": 6000,
+                        "ctmr": 200,
                         "cntr": 0
                         },
                     "clusto":{
@@ -364,7 +364,7 @@
                         },
                         "empty": "no",
                         "bank": "no",
-                        "ctmr": 6000,
+                        "ctmr": 200,
                         "cntr": 0
                       },
                       "cupbo":{
@@ -402,7 +402,7 @@
                               },
                               "empty": "no",
                               "bank": "no",
-                              "ctmr": 6000,
+                              "ctmr": 3000,
                               "cntr": 0
                                 }
                       },

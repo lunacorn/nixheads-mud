@@ -801,6 +801,7 @@ def SaveCommand():
 def ItemsCheckRoom(pr):
     items = []
     for itemsx in allitemslist:
+        #3rd time from grabbing bucket crashes on 804 @ Dragonkeeper
        if itemsx == Items.allitems[itemsx].iid:
            if pr == Items.allitems[itemsx].room:
                items.append(itemsx)
@@ -2054,6 +2055,7 @@ def kung_fu_fighting(monster):
         basemoveamount = 5 ## might add this to the creature so its a dynamic percentage
         count = 0
         if Creatures.creatures[monster].basemove != "no":
+            print("I checked base move")
             while basemoveamount >= count:
                 movepool.append(Creatures.creatures[monster].basemove)
                 count += 1
