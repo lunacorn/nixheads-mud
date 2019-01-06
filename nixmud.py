@@ -1057,8 +1057,6 @@ def ExamCommand():
 
 
 def SheetCommand():
-    ## luna # i want to add some math to this as well to structure it based on line length
-    # add unlocked jobs (ujobs) spells and skills
     sheetframe = 70
     lines = [
     str(":"*sheetframe), str(":"*sheetframe), str(":"*sheetframe), str(":"*23+"CHARACTER SHEET"+":"*sheetframe), str(":"*sheetframe), str(":"*sheetframe),
@@ -1067,9 +1065,10 @@ def SheetCommand():
     str(":"*sheetframe), str(":"*22+" Character Stats "+":"*sheetframe), str(":"*sheetframe),
     str(":"*2+"STR: "+str(players[id]["str"])+":"*2+"DEX: "+str(players[id]["dex"])+":"*2+"VIT: "+str(players[id]["vit"])+":"*2+"INT: "+str(players[id]["int"])+":"*4+"MND: "+str(players[id]["mnd"])+":"*2+"CHA: "+str(players[id]["cha"])+":"*sheetframe),
     str(":"*sheetframe), str(":"*2+"Crit. Chance"+":"*3+str(players[id]["crit"])+"% "+":"*3+"Coin "+str(players[id]["coin"])+":"*5+"TNL "+":"*3+str(players[id]["exp"])+"/"+str(players[id]["next"])+":"*sheetframe),
-    str(":"*sheetframe), str("::Spells"+":"*sheetframe), str(":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe),
-    str(":"*sheetframe), str("::Skills"+":"*sheetframe), str(":"*sheetframe),
-    str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe),
+    str(":"*sheetframe), str("::Spells"+":"*sheetframe), str(":"*sheetframe)
+    ]
+    lines2 = [
+#    str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe), str("::"+" "*66+":"*sheetframe),
     str(":"*sheetframe), str("::User Rank"+":"*9+"Current Job"+":"*6+"PVP Status"+":"*4+"TP"+":"*sheetframe),
     str(":: "+str((players[id]["user"])+"     :::::::: "+str(players[id]["job"])+" ::::::: "+str(players[id]["pvp"])+" :::::::: "+str(players[id]["tp"])+" "+":"*sheetframe)), str(":"*sheetframe),
     str("::Unlocked Jobs"+":"*sheetframe), str(":::warrior:"+str(players[id]["ujob"]["warrior"])+":whitemage:"+str(players[id]["ujob"]["whitemage"])+"::thief:"+str(players[id]["ujob"]["thief"])+":indecisive:"+str(players[id]["ujob"]["indecisive"])+"::bard:"+str(players[id]["ujob"]["bard"])+":"*sheetframe),
@@ -1079,6 +1078,25 @@ def SheetCommand():
     ]
 
     for line in lines:
+        mud.send_message(id, line[:sheetframe])
+    for job in fun["corevalues"]["jobs"]:
+        if job == players[id]["job"]:
+            for mystuff in fun["corevalues"]["jobs"][job]:
+                if mystuff == "spells":
+                    for stuff in fun["corevalues"]["jobs"][job][mystuff]:
+                        throwthis = str("::"+" "+stuff+" "*int(66-len(stuff))+":"*sheetframe)
+                        mud.send_message(id, throwthis[:sheetframe])
+    mud.send_message(id, str("::"+" "*66+":"*sheetframe)[:sheetframe])
+    mud.send_message(id, str("::Skills"+":"*sheetframe)[:sheetframe])
+    for job in fun["corevalues"]["jobs"]:
+        if job == players[id]["job"]:
+            for mystuff in fun["corevalues"]["jobs"][job]:
+                if mystuff == "skills":
+                    for stuff in fun["corevalues"]["jobs"][job][mystuff]:
+                        throwthis = str("::"+" "+stuff+" "*int(66-len(stuff))+":"*sheetframe)
+                        mud.send_message(id, throwthis[:sheetframe])
+    mud.send_message(id, str("::"+" "*66+":"*sheetframe)[:sheetframe])
+    for line in lines2:
         mud.send_message(id, line[:sheetframe])
     #help me god need to print out the right format for json files
     #mud.send_message(id, "{}".format([fun["corevalues"]["jobs"][players[id]["job"]]["spells"][str(players[id]["level"]).replace("'spell'"," ")]]))
