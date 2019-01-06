@@ -2478,6 +2478,7 @@ while True:
 
         elif command == "email":
             send_mail("NIXMUD@nixheads.co.uk", "email to send too", "NixMud password reset", "password and user for associated user")
+
         # 'go' command
         elif command == "go":
             GoCommand()
