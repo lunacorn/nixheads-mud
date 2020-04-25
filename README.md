@@ -2,7 +2,13 @@
 
 dev note:
 This code needed a lot of work, and has required a rewrite for both functionality and cleanliness....
-it remains as a backup for reference, and likely will be removed once all material is transferred
+it remains as a backup for reference, and likely will be removed once all material is transferred.
+
+the current state of the new project while private is something we are both proud of, and believe
+others will enjoy both for ease of world building, and new features.
+
+hopefuly making our codebase both unique and complex, while also being much easier for world builders to
+create with.
 
 -------------
 
