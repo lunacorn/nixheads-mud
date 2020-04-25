@@ -1,3 +1,13 @@
+-------------
+
+dev note:
+This code needed a lot of work, and has required a rewrite for both functionality and cleanliness....
+it remains as a backup for reference, and likely will be removed once all material is transferred
+
+-------------
+
+
+
 # nixheads-mud
 
 =^..^=   =^..^=   =^..^=    =^..^=    =^..^=    =^..^=    =^..^=
